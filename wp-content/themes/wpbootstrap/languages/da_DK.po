@@ -1,0 +1,393 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: MathGame\n"
+"POT-Creation-Date: 2013-05-13 13:02+0100\n"
+"PO-Revision-Date: 2013-05-13 13:02+0100\n"
+"Last-Translator: \n"
+"Language-Team: Mads Lundt <madslundt@live.dk>\n"
+"Language: Danish\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.5\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../404.php:3
+msgid "The page you were looking for do not exists"
+msgstr "Siden du leder efter findes ikke"
+
+#: ../404.php:5 ../page-30.php:8 ../page-32.php:6 ../page.php:8
+#: ../template-play.php:286 ../template-view-score.php:21
+msgid "Sorry, this page does not exist."
+msgstr "Denne side eksiterer ikke."
+
+#: ../front-page.php:40 ../index.php:6
+msgid "Sorry, no posts matched your criteria."
+msgstr "Ingen indlæg passer med dine kriterier."
+
+#: ../functions.php:195
+msgid "Teacher menu"
+msgstr "Lære menu"
+
+#: ../functions.php:196
+msgid "User menu"
+msgstr "Bruger menu"
+
+#: ../functions.php:197
+msgid "Guest menu"
+msgstr "Gæste menu"
+
+#: ../functions.php:274
+msgid "Front footer 1"
+msgstr "Forside sidefod 1"
+
+#: ../functions.php:284
+msgid "Front footer 2"
+msgstr "Forside sidefod 2"
+
+#: ../functions.php:294
+msgid "Front footer 3"
+msgstr "Forside sidefod 3"
+
+#: ../functions.php:307 ../template-view-score.php:12
+#: ../view-score-table.php:60 ../view-score-table.php:170
+#: ../view-score-table.php:235
+msgid "Level"
+msgstr "Bane"
+
+#: ../header.php:93 ../header.php:95
+msgid "Log out"
+msgstr "Log ud"
+
+#: ../header.php:103 ../level-choose.php:48 ../level-choose.php:382
+#: ../level-edit.php:50 ../level-edit.php:149 ../level-form.php:347
+#: ../overall-user-highscore.php:24 ../view-score-table.php:55
+#: ../view-score-table.php:230 ../view-score-table.php:303
+msgid "Name"
+msgstr "Navn"
+
+#: ../header.php:105
+msgid "Log in"
+msgstr "Log ind"
+
+#: ../header.php:141
+msgid "No access!"
+msgstr "Ingen adgang!"
+
+#: ../header.php:149
+msgid "You need javascript to access the rest of the homepage."
+msgstr ""
+"Du skal have Javascript slået til for, at få adgang til resten af siden."
+
+#: ../level-choose.php:49 ../level-choose.php:383 ../level-edit.php:51
+#: ../level-edit.php:150
+msgid "Car time"
+msgstr "Bil tid"
+
+#: ../level-choose.php:50 ../level-choose.php:384 ../level-edit.php:52
+#: ../level-edit.php:151
+msgid "Build time"
+msgstr "Bygge tid"
+
+#: ../level-choose.php:51 ../level-choose.php:385 ../level-edit.php:53
+#: ../level-edit.php:152
+msgid "Min. number"
+msgstr "Min. nummer"
+
+#: ../level-choose.php:52 ../level-choose.php:386 ../level-edit.php:54
+#: ../level-edit.php:153
+msgid "Max. number"
+msgstr "Max. nummer"
+
+#: ../level-choose.php:53 ../level-choose.php:387 ../level-edit.php:55
+#: ../level-edit.php:154 ../template-play.php:60
+msgid "Car speed"
+msgstr "Bil hastighed"
+
+#: ../level-choose.php:54 ../level-choose.php:388 ../level-edit.php:56
+#: ../level-edit.php:155 ../level-form.php:373 ../template-play.php:63
+msgid "Bonus number"
+msgstr "Bonus tal"
+
+#: ../level-choose.php:55 ../level-choose.php:389 ../level-edit.php:57
+#: ../level-edit.php:156
+msgid "No. of bubbles"
+msgstr "Antal af bobler"
+
+#: ../level-choose.php:56 ../level-edit.php:58
+msgid "Bridge length"
+msgstr "Bro længde"
+
+#: ../level-choose.php:57
+msgid "Creator"
+msgstr "Skaber"
+
+#: ../level-choose.php:58
+msgid "Rating"
+msgstr "Bedømmelse"
+
+#: ../level-choose.php:146 ../level-edit.php:126 ../view-score-table.php:349
+msgid "&laquo;"
+msgstr ""
+
+#: ../level-choose.php:147 ../level-edit.php:127 ../view-score-table.php:350
+msgid "&raquo;"
+msgstr ""
+
+#: ../level-choose.php:319 ../template-play.php:227
+msgid "Could not rate the level."
+msgstr "Kunne ikke bedømme denne bane."
+
+#: ../level-form.php:31
+msgid "You are not a part of the group this level was created for"
+msgstr "Du er ikke en del af den gruppe, denne bane er lavet til"
+
+#: ../level-form.php:151
+msgid "There was an error deleting the level. Level was not removed."
+msgstr "Der opstod en fejl vedr. sletning af banen. Banen er ikke fjernet."
+
+#: ../level-form.php:232 ../level-form.php:233 ../level-form.php:236
+#: ../level-form.php:237 ../level-form.php:244 ../level-form.php:245
+#: ../level-form.php:248 ../level-form.php:249 ../view-score-chart.php:190
+#: ../view-score-chart.php:270
+msgid "seconds"
+msgstr "sekunder"
+
+#: ../level-form.php:357
+msgid "Speed of the car"
+msgstr "Bilens hastighed"
+
+#: ../level-form.php:361
+msgid "Time for car to start"
+msgstr "Tid for hvornår bilen skal starte"
+
+#: ../level-form.php:365
+msgid "Building time"
+msgstr "Bygge tid"
+
+#: ../level-form.php:369
+msgid "Numbers in game"
+msgstr "Tal i spillet"
+
+#: ../level-form.php:377
+msgid "Number bubbles"
+msgstr "Talbobler"
+
+#: ../level-form.php:381
+msgid "Speed of the bubbles"
+msgstr "Talboblernes hastighed"
+
+#: ../level-form.php:386
+msgid "Fractions"
+msgstr "Brøker"
+
+#: ../level-form.php:403
+msgid "Groups"
+msgstr "Grupper"
+
+#: ../level-form.php:456
+msgid "Length of the bridge"
+msgstr "Broens længde"
+
+#: ../level-form.php:460
+msgid "Points for every bridge pillar to build"
+msgstr "Point for hver brosøjle der skal bygges"
+
+#: ../level-form.php:483
+msgid "Save"
+msgstr "Gem"
+
+#: ../level-form.php:489
+msgid "Try"
+msgstr "Prøv"
+
+#: ../level-form.php:500
+msgid "Deleting level"
+msgstr "Slet bane"
+
+#: ../level-form.php:503
+msgid ""
+"This will delete the level and related to this level as scores and revisions."
+msgstr ""
+"Dette vil fjerne banen, samt alt relateret til denne bane som pointfordeling "
+"og tidligere bane versioner."
+
+#: ../level-form.php:503
+msgid "This can not be restored."
+msgstr "Dette kan ikke blive gendannet."
+
+#: ../level-form.php:506
+msgid "Cancel"
+msgstr "Annuller"
+
+#: ../level-form.php:507
+msgid "Delete"
+msgstr "Slet"
+
+#: ../level-form.php:517
+msgid "Try level"
+msgstr "Prøv bane"
+
+#: ../level-form.php:626 ../level-form.php:630
+msgid "There was an error creating the level. Please try again"
+msgstr "Der opstod en fejl vedr. oprettelse af banen. Forsøg venligst igen"
+
+#: ../level-form.php:690 ../level-form.php:694
+msgid "Level created"
+msgstr "Bane oprettet"
+
+#: ../level-form.php:768 ../level-form.php:772
+#, php-format
+msgid "An revision of level %d was added."
+msgstr "En version af bane %d blev tilføjet."
+
+#: ../overall-user-highscore.php:25 ../view-score-chart.php:214
+#: ../view-score-chart.php:246 ../view-score-table.php:56
+#: ../view-score-table.php:166 ../view-score-table.php:231
+#: ../view-score-table.php:304
+msgid "Points"
+msgstr "Point"
+
+#: ../overall-user-highscore.php:26 ../view-score-chart.php:225
+#: ../view-score-chart.php:255 ../view-score-table.php:57
+#: ../view-score-table.php:167 ../view-score-table.php:232
+#: ../view-score-table.php:305
+msgid "Errors"
+msgstr "Fejl"
+
+#: ../overall-user-highscore.php:27 ../view-score-chart.php:197
+#: ../view-score-chart.php:264 ../view-score-table.php:58
+#: ../view-score-table.php:168 ../view-score-table.php:233
+#: ../view-score-table.php:306
+msgid "Time"
+msgstr "Tid"
+
+#: ../overall-user-highscore.php:28
+msgid "Level no."
+msgstr "Bane nr."
+
+#: ../overall-user-highscore.php:29
+msgid "Level name"
+msgstr "Bane navn"
+
+#: ../overall-user-highscore.php:30 ../view-score-table.php:61
+#: ../view-score-table.php:171 ../view-score-table.php:236
+#: ../view-score-table.php:307
+msgid "Date"
+msgstr "Dato"
+
+#: ../overall-user-highscore.php:38 ../view-score-table.php:70
+#: ../view-score-table.php:180 ../view-score-table.php:245
+#: ../view-score-table.php:316
+msgid "Y-m-d"
+msgstr "d-m-Y"
+
+#: ../overall-user-highscore.php:42 ../view-score-table.php:74
+#: ../view-score-table.php:184 ../view-score-table.php:249
+#: ../view-score-table.php:320
+msgid "ago"
+msgstr "siden"
+
+#: ../play-page.php:137
+msgid "Could not upload score."
+msgstr "Kunne indlæse point."
+
+#: ../template-play.php:57
+msgid "Numbers"
+msgstr "Tal"
+
+#: ../template-view-score.php:13
+msgid "Group"
+msgstr "Gruppe"
+
+#: ../template-view-score.php:14
+msgid "User"
+msgstr "Bruger"
+
+#: ../userScoreTable.php:10
+msgid "A widget that displays top 5 user scores "
+msgstr "En widget som viser top 5 pointfordelingen blandt brugerne"
+
+#: ../userScoreTable.php:12
+msgid "User score Widget"
+msgstr "Bruger pointfordeling"
+
+#: ../view-score-chart.php:47 ../view-score.php:30
+msgid "Group highscore"
+msgstr "Gruppe pointfordeling"
+
+#: ../view-score-chart.php:115 ../view-score-chart.php:135
+#: ../view-score.php:49
+msgid "User highscore"
+msgstr "Bruger pointfordeling"
+
+#: ../view-score-chart.php:159 ../view-score.php:82
+msgid "Level highscore"
+msgstr "Bane pointfordeling"
+
+#: ../view-score-chart.php:208 ../view-score-chart.php:252
+msgid "points"
+msgstr "point"
+
+#: ../view-score-chart.php:233 ../view-score-chart.php:261
+msgid "errors"
+msgstr "fejl"
+
+#: ../view-score-table.php:59 ../view-score-table.php:169
+#: ../view-score-table.php:234
+msgid "Level ID"
+msgstr "Bane ID"
+
+#: ../view-score-table.php:62 ../view-score-table.php:172
+#: ../view-score-table.php:237 ../view-score-table.php:308
+msgid "Finished"
+msgstr "Færdigspillet"
+
+#: ../view-score.php:35
+msgid "Select a group"
+msgstr "Vælg en gruppe"
+
+#: ../view-score.php:54
+msgid "All users"
+msgstr "Alle brugere"
+
+#: ../view-score.php:87
+msgid "Select a level"
+msgstr "Vælg bane"
+
+#: ../view-score.php:122
+msgid "View"
+msgstr "Vis"
+
+#: ../view-score.php:126
+msgid "Only finished games"
+msgstr "Kun færdigspillet baner"
+
+#: ../view-score.php:138
+msgid "Table"
+msgstr "Tabel"
+
+#: ../view-score.php:139
+msgid "Chart"
+msgstr "Diagram"
+
+#~ msgid "Rate this level"
+#~ msgstr "Bedøm denne bane"
+
+#~ msgid "Group name"
+#~ msgstr "Gruppe"
+
+#~ msgid "All groups"
+#~ msgstr "Alle grupper"
+
+#~ msgid "All levels"
+#~ msgstr "Alle baner"
+
+#~ msgid "Graph"
+#~ msgstr "Diagram"
+
+#~ msgid "second"
+#~ msgstr "sekund"

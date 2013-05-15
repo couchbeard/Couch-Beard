@@ -1,0 +1,54 @@
+/**
+ * Theme Name: wpbootstrap
+ * Theme URI: 
+ * Description: Theme made with bootstrap
+ * Version: 1.0
+ * Author: Mads Lundt
+ * Author URI: 
+ * License:
+ * License URI:
+ * Tags:
+ */
+
+@import url('bootstrap/css/bootstrap.min.css');
+@import url('bootstrap/css/bootstrap-responsive.min.css');
+@import url('Styles/jquery-ui.css');
+@media (min-width: 979px) {
+	body {
+		padding-bottom: 40px;
+	}
+}
+
+.navbar-fixed-top,
+.navbar-fixed-bottom {
+	position: static;
+	margin-bottom: 19px;
+}
+
+.poster {
+	height: 50px;
+	width: 75px;
+	float: left;
+}
+
+.list_item_container {
+	height: 60px;
+    padding: 5px;
+    margin-bottom: 50px;
+    background: none;
+}
+
+.description {
+    font-style: italic;
+    font-size: 0.8em;
+    background: none;
+}
+
+.ui-autocomplete {
+	float: left;
+    max-height: 80%;
+    width: 26%;
+    overflow-y: auto;
+
+    overflow-x: hidden;
+}
