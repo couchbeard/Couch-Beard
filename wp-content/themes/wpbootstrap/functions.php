@@ -65,7 +65,7 @@ function myprefix_autocomplete_suggestions() {
     $imdb = file_get_contents($url);
 
     if(!$_SERVER["HTTP_X_REQUESTED_WITH"] || !$_GET['term']){
-        echo 'NOOOOOO';
+        _e('error', 'wpbootstrap');
         exit;
     }
 
@@ -74,14 +74,15 @@ function myprefix_autocomplete_suggestions() {
     $suggestions = array();
     foreach($json as $movie){
         $suggestion = array();
-        $suggestion['id'] = (string) $movie->imdb_id;
+        $string = (strlen($movie->title) > 13) ? substr($movie->title, 0, 30).'...' : $movie->title;
+        $suggestion['imdbid'] = (string) $movie->imdb_id;
         $suggestion['label'] = $movie->title;
-        $suggestion['title'] = chunk_split($movie->title, 30, '<br />') . ' (' . date('Y',strtotime($movie->year)).')';
+        $suggestion['title'] = $string;
+        $suggestion['year'] = '(' . date('Y',strtotime($movie->year)).')';
         $suggestion['type'] = $movie->type;
         $suggestion['image'] = $movie->poster;
         $suggestions[]= $suggestion;
     }
-
     echo $_GET["callback"] . "(" . json_encode($suggestions) . ")";
     exit;
 }  
@@ -112,6 +113,35 @@ function register_my_menus()
     ));
 }
 add_action('init', 'register_my_menus');
+
+function getMovies()
+{
+    $url = "http://imdbapi.org/?q=".$_POST['q']."&episode=0&limit=10";
+
+    $imdb = file_get_contents($url);
+
+    if(!$_SERVER["HTTP_X_REQUESTED_WITH"] || !$_POST['q']){
+        _e('error', 'wpbootstrap');
+        exit;
+    }
+
+    $json = json_decode($imdb);
+
+    $suggestions = array();
+    foreach($json as $movie){
+        $suggestion = array();
+        $suggestion['id'] = (string) $movie->imdb_id;
+        $suggestion['label'] = $movie->title;
+        $suggestion['title'] = chunk_split($movie->title, 20, '<br />') . ' (' . date('Y',strtotime($movie->year)).')';
+        $suggestion['type'] = $movie->type;
+        $suggestion['image'] = $movie->poster;
+        $suggestions[]= $suggestion;
+    }
+    echo json_encode($suggestions);
+    exit;
+}
+
+add_action('wp_ajax_getMovies', 'getMovies');  // Only logged in users
 
 function custom_theme_setup()
 {

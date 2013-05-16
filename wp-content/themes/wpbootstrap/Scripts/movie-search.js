@@ -6,12 +6,27 @@ jQuery(document).ready(function ($) {
         source: function(req, response) {  
             $.getJSON(MyAcSearch.url+'?callback=?&action='+acs_action, req, response);
         },
-        select: function(event, ui) { 
-            var id = ui.item.id;
-            window.location.href = 'http://www.imdb.com/title/' . id;
+        select: function(event, ui) {
+            window.location.href = '?page_id=17&id=' + ui.item.imdbid;
         }
     }).data( "ui-autocomplete" )._renderItem = function( ul, item ) {
-        var inner_html = '<a><div class="list_item_container"><div class="poster"><img src="' + item.image + '"></div><div class="label">' + item.title + '</div><div class="description">' + item.type + '</div></div></a>';
+        var inner_html =
+        '<a id="movieSearch">' +
+            '<div class="list_item_container">' +
+                '<div class="poster span1 pull-left">' +
+                    '<img class="img-rounded" src="' + item.image + '">' +
+                '</div>' +
+                '<div id="movietitle">' +
+                    '<div class="span2"><small>' + item.title +
+                    '</small></div>' +
+                    '<div class="span1">' + item.year +
+                    '</div>' +
+                '</div>' +
+                '<div id="description" class="label label-info">' + item.type +
+                '</div>' +
+            '</div>' +
+        '</a>' +
+        '<hr>';
         return $( "<li></li>" )
             .data( "item.autocomplete", item )
             .append(inner_html)
@@ -19,7 +34,7 @@ jQuery(document).ready(function ($) {
     };
 });
 /*
-$.fn.defaultText = function(value){
+$.fn.defaultText = function(value){ 
     
     var element = this.eq(0);
     element.data('defaultText',value);
@@ -36,3 +51,7 @@ $.fn.defaultText = function(value){
     
     return element.blur();
 }*/
+
+
+
+

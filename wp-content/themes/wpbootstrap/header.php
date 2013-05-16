@@ -52,8 +52,8 @@
 			</ul>
 			<ul class="nav pull-right">
 				<?php if (is_user_logged_in()) { ?>
-				<form method="get" class="navbar-search" id="searchform" action="<?php echo esc_url( home_url( '/' ) ); ?>">
-					<input type="text" id="movieName" name="movieName" class="search-query span2" placeholder="<?php _e('Search', 'wpbootstrap'); ?>" />
+				<form class="navbar-search span2" id="searchform">
+					<input type="text" id="movieName" name="query" class="typeahead search-query span2" data-provide="typeahead" placeholder="<?php _e('Search', 'wpbootstrap'); ?>" />
 				</form>
 				<div class="span1">
 					<div class="btn-group">
@@ -94,9 +94,47 @@
 		
 		if (!$access && !is_front_page()) {
 			_e('No access!', 'wpbootstrap');
-			exit();
+			//exit();
 		}
 	?>
+
+	<script>
+// 	jQuery(document).ready(function ($) {
+//     // use this hash to cache search results
+//   window.query_cache = {};
+//   $('#movieName').typeahead({
+//       source:function(query,process) {
+//           // if in cache use cached value, if don't wanto use cache remove this if statement
+//           if(query_cache[query]){
+//               process(query_cache[query]);
+//               return;
+//           }
+//           if( typeof searching != "undefined") {
+//               clearTimeout(searching);
+//               process([]);
+//           }
+//           searching = setTimeout(function() {
+//               return $.ajax({
+//                 type: 'POST',
+//                 url: "<?php echo home_url() . '/wp-admin/admin-ajax.php'; ?>",
+//                 data: {  
+//                     action: 'getMovies',
+//                     //security: '<?php echo $ajax_nonce; ?>',
+//                     q: query
+//                 },
+//                 success: function(data) {
+//                 	console.log(data);
+//                 // save result to cache, remove next line if you don't want to use cache
+//                   query_cache[query] = data;
+//                   // only search if stop typing for 300ms aka fast typers
+//                   return process(data);
+//                 }
+//                 });
+//           }, 300); // 300 ms
+//       }
+//   });
+// });
+	</script>
 <noscript>
 	
 		<?php 

@@ -25,30 +25,50 @@
 	margin-bottom: 19px;
 }
 
+.coverSearch {
+	width: 210px;
+}
+
 .poster {
-	height: 50px;
-	width: 75px;
+	height: 60px;
+	width: 40px;
 	float: left;
+	top: 0;
+	margin: 0;
+	padding: 0;
+	margin-left: 20px;
 }
 
 .list_item_container {
-	height: 60px;
-    padding: 5px;
-    margin-bottom: 50px;
+	height: 80px;
+    margin: 10px;
+    margin-bottom: 30px;
     background: none;
 }
 
-.description {
-    font-style: italic;
-    font-size: 0.8em;
-    background: none;
+#description {
+    float: right;
+}
+
+.label {
+	float: right;
+	bottom: 0;
+	margin-left: 10px;
 }
 
 .ui-autocomplete {
 	float: left;
     max-height: 80%;
-    width: 26%;
+    width: 24%;
     overflow-y: auto;
 
     overflow-x: hidden;
+}
+
+#movieSearch {
+	height: 100px;
+}
+
+.ui-autocomplete-loading {
+	background: url('images/loading-icon.gif') no-repeat right center;
 }
