@@ -328,6 +328,19 @@ function cp_update() {
 }
 add_action( 'thesis_hook', 'cp_update');
 
+/**
+ * Looking for a specific movie in CouchPotato
+ * @param  int $imdb_id IMDb movie ID
+ * @return bool movie found in CouchPotato
+ */
+function cp_movieWanted($imdb_id)
+{
+	$url = cp_getURL() . '/movie.get/?id=' . $imdb_id;
+	$res = json_decode(file_get_contents($url));
+	return $res->success;
+}
+add_action( 'thesis_hook', 'cp_movieWanted');
+
 
 
 

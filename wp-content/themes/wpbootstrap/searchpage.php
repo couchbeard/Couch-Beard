@@ -50,14 +50,23 @@ if (isset($_GET['id'])) {
 			</div>
 		</div>
 		<div class="span2 pull-right">
-			<?php if($data->type == 'M') { ?>
-				<button class="btn btn-inverse pull-right" id="addMovie"><?php _e('Add movie', 'wpbootstrap'); ?></button>
-			<?php } else { ?>
+			<?php if($data->type == 'M') {
+				if (cp_movieWanted($data->imdb_id))
+				{ ?>
+					<button class="btn btn-inverse pull-right disabled" disabled="disabled"><?php _e('Movie added', 'wpbootstrap'); ?></button>
+				<?php }
+				else
+				{
+				?>
+					<button class="btn btn-inverse pull-right" id="addMovie"><?php _e('Add movie', 'wpbootstrap'); ?></button>
+				<?php
+				}
+			} else { ?>
 				<button class="btn btn-inverse pull-right" id="addTV"><?php _e('Add TV show', 'wpbootstrap'); ?></button>
 			<?php } ?>
 		</div>
 		<div class="span1 pull-right">
-			<a href="<?php echo $data->imdb_url; ?>">IMDB</a>
+			<a href="<?php echo $data->imdb_url; ?>">IMDb</a>
 		</div>
 	</div>
 	
