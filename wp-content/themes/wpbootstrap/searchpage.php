@@ -40,7 +40,7 @@ if (isset($_GET['id'])) {
 					<?php 
 						$time = explode('min', $data->runtime[0])[0]; 
 						$h = intval($time / 60);
-						$m = ($h > 0) ? intval($h % 60) : intval($time);
+						$m = ($h > 0) ? intval($time % 60) : intval($time);
 					?>
 					<p class="lead"><?php echo (($h > 0) ? $h : '0') . ':' . (($m > 9) ? $m : '0' . $m); ?></p>
 				</div>				
