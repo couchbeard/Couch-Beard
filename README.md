@@ -1,7 +1,14 @@
 Couch-Beard
 ===========
 
-Website connecting couchpotato and sickbeard. Using IMDB to search for movies and tv-series and connecting to XBMC
+Website connecting couchpotato and sickbeard into a single website. Using Wordpress CMS for greater user management, plugins etc.
+
+Search for movies and TV shows with a single search bar. The search bar is using IMDB to search for movies and tv shows. 
+
+Share your movie and TV collection from XBMC on the website and view server information.
+
+
+Feel free to donate to the project or add issues.
 
 
 Installation
