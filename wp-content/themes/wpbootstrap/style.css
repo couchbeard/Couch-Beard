@@ -47,6 +47,16 @@
 	top: 30%;
 }
 
+#checkOverlay {
+	position: absolute;
+	float: left;
+	margin: 10px;
+	z-index:10;
+	height:40px;
+	opacity: 0.6;
+	visibility: hidden;
+}
+
 .poster {
 	height: 65px;
 	width: 42px;
