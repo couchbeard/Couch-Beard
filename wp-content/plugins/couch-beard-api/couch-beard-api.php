@@ -22,8 +22,8 @@ function couchbeardapi_activate() {
         $sql = "CREATE TABLE " . $table_name . "(
               ID INT(20) UNSIGNED NOT NULL AUTO_INCREMENT ,
               name VARCHAR(45) NOT NULL UNIQUE ,
-              api VARCHAR(100) NOT NULL ,
-              ip VARCHAR(100) NOT NULL ,
+              api VARCHAR(100) NULL ,
+              ip VARCHAR(100) NULL ,
               PRIMARY KEY (ID) )
             ENGINE = InnoDB;";
 
