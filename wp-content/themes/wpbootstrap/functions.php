@@ -5,8 +5,18 @@ function addMovieFunction()
 {
     check_ajax_referer( 'keyy', 'security' );
     echo cp_addMovie($_POST['id']);
+    exit();
 }
 add_action('wp_ajax_addMovie', 'addMovieFunction');  // Only logged in users
+
+function addTVFunction()
+{
+    check_ajax_referer( 'keyy', 'security' );
+    //echo sb_addShow($_POST['id']);
+    echo 0;
+    exit();
+}
+add_action('wp_ajax_addTV', 'addTVFunction');  // Only logged in users
 
 function timezone() {
     date_default_timezone_set(get_option('timezone_string'));

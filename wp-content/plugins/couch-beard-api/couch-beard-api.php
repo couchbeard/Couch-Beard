@@ -136,7 +136,7 @@ function getAPI($name) {
 }
 
 // Get URL with API
-function getURL($name) {
+function cp_getURL($name = 'Couchpotato') {
 	global $wpdb;
 	global $table_name;
 	$ip = $wpdb->get_var($wpdb->prepare(
@@ -151,12 +151,14 @@ function getURL($name) {
 	return $url;
 }
 
+// Couchpotato
+
 /**
  * Get version of Couchpotato
  * @return string Version
  */
 function cp_version(){
-	$url = getURL('Couchpotato') . '/app.version';
+	$url = cp_getURL('Couchpotato') . '/app.version';
 	$json = file_get_contents($url);
 	$data = json_decode($json);
  	return $data->version;
@@ -168,7 +170,7 @@ add_action( 'thesis_hook', 'cp_version');
  * @return bool Connection status
  */
 function cp_available(){
-	$url = getURL('Couchpotato') . '/app.available';
+	$url = cp_getURL('Couchpotato') . '/app.available';
 	$json = file_get_contents($url);
 	$data = json_decode($json);
  	return $data->success;
@@ -181,7 +183,7 @@ add_action( 'thesis_hook', 'cp_available');
  * @return bool     Adding status
  */
 function cp_addMovie($id){
-	$url = getURL('Couchpotato') . '/movie.add/?identifier=' . $id;
+	$url = cp_getURL('Couchpotato') . '/movie.add/?identifier=' . $id;
 	$json = file_get_contents($url);
 	$data = json_decode($json);
  	return $data->added;
@@ -194,7 +196,7 @@ add_action( 'thesis_hook', 'cp_addMovie');
  * @return bool     Success
  */
 function cp_removeMovie($id){
-	$url = getURL('Couchpotato') . '/movie.delete?id=' . $id . '&delete_from=wanted';
+	$url = cp_getURL('Couchpotato') . '/movie.delete?id=' . $id . '&delete_from=wanted';
 	$json = file_get_contents($url);
 	$data = json_decode($json);
  	return $data->success;
@@ -206,7 +208,7 @@ add_action( 'thesis_hook', 'cp_removeMovie');
  * @return array Movies
  */
 function cp_getMovies(){
-	$url = getURL('Couchpotato') . '/movie.list?status=active';
+	$url = cp_getURL('Couchpotato') . '/movie.list?status=active';
 	$json = file_get_contents($url);
 	$data = json_decode($json);
  	return $data;
@@ -219,7 +221,7 @@ add_action( 'thesis_hook', 'cp_getMovies');
  * @return bool     Success
  */
 function cp_refreshMovie($id){
-	$url = getURL('Couchpotato') . '/movie.list?id=' . $id;
+	$url = cp_getURL('Couchpotato') . '/movie.list?id=' . $id;
 	$json = file_get_contents($url);
 	$data = json_decode($json);
  	return $data->success;
@@ -231,7 +233,7 @@ add_action( 'thesis_hook', 'cp_refreshMovie');
  * @return bool update available
  */
 function cp_update() {
-	$url = getURL('Couchpotato') . '/updater.check';
+	$url = cp_getURL('Couchpotato') . '/updater.check';
 	$json = file_get_contents($url);
 	$data = json_decode($json);
  	return $data->update_available;
@@ -239,7 +241,24 @@ function cp_update() {
 add_action( 'thesis_hook', 'cp_update');
 
 // Sickbeard (sb)
+function sb_getURL($name = 'Sickbeard') {
+	global $wpdb;
+	global $table_name;
+	$ip = $wpdb->get_var($wpdb->prepare(
+		"
+		SELECT ip
+		FROM $table_name
+		WHERE name = %d
+		", 
+		$name
+	));
+	$url = "http://" . $ip . "/api/" . getAPI($name);
+	return $url;
+}
 
+function sb_addShow($id) {
+	$url = sb_getURL() . '/?cmd_show.addnew&tvdbid=' . $id;
+}
 
 // SabNZBD (sab)
 

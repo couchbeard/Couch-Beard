@@ -30,6 +30,11 @@
 	width: 210px;
 }
 
+#notification {
+	position: fixed;
+	top: 30%;
+}
+
 .poster {
 	height: 60px;
 	width: 40px;
