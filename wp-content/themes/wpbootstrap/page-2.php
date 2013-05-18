@@ -1,8 +1,3 @@
-<?php
-/*
-Template Name: Search Page
-*/
-?>
 <?php $ajax_nonce = wp_create_nonce("keyy"); ?>
 <?php get_header(); ?>
 <?php
@@ -42,7 +37,7 @@ if (isset($_GET['id'])) {
 						$h = intval($time / 60);
 						$m = ($h > 0) ? intval($h % 60) : intval($time);
 					?>
-					<p class="lead"><?php echo (($h > 0) ? $h : '0') . ':' . (($m > 9) ? $m : '0' . $m); ?></p>
+					<p class="lead"><?php echo $h . ':' . $m; ?></p>
 				</div>				
 			</div>
 			<div class="row">
@@ -84,6 +79,66 @@ if (isset($_GET['id'])) {
 			<a href="<?php echo $data->imdb_url; ?>"><img id="imdblogo" alt="IMDB" src="<?php print IMAGES; ?>/imdb-logo.png" /></a>
 		</div>	
 	</div>
+<!--
+	<div class="row">
+		<div class="row">
+			<div class="span3">
+				<div class="coverSearch">
+	    			<img src="<?php echo $data->poster; ?>" class="img-rounded"/>
+	    			<?php if ($data->rating != null && $data->rating != "") { ?>
+	    				<div class="rating" data-average="<?php echo $data->rating; ?>" data-id="1" data-toggle="tooltip" data-placement="bottom" title="<?php echo $data->rating . ' / ' . number_format($data->rating_count, 0, '.', ' '); ?>"></div>
+
+	    				<div class="ratingtext"><center><p class="lead"><?php echo $data->rating; ?></p></center></div>
+	    			<?php } ?>
+	    		</div>
+			</div>
+			<div class="span9">
+				<div class="row">
+					<div class="span6">
+	  					<p class="lead"><?php echo implode(', ', $data->genres); ?></p>
+					</div>
+					<div class="span1 pull-right">
+						<p class="lead"><?php echo $data->country[0]; ?></p>
+	  				</div>
+	  				<div class="span1 pull-right">
+						<p class="lead"><?php echo $data->year; ?></p>
+	  				</div>
+				</div>
+				<div class="row">
+					<div class="span3">
+						<p class="lead"><?php echo implode(', ', $data->language); ?></p>
+					</div>
+					<div class="span3">
+						<p class="lead"><?php date('g:i', strtotime('today ' . (string) $data->runtime[0])); ?></p>
+					</div>
+				</div>
+				<p><?php echo $data->plot; ?></p>
+			</div>
+		</div>
+		<div class="span2 pull-right">
+			<?php if($data->type == 'M') {
+				if (cp_movieWanted($data->imdb_id))
+				{ ?>
+					<button class="btn btn-inverse pull-right disabled" disabled="disabled"><?php _e('Movie added', 'wpbootstrap'); ?></button>
+				<?php }
+				else
+				{
+				?>
+					<button class="btn btn-inverse pull-right" id="addMovie"><?php _e('Add movie', 'wpbootstrap'); ?></button>
+				<?php
+				}
+			} else { ?>
+				<button class="btn btn-inverse pull-right" id="addTV"><?php _e('Add TV show', 'wpbootstrap'); ?></button>
+			<?php } ?>
+		</div>
+		<div class="span1 pull-right">
+			<a href="<?php echo $data->imdb_url; ?>">IMDb</a>
+		</div>
+	</div>-->
+	
+	
+
+
 <?php
 }
 function imdb_to_tvdb($imdb)

@@ -57,6 +57,10 @@
 	margin-left: 5px;
 }
 
+.pline {
+	display: inline;
+}
+
 .list_item_container {
 	height: 60px;
     margin-bottom: 10px;
@@ -96,4 +100,20 @@
 
 .ui-autocomplete-loading {
 	background: url('images/loading-icon.gif') no-repeat right center;
+}
+
+
+.opensans {
+	font-family: 'Open sans', serif;
+	font-size: 48px;
+}
+
+.josefinslab {
+	font-family: 'Josefin Slab', serif;
+	font-size: 30px;
+}
+
+#imdblogo {
+	height: 40px;
+	width: 40px;
 }

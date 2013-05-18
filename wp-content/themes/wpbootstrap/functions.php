@@ -129,6 +129,13 @@ function custom_scripts()
 }
 add_action('wp_enqueue_scripts', 'custom_scripts');
 
+function custom_styles() 
+{
+    wp_register_style( 'googletangerine', 'http://fonts.googleapis.com/css?family=Tangerine');
+    wp_enqueue_style( 'googletangerine');
+}
+add_action( 'wp_enqueue_scripts', 'custom_styles' );
+
 function register_my_menus()
 {
     register_nav_menus(array(
