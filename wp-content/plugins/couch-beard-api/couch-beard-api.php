@@ -191,7 +191,7 @@ function getAPI($name) {
 		"
 		SELECT api
 		FROM $table_name
-		WHERE name = %d
+		WHERE name = %s
 		", 
 		$name
 	));
@@ -209,7 +209,7 @@ global $wpdb;
 		"
 		SELECT username, password
 		FROM $table_name
-		WHERE name = %d
+		WHERE name = %s
 		", 
 		$name
 	));	
@@ -233,7 +233,7 @@ function cp_getURL() {
 		"
 		SELECT ip
 		FROM $table_name
-		WHERE name = %d
+		WHERE name = %s
 		", 
 		'Couchpotato'
 	));
@@ -395,8 +395,67 @@ function sab_getCurrentDownloads() {
 // XBMC (xbmc)
 ///////////////
 
-function xbmc_getMovies() {
-	// TODO
+/**
+ * Get XBMC url
+ * @return string url
+ */
+function xbmc_getURL() {
+	global $wpdb;
+	global $table_name;
+	$ip = $wpdb->get_var($wpdb->prepare(
+		"
+		SELECT ip
+		FROM $table_name
+		WHERE name = %s
+		", 
+		'XBMC'
+	));
+	$url = "http://" . $ip;
+	return $url;
 }
+
+/**
+ * Get all XBMC movies
+ * @return array all XBMC movies
+ */
+function xbmc_getMovies() {
+	$xbmc = getLogin('XBMC');
+
+	$json = "{\"jsonrpc\": \"2.0\", \"method\": \"VideoLibrary.GetMovies\", \"params\": { \"properties\" : [\"art\", \"rating\", \"playcount\", \"year\", \"imdbnumber\"], \"sort\": { \"order\": \"ascending\", \"method\": \"label\", \"ignorearticle\": true } }, \"id\": \"libMovies\"}";
+	$json = urlencode($json);
+	$url = xbmc_getURL() . "/jsonrpc?request=" . $json;
+	$opts = array('http' =>
+	array(
+	 "header"  => "Content-Type: application/json\r\n".
+	 "Authorization: Basic ".base64_encode($xbmc->username . ":" . $xbmc->password),
+	 'timeout' => 60
+	)
+	);
+	                     
+	$context  = stream_context_create($opts);
+	$result = file_get_contents($url, true, $context);
+	$data = json_decode($result);
+	return $data->result->movies;
+
+}
+add_action( 'thesis_hook', 'xbmc_getMovies');
+
+/**
+ * Check if movie is in XBMC
+ * @param  string $imdb_id IMDb movie ID
+ * @return bool     Success
+ */
+function xbmc_movieOwned($imdb_id)
+{
+	foreach(xbmc_getMovies() as $movie)
+	{
+		if ($movie->imdbnumber == $imdb_id)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+add_action( 'thesis_hook', 'xbmc_movieOwned');
 
 ?>
