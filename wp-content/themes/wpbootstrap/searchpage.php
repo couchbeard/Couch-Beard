@@ -69,8 +69,21 @@ function imdb_to_tvdb($imdb)
 
 ?>
 
+<div id="notification">
+		
+		<div id="default">
+			<h1>#{title}</h1>
+			<p>#{text}</p>
+		</div>
+	</div>
+
 <script>
-$(function() {     
+$(function() {
+	$("#notification").notify({
+	  speed: 500,
+	  expires: 5000
+	});   
+
     $("#addMovie").on("click", function() {
         jQuery.ajax({  
             type: 'POST',
@@ -82,8 +95,10 @@ $(function() {
                 id: '<?php echo $data->imdb_id; ?>'
             },
             success: function(data, textStatus, XMLHttpRequest) {
-            	console.log(data);
-            	alert('added'); 
+            	$("#notification").notify("create", {
+  					title: '<?php _e("Movie added", "wpbootstrap"); ?>',
+  					text: '<?php printf(__("%s was added", "wpbootstrap"), $data->title); ?>'
+				});
             },  
             error: function(MLHttpRequest, textStatus, errorThrown) {
                 alert("<?php _e('There was an error adding the movie. The movie was not added.', 'wpbootstrap'); ?>");  

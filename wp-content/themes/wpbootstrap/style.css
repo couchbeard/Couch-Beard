@@ -13,6 +13,7 @@
 @import url('bootstrap/css/bootstrap.min.css');
 @import url('bootstrap/css/bootstrap-responsive.min.css');
 @import url('Styles/jquery-ui.css');
+@import url('Styles/ui.notify.css');
 @media (min-width: 979px) {
 	body {
 		padding-bottom: 40px;
