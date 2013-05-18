@@ -125,7 +125,7 @@ function custom_scripts()
     wp_enqueue_style( 'myprefix-jquery-ui' );
     wp_register_script('jnotify', get_template_directory_uri() . '/Scripts/jquery.notify.js', array('jquery', 'jquery-ui-autocomplete'));
     wp_enqueue_script('jnotify');
-
+ 
 }
 add_action('wp_enqueue_scripts', 'custom_scripts');
 

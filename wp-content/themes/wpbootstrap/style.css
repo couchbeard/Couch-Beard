@@ -12,9 +12,9 @@
 
 @import url('bootstrap/css/bootstrap.min.css');
 @import url('bootstrap/css/bootstrap-responsive.min.css');
-@import url('Styles/jquery-ui.css');
 @import url('Styles/ui.notify.css');
 @import url('Styles/jRating.jquery.css');
+@import url('Styles/custom-theme/jquery-ui-1.10.0.custom.css');
 @media (min-width: 979px) {
 	body {
 		padding-bottom: 40px;
@@ -85,6 +85,9 @@
 
 #movieSearch {
 	height: 80px;
+	margin: 0;
+	padding: 0;
+	cursor: pointer;
 }
 
 .ui-autocomplete-loading {
