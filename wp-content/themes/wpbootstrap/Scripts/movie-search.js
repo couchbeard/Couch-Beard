@@ -3,13 +3,21 @@ jQuery(document).ready(function ($) {
     $("#movieName").autocomplete({
         minLength   : 2,
         delay       : 500,
-        source: function(req, response) {  
+        source: function(req, response) {
             $.getJSON(MyAcSearch.url+'?callback=?&action='+acs_action, req, response);
         },
         select: function(event, ui) {
             window.location.href = '?page_id=' + ui.item.searchpageid + '&id=' + ui.item.imdbid;
         }
     }).data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+        if (item == null || item.title == null) {
+            return $( "<li></li>" )
+            .data( "item.autocomplete", item )
+            .append("No results")
+            .appendTo(ul);
+            
+        }
+        console.log(item);
         var inner_html =
         '<a id="movieSearch">' +
             '<div class="row">' +
@@ -17,11 +25,11 @@ jQuery(document).ready(function ($) {
                     '<div class="poster span1 pull-left">' +
                         '<img class="img-rounded" src="' + item.image + '">' +
                     '</div>' +
-                    '<div class="label label-info">' +
+                    '<div class="badge badge-info pull-right">' +
                         item.type +
                     '</div>' +
-                    '<div class="pull-right">' +
-                        '<div class="label">' + item.year + '</div>' +
+                    '<div class="pull-left">' +
+                        '<div class="label label-inverse">' + item.year + '</div>' +
                     '</div>' +
                     '<div class="row">' +
                         '<div class="span2">' +

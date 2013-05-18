@@ -13,7 +13,7 @@ function addTVFunction()
 {
     check_ajax_referer( 'keyy', 'security' );
     //echo sb_addShow($_POST['id']);
-    echo 0;
+    echo 1;
     exit();
 }
 add_action('wp_ajax_addTV', 'addTVFunction');  // Only logged in users
@@ -150,11 +150,13 @@ function getMovies()
     }
 
     $json = json_decode($imdb);
-
+    if (count($json) < 1) {
+        return null;
+    }
     $suggestions = array();
     foreach($json as $movie){
         $suggestion = array();
-        $suggestion['id'] = (string) $movie->imdb_id;
+        $suggestion['imdbid'] = (string) $movie->imdb_id;
         $suggestion['label'] = $movie->title;
         $suggestion['title'] = chunk_split($movie->title, 20, '<br />') . ' (' . date('Y',strtotime($movie->year)).')';
         $suggestion['type'] = $movie->type;
