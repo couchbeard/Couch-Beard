@@ -1,23 +1,3 @@
-<style>
-
-	body {
-		width: 90%;
-	}
-	#table {
-		margin: 10px;
-		margin-left: auto;
-		margin-right: auto;
-	}
-
-	#sub {
-		float: right;
-	}
-
-	#name {
-		padding-top: 8px;
-	}
-</style>
-
 <?php
 /*
 	Plugin Name: Couch Beard APIs
@@ -31,7 +11,14 @@
 global $wpdb;
 global $table_name;
 $table_name = $wpdb->prefix . 'apis';
+?>
 
+<?php
+function loadStyle() {
+	wp_register_style( 'style', plugin_dir_url( __FILE__ ) . 'couch-beard-api.css');
+	wp_enqueue_style( 'style');
+}
+add_action( 'admin_enqueue_scripts', 'loadStyle' );
 function couchbeardapi_activate() {
 	global $wpdb;
 	global $table_name;
@@ -140,7 +127,7 @@ function couchbeardapi_admin() {
 	<div class="wrap">
 	<h2>Manage Couch Beard APIs</h2>
 	</div>
-	<form action="" method="POST">
+	<form action="" method="POST" id="content">
 		<table class="widefat" id="table">
 			<thead>
 			<tr>

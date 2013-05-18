@@ -1,0 +1,14 @@
+#content {
+	width: 90%;
+}
+#table {
+	margin: 10px;
+	margin-left: auto;
+	margin-right: auto;
+}
+#sub {
+	float: right;
+}
+#name {
+	padding-top: 8px;
+}
