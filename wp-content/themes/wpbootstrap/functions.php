@@ -1,15 +1,24 @@
 <?php
+
+// AJAX calls
+function addMovieFunction()
+{
+    check_ajax_referer( 'keyy', 'security' );
+    echo cp_addMovie($_POST['id']);
+}
+add_action('wp_ajax_addMovie', 'addMovieFunction');  // Only logged in users
+
 function timezone() {
     date_default_timezone_set(get_option('timezone_string'));
 }
 add_action('init', 'timezone');
 
-function init_sessions() {
+/*function init_sessions() {
     if (!session_id()) {
         session_start();
     }
 }
-add_action('init', 'init_sessions');
+add_action('init', 'init_sessions');*/
 
 
 // LOGIN SCREEN 
@@ -74,11 +83,13 @@ function myprefix_autocomplete_suggestions() {
     $suggestions = array();
     foreach($json as $movie){
         $suggestion = array();
-        $string = (strlen($movie->title) > 13) ? substr($movie->title, 0, 30).'...' : $movie->title;
+        $string = (strlen($movie->title) > 50) ? substr($movie->title, 0, 45).'...' : $movie->title;
+        $searchpage = get_page_by_title( 'Search' );
+        $suggestion['searchpageid'] =  $searchpage->ID;
         $suggestion['imdbid'] = (string) $movie->imdb_id;
         $suggestion['label'] = $movie->title;
         $suggestion['title'] = $string;
-        $suggestion['year'] = '(' . date('Y',strtotime($movie->year)).')';
+        $suggestion['year'] = date('Y',strtotime($movie->year));
         $suggestion['type'] = $movie->type;
         $suggestion['image'] = $movie->poster;
         $suggestions[]= $suggestion;
@@ -207,6 +218,16 @@ if (function_exists('register_sidebar')) {
         'before_title' => '<h2>',
         'after_title' => '</h2>'
     ) ); 
+
+    register_sidebar( array (
+        'name' => __('Footer', 'wpbootstrap'),
+        'id' => 'footer',
+        'description' => 'Footer widget',
+        'before_widget' => '<div class="footerwidget">',
+        'after_widget' => '</div> <!-- end footerwidget -->',
+        'before_title' => '<h2>',
+        'after_title' => '</h2>'
+    ));
 
 }
 

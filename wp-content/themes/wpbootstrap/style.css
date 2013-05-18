@@ -40,7 +40,7 @@
 }
 
 .list_item_container {
-	height: 80px;
+	height: 60px;
     margin: 10px;
     margin-bottom: 30px;
     background: none;
@@ -66,7 +66,7 @@
 }
 
 #movieSearch {
-	height: 100px;
+	height: 80px;
 }
 
 .ui-autocomplete-loading {

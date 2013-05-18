@@ -52,10 +52,10 @@
 			</ul>
 			<ul class="nav pull-right">
 				<?php if (is_user_logged_in()) { ?>
-				<form class="navbar-search span2" id="searchform">
-					<input type="text" id="movieName" name="query" class="typeahead search-query span2" data-provide="typeahead" placeholder="<?php _e('Search', 'wpbootstrap'); ?>" />
-				</form>
-				<div class="span1">
+				<div class="navbar-search span2" id="searchform">
+					<input type="text" id="movieName" name="query" class="input-large search-query" placeholder="<?php _e('Search', 'wpbootstrap'); ?>" />
+				</div>
+				<div class="span1 offset1">
 					<div class="btn-group">
 					  <a class="btn" href="<?php echo get_option('siteurl'); ?>/wp-admin/profile.php"><i class="icon-user"></i><?php echo $current_user->user_login; ?></a>
 					  <button class="btn dropdown-toggle" data-toggle="dropdown">
@@ -93,7 +93,8 @@
 		}
 		
 		if (!$access && !is_front_page()) {
-			_e('No access!', 'wpbootstrap');
+			//wp_redirect( home_url( '/login' ) );
+			//_e('No access!', 'wpbootstrap');
 			//exit();
 		}
 	?>

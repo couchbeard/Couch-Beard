@@ -7,22 +7,27 @@ jQuery(document).ready(function ($) {
             $.getJSON(MyAcSearch.url+'?callback=?&action='+acs_action, req, response);
         },
         select: function(event, ui) {
-            window.location.href = '?page_id=17&id=' + ui.item.imdbid;
+            window.location.href = '?page_id=' + ui.item.searchpageid + '&id=' + ui.item.imdbid;
         }
     }).data( "ui-autocomplete" )._renderItem = function( ul, item ) {
         var inner_html =
         '<a id="movieSearch">' +
-            '<div class="list_item_container">' +
-                '<div class="poster span1 pull-left">' +
-                    '<img class="img-rounded" src="' + item.image + '">' +
-                '</div>' +
-                '<div id="movietitle">' +
-                    '<div class="span2"><small>' + item.title +
-                    '</small></div>' +
-                    '<div class="span1">' + item.year +
+            '<div class="row">' +
+                '<div class="list_item_container">' +
+                    '<div class="poster span1 pull-left">' +
+                        '<img class="img-rounded" src="' + item.image + '">' +
                     '</div>' +
-                '</div>' +
-                '<div id="description" class="label label-info">' + item.type +
+                    '<div class="label label-info">' +
+                        item.type +
+                    '</div>' +
+                    '<div class="pull-right">' +
+                        '<div class="label">' + item.year + '</div>' +
+                    '</div>' +
+                    '<div class="row">' +
+                        '<div class="span2">' +
+                            '<small>' + item.title + '</small>' +
+                        '</div>' +
+                    '</div>' +
                 '</div>' +
             '</div>' +
         '</a>' +
