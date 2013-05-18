@@ -20,26 +20,21 @@ jQuery(document).ready(function ($) {
         console.log(item);
         var inner_html =
         '<a id="movieSearch">' +
-            '<div class="row">' +
                 '<div class="list_item_container">' +
-                    '<div class="poster span1 pull-left">' +
+                    '<div class="poster pull-left">' +
                         '<img class="img-rounded" src="' + item.image + '">' +
                     '</div>' +
                     '<div class="badge badge-info pull-right">' +
                         item.type +
                     '</div>' +
                     '<div class="pull-left">' +
-                        '<div class="label label-inverse">' + item.year + '</div>' +
-                    '</div>' +
-                    '<div class="row">' +
-                        '<div class="span2">' +
+                        '<div class="yearlabel label label-inverse">' + item.year + '</div>' +
+                    '</div><br />' +
+                        '<div class="title">' +
                             '<small>' + item.title + '</small>' +
                         '</div>' +
-                    '</div>' +
                 '</div>' +
-            '</div>' +
-        '</a>' +
-        '<hr>';
+        '</a>';
         return $( "<li></li>" )
             .data( "item.autocomplete", item )
             .append(inner_html)

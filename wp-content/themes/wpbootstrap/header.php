@@ -46,7 +46,6 @@
 					'theme_location' => $menu,
 					'walker'	 => new BootstrapNavMenuWalker()
 				);
- 
 				wp_nav_menu($args);				
 				?>
 			</ul>
