@@ -14,6 +14,7 @@
 @import url('bootstrap/css/bootstrap-responsive.min.css');
 @import url('Styles/jquery-ui.css');
 @import url('Styles/ui.notify.css');
+@import url('Styles/jRating.jquery.css');
 @media (min-width: 979px) {
 	body {
 		padding-bottom: 40px;
@@ -30,8 +31,19 @@
 	width: 210px;
 }
 
+.rating {
+	margin-top: 5px;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+.ratingtext {
+	visibility: hidden;
+}
+
 #notification {
 	position: fixed;
+	display: none;
 	top: 30%;
 }
 
