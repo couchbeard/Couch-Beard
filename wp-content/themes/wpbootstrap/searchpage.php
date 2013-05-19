@@ -17,7 +17,7 @@ if (isset($_GET['id'])) {
 	<div class="row">
 		<div class="span3">
 			<img id="checkOverlay" src="<?php print IMAGES; ?>/check.png" />
-			<img src="<?php echo $data->poster; ?>" class="img-rounded"/>
+			<img id="searchpageCover" src="<?php echo $data->poster; ?>" class="img-rounded"/>
 			<?php if ($data->rating != null && $data->rating != "") { ?>
 				<div class="rating" data-average="<?php echo $data->rating; ?>" data-id="1" data-toggle="tooltip" data-placement="bottom" title="<?php echo $data->rating . ' / ' . number_format($data->rating_count, 0, '.', ' '); ?>"></div>
 
@@ -68,19 +68,19 @@ if (isset($_GET['id'])) {
 			<?php
 			if($data->type == 'M' || $data->type == 'TV') {
 				try {
-					if (xbmc_movieOwned($data->imdb_id))
+					/*if (xbmc_movieOwned($data->imdb_id))
 					{ ?>
-						<button class="btn btn-inverse pull-right disabled" disabled="disabled"><?php _e('Movie owned', 'wpbootstrap'); ?></button>
+						<button class="btn btn-inverse pull-right disabled" disabled="disabled"><i><?php _e('Movie owned', 'wpbootstrap'); ?></i></button>
 						<script>
 							$('#checkOverlay').css("visibility", "visible");
 						</script>
 					<?php }
-					else if (cp_movieWanted($data->imdb_id))
+					else*/ if (cp_movieWanted($data->imdb_id))
 					{ ?>
-						<button class="btn btn-inverse pull-right disabled" disabled="disabled"><?php _e('Movie added', 'wpbootstrap'); ?></button>
+						<button class="btn btn-inverse pull-right disabled" disabled="disabled"><i><?php _e('Movie added', 'wpbootstrap'); ?></i></button>
 						<script>
-							$('#checkOverlay').css("visibility", "visible");
 							$('#checkOverlay').attr('src', '<?php print IMAGES; ?>/download_logo.png');
+							$('#checkOverlay').css("visibility", "visible");
 						</script>					
 					<?php }
 					else

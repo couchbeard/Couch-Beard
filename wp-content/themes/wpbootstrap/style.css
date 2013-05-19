@@ -86,6 +86,10 @@ p, h1, h2, h3, h4, body, legend {
     margin-top: 10px;
 }
 
+#searchpageCoverBox:hover {
+	opacity: 0.7;
+}
+
 #description {
     float: right;
 }
@@ -104,7 +108,7 @@ p, h1, h2, h3, h4, body, legend {
 
 .ui-autocomplete {
     width: 25%;
-    height: 90%;
+    max-height: 90%;
     overflow-y: auto;
 
     overflow-x: hidden;
