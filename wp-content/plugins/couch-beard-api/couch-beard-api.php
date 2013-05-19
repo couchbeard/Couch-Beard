@@ -185,7 +185,7 @@ function couchbeardapi_admin() {
 function getAPI($name) {
 	global $wpdb;
 	global $table_name;
-	return $wpdb->get_var($wpdb->prepare(
+	$api = $wpdb->get_var($wpdb->prepare(
 		"
 		SELECT api
 		FROM $table_name
@@ -193,6 +193,10 @@ function getAPI($name) {
 		", 
 		$name
 	));
+	if (empty($api))
+		throw new Exception('No API');
+
+	return $api;
 }
 
 /**
@@ -203,14 +207,18 @@ function getAPI($name) {
 function getLogin($name) {
 global $wpdb;
 	global $table_name;
-	return $wpdb->get_row($wpdb->prepare(
+	$user = $wpdb->get_row($wpdb->prepare(
 		"
 		SELECT username, password
 		FROM $table_name
 		WHERE name = %s
 		", 
 		$name
-	));	
+	));
+	if (empty($user->username))
+		throw new Exception('No user');
+
+	return $user;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
@@ -235,6 +243,9 @@ function cp_getURL() {
 		", 
 		'Couchpotato'
 	));
+	if (empty($ip))
+		throw new Exception('No IP');
+
 	$url = "http://" . $ip . "/api/" . getAPI('Couchpotato');
 	return $url;
 }
@@ -246,6 +257,9 @@ function cp_getURL() {
 function cp_version(){
 	$url = cp_getURL() . '/app.version';
 	$json = file_get_contents($url);
+	if (!$json)
+		throw new Exception('Couchpotato offline');
+
 	$data = json_decode($json);
  	return $data->version;
 }
@@ -258,6 +272,9 @@ add_action( 'thesis_hook', 'cp_version');
 function cp_available(){
 	$url = cp_getURL() . '/app.available';
 	$json = file_get_contents($url);
+	if (!$json)
+		throw new Exception('Couchpotato offline');
+
 	$data = json_decode($json);
  	return $data->success;
 }
@@ -271,6 +288,9 @@ add_action( 'thesis_hook', 'cp_available');
 function cp_addMovie($id){
 	$url = cp_getURL() . '/movie.add/?identifier=' . $id;
 	$json = file_get_contents($url);
+	if (!$json)
+		throw new Exception('Couchpotato offline');
+
 	$data = json_decode($json);
  	return $data->added;
 }
@@ -284,6 +304,9 @@ add_action( 'thesis_hook', 'cp_addMovie');
 function cp_removeMovie($id){
 	$url = cp_getURL() . '/movie.delete?id=' . $id . '&delete_from=wanted';
 	$json = file_get_contents($url);
+	if (!$json)
+		throw new Exception('Couchpotato offline');
+
 	$data = json_decode($json);
  	return $data->success;
 }
@@ -296,6 +319,9 @@ add_action( 'thesis_hook', 'cp_removeMovie');
 function cp_getMovies(){
 	$url = cp_getURL() . '/movie.list?status=active';
 	$json = file_get_contents($url);
+	if (!$json)
+		throw new Exception('Couchpotato offline');
+
 	$data = json_decode($json);
  	return $data;
 }
@@ -309,6 +335,9 @@ add_action( 'thesis_hook', 'cp_getMovies');
 function cp_refreshMovie($id){
 	$url = cp_getURL() . '/movie.list?id=' . $id;
 	$json = file_get_contents($url);
+	if (!$json)
+		throw new Exception('Couchpotato offline');
+
 	$data = json_decode($json);
  	return $data->success;
 }
@@ -321,6 +350,9 @@ add_action( 'thesis_hook', 'cp_refreshMovie');
 function cp_update() {
 	$url = cp_getURL() . '/updater.check';
 	$json = file_get_contents($url);
+	if (!$json)
+		throw new Exception('Couchpotato offline');
+
 	$data = json_decode($json);
  	return $data->update_available;
 }
@@ -334,7 +366,11 @@ add_action( 'thesis_hook', 'cp_update');
 function cp_movieWanted($imdb_id)
 {
 	$url = cp_getURL() . '/movie.get/?id=' . $imdb_id;
-	$res = json_decode(file_get_contents($url));
+	$json = file_get_contents($url);
+	if (!$json)
+		throw new Exception('Couchpotato offline');
+
+	$res = json_decode($json);
 	return $res->success;
 }
 add_action( 'thesis_hook', 'cp_movieWanted');
@@ -408,6 +444,9 @@ function sab_getURL() {
 function sab_getCurrentDownloads() {
 	$url = sab_getURL() . "qstatus";
 	$json = file_get_contents($url);
+	if (!$json)
+		throw new Exception('SabNZBD offline');
+
 	$data = json_decode($json);
 	return $data->jobs;
 }
@@ -435,6 +474,9 @@ function xbmc_getURL() {
 		", 
 		'XBMC'
 	));
+	if (empty($ip))
+		throw new Exception('No IP');
+	
 	$url = "http://" . $ip;
 	return $url;
 }
@@ -458,7 +500,17 @@ function xbmc_getMovies() {
 	);
 	                     
 	$context  = stream_context_create($opts);
-	$result = file_get_contents($url, true, $context);
+	if (!$context)
+		throw new Exception('XBMC offline');
+
+	try {
+		$result = file_get_contents($url, true, $context);
+	} catch (Exception $e) {
+		throw new Exception('XBMC offline');
+	}
+	if (!$result)
+		throw new Exception('XBMC offline');
+
 	$data = json_decode($result);
 	return $data->result->movies;
 
@@ -472,12 +524,16 @@ add_action( 'thesis_hook', 'xbmc_getMovies');
  */
 function xbmc_movieOwned($imdb_id)
 {
-	foreach(xbmc_getMovies() as $movie)
-	{
-		if ($movie->imdbnumber == $imdb_id)
+	try {
+		foreach(xbmc_getMovies() as $movie)
 		{
-			return true;
+			if ($movie->imdbnumber == $imdb_id)
+			{
+				return true;
+			}
 		}
+	} catch (Exception $e) {
+		return false;
 	}
 	return false;
 }

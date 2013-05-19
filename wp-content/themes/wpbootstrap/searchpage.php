@@ -67,26 +67,30 @@ if (isset($_GET['id'])) {
 		<div class="span2 pull-right">
 			<?php
 			if($data->type == 'M') {
-				if (xbmc_movieOwned($data->imdb_id))
-				{ ?>
-					<button class="btn btn-inverse pull-right disabled" disabled="disabled"><?php _e('Movie owned', 'wpbootstrap'); ?></button>
-					<script>
-						$('#checkOverlay').css("visibility", "visible");
-					</script>
-				<?php }
-				else if (cp_movieWanted($data->imdb_id))
-				{ ?>
-					<button class="btn btn-inverse pull-right disabled" disabled="disabled"><?php _e('Movie added', 'wpbootstrap'); ?></button>
-					<script>
-						$('#checkOverlay').css("visibility", "visible");
-						$('#checkOverlay').attr('src', '<?php print IMAGES; ?>/download_logo.png');
-					</script>					
-				<?php }
-				else
-				{
-				?>
-					<button class="btn btn-inverse pull-right" id="addMovie"><?php _e('Add movie', 'wpbootstrap'); ?></button>
-				<?php
+				try {
+					if (xbmc_movieOwned($data->imdb_id))
+					{ ?>
+						<button class="btn btn-inverse pull-right disabled" disabled="disabled"><?php _e('Movie owned', 'wpbootstrap'); ?></button>
+						<script>
+							$('#checkOverlay').css("visibility", "visible");
+						</script>
+					<?php }
+					else if (cp_movieWanted($data->imdb_id))
+					{ ?>
+						<button class="btn btn-inverse pull-right disabled" disabled="disabled"><?php _e('Movie added', 'wpbootstrap'); ?></button>
+						<script>
+							$('#checkOverlay').css("visibility", "visible");
+							$('#checkOverlay').attr('src', '<?php print IMAGES; ?>/download_logo.png');
+						</script>					
+					<?php }
+					else
+					{
+					?>
+						<button class="btn btn-inverse pull-right" id="addMovie"><?php _e('Add movie', 'wpbootstrap'); ?></button>
+					<?php
+					}
+				} catch (Exception $e) {
+					// TODO bar with 'Connection lost'
 				}
 			} else { ?>
 				<button class="btn btn-inverse pull-right" id="addTV"><?php _e('Add TV show', 'wpbootstrap'); ?></button>
