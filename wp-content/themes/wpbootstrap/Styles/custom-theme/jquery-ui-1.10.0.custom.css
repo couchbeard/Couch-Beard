@@ -11,6 +11,7 @@
 
 /* Layout helpers
 ----------------------------------*/
+
 .ui-helper-hidden { display: none; }
 .ui-helper-hidden-accessible { 
   border: 0; clip: rect(0 0 0 0);
@@ -668,7 +669,7 @@
   position: absolute; 
   top: 0;
   left: 0;
-  cursor: default; 
+  cursor: default;
 }
 
 /*

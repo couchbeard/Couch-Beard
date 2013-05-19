@@ -132,7 +132,6 @@ $(function() {
 
 	$(".rating").jRating({
 	  step:true,
-	  type: '18',
 	  length: 10,
 	  rateMax: 10, 
 	  isDisabled: true,
@@ -205,7 +204,7 @@ $(function() {
 	$.fn.jRating = function(op) {
 		var defaults = {
 			/** String vars **/
-			bigStarsPath : '<?php print IMAGES; ?>/stars.png', // path of the icon stars.png
+			bigStarsPath : '<?php print IMAGES; ?>/star-inverse.png', // path of the icon stars.png
 			smallStarsPath : '<?php print IMAGES; ?>/small.png', // path of the icon small.png
 			star18Path : '<?php print IMAGES; ?>/stars18.png',
 			star15Path : '<?php print IMAGES; ?>/stars15.png',
@@ -423,8 +422,8 @@ $(function() {
 						bgPath = opts.star15Path;
 					break;					
 					default :
-						starWidth = 23; // width of the picture stars.png
-						starHeight = 20; // height of the picture stars.png
+						starWidth = 18; // width of the picture stars.png
+						starHeight = 17; // height of the picture stars.png
 						bgPath = opts.bigStarsPath;
 				}
 			};

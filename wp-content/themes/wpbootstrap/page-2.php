@@ -8,7 +8,7 @@ if (isset($_GET['id'])) {
 
 	$data = json_decode($json);
 ?>
-	<legend><?php echo $data->title; ?></legend>
+	<legend class="inverse"><?php echo $data->title; ?></legend>
 	<div class="row">
 		<div class="span3">
 			<img src="<?php echo $data->poster; ?>" class="img-rounded"/>

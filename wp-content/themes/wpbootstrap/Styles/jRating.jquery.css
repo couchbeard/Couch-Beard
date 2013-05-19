@@ -11,6 +11,15 @@
 	z-index:2;
 	height:100%;
 }
+
+/** Div containing the stars **/
+.jStar {
+	position:relative;
+	left:0;
+	z-index:3;
+	background-color: #000;
+}
+
 .jRatingColor {
 	background-color:#f4c239; /* bgcolor of the stars*/
 	position:relative;
@@ -18,13 +27,7 @@
 	left:0;
 	z-index:2;
 	height:100%;
-}
-
-/** Div containing the stars **/
-.jStar {
-	position:relative;
-	left:0;
-	z-index:3;
+	opacity: 0.8;
 }
 
 /** P containing the rate informations **/
@@ -40,7 +43,7 @@ p.jRatingInfos {
 	text-align:center;
 	padding-top:5px;
 }
-	p.jRatingInfos span.maxRate {
-		color:#c9c9c9;
-		font-size:14px;
-	}
+p.jRatingInfos span.maxRate {
+	color:#c9c9c9;
+	font-size:14px;
+}
