@@ -371,7 +371,15 @@ function cp_movieWanted($imdb_id)
 		throw new Exception('Couchpotato offline');
 
 	$res = json_decode($json);
-	return $res->success;
+	if ($res->success)
+	{
+		if (count($res->movie->releases))
+		{
+			return false;
+		}
+		return true;
+	}
+	return false;
 }
 add_action( 'thesis_hook', 'cp_movieWanted');
 
