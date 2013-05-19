@@ -382,9 +382,36 @@ function sb_addShow($id) {
 // SabNZBD (sab)
 /////////////////
 
-function sab_getCurrentDownloads() {
-	// TODO
+/**
+ * Get sabnzbd url
+ * @return string url
+ */
+function sab_getURL() {
+	global $wpdb;
+	global $table_name;
+	$ip = $wpdb->get_var($wpdb->prepare(
+		"
+		SELECT ip
+		FROM $table_name
+		WHERE name = %s
+		", 
+		'SabNZBD'
+	));
+	$url = "http://" . $ip . "/api?apikey=" . getAPI('SabNZBD') . "&output=json&mode=";
+	return $url;
 }
+
+/**
+ * Get sabnzbd downloads
+ * @return array downloads
+ */
+function sab_getCurrentDownloads() {
+	$url = sab_getURL() . "qstatus";
+	$json = file_get_contents($url);
+	$data = json_decode($json);
+	return $data->jobs;
+}
+add_action( 'thesis_hook', 'sab_getCurrentDownloads');
 
 
 
