@@ -66,7 +66,7 @@ if (isset($_GET['id'])) {
 	<div class="row">
 		<div class="span2 pull-right">
 			<?php
-			if($data->type == 'M') {
+			if($data->type == 'M' || $data->type == 'TV') {
 				try {
 					if (xbmc_movieOwned($data->imdb_id))
 					{ ?>
@@ -92,7 +92,7 @@ if (isset($_GET['id'])) {
 				} catch (Exception $e) {
 					// TODO bar with 'Connection lost'
 				}
-			} else { ?>
+			} else if ($data->type == 'TVS') { ?>
 				<button class="btn btn-inverse pull-right" id="addTV"><?php _e('Add TV show', 'wpbootstrap'); ?></button>
 			<?php } ?>
 		</div>
