@@ -92,17 +92,20 @@ function myprefix_autocomplete_suggestions() {
 
     $suggestions = array();
     foreach($json as $movie){
-        $suggestion = array();
-        $string = (strlen($movie->title) > 50) ? substr($movie->title, 0, 45).'...' : $movie->title;
-        $searchpage = get_page_by_title( 'Search' );
-        $suggestion['searchpageid'] =  $searchpage->ID;
-        $suggestion['imdbid'] = (string) $movie->imdb_id;
-        $suggestion['label'] = $movie->title;
-        $suggestion['title'] = $string;
-        $suggestion['year'] = ($movie->year ? $movie->year : "?");
-        $suggestion['type'] = $movie->type;
-        $suggestion['image'] = $movie->poster;
-        $suggestions[]= $suggestion;
+        if ($movie->type == "M" || $movie->type == "TV" || $movie->type == "TVS")
+        {
+            $suggestion = array();
+            $string = (strlen($movie->title) > 50) ? substr($movie->title, 0, 45).'...' : $movie->title;
+            $searchpage = get_page_by_title( 'Search' );
+            $suggestion['searchpageid'] =  $searchpage->ID;
+            $suggestion['imdbid'] = (string) $movie->imdb_id;
+            $suggestion['label'] = $movie->title;
+            $suggestion['title'] = $string;
+            $suggestion['year'] = ($movie->year ? $movie->year : "?");
+            $suggestion['type'] = $movie->type;
+            $suggestion['image'] = $movie->poster;
+            $suggestions[]= $suggestion;
+        }
     }
     echo $_GET["callback"] . "(" . json_encode($suggestions) . ")";
     exit;
