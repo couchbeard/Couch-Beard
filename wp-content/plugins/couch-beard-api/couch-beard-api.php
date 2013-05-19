@@ -383,6 +383,18 @@ add_action( 'thesis_hook', 'cp_movieWanted');
 //////////////////
 
 /**
+ * Get version of Sick Beard
+ * @return string Version
+ */
+function sb_version() {
+	$url = sb_getURL() . '/?cmd=sb';
+	$json = file_get_contents($url);
+	$data = json_decode($json);
+ 	return $data->data->sb_version;
+}
+add_action( 'thesis_hook', 'sb_version');
+
+/**
  * Get sickbeard url
  * @return string url
  */
@@ -393,7 +405,7 @@ function sb_getURL() {
 		"
 		SELECT ip
 		FROM $table_name
-		WHERE name = %d
+		WHERE name = %s
 		", 
 		'Sickbeard'
 	));
@@ -417,6 +429,18 @@ function sb_addShow($id) {
 /////////////////
 // SabNZBD (sab)
 /////////////////
+
+/**
+ * Get version of SABnzbd+
+ * @return string Version
+ */
+function sab_version(){
+	$url = sab_getURL() . 'version';
+	$json = file_get_contents($url);
+	$data = json_decode($json);
+ 	return $data->version;
+}
+add_action( 'thesis_hook', 'sab_version');
 
 /**
  * Get sabnzbd url
