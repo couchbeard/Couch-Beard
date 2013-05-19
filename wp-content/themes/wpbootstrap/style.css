@@ -104,6 +104,7 @@ p, h1, h2, h3, h4, body, legend {
 
 .ui-autocomplete {
     width: 25%;
+    height: 90%;
     overflow-y: auto;
 
     overflow-x: hidden;
