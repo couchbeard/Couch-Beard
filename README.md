@@ -15,7 +15,7 @@ Installation
 ===========
 First you need an apache server with PHP 5.3 or above and MySQL database.
 
-This could be more simple and will be more simple when release.
+This could be more simple and should be in future release.
 
 1. Download this repo.
 
