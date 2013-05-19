@@ -11,9 +11,7 @@
 global $wpdb;
 global $table_name;
 $table_name = $wpdb->prefix . 'apis';
-?>
 
-<?php
 function loadStyle() {
 	wp_register_style( 'style', plugin_dir_url( __FILE__ ) . 'couch-beard-api.css');
 	wp_enqueue_style( 'style');
