@@ -99,7 +99,7 @@ function myprefix_autocomplete_suggestions() {
         $suggestion['imdbid'] = (string) $movie->imdb_id;
         $suggestion['label'] = $movie->title;
         $suggestion['title'] = $string;
-        $suggestion['year'] = date('Y',strtotime($movie->year));
+        $suggestion['year'] = ($movie->year ? $movie->year : "?");
         $suggestion['type'] = $movie->type;
         $suggestion['image'] = $movie->poster;
         $suggestions[]= $suggestion;
