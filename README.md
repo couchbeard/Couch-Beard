@@ -25,7 +25,7 @@ This could be more simple and will be more simple when release.
 
 4. Login to the website.
 
-5. Go to 'Tools/Import' and choose 'Wordpress'. Select the XML file.
+5. Go to 'Tools/Import' and choose 'Wordpress'. Select 'backup.xml' and submit.
 
 6. Go to 'Appearance/Themes' and activate 'wpbootstrap'
 
