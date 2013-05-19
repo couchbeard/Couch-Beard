@@ -1,7 +1,30 @@
-<?php
+<html>
+<head>
+<link href='http://twitter.github.io/bootstrap/assets/css/bootstrap.css' rel='stylesheet'>
+<script src='http://twitter.github.io/bootstrap/assets/js/jquery.js'></script>
+</head>
+<body>
 
-	$name = "Arrested Development";
-  $xml = simplexml_load_string(file_get_contents("http://thetvdb.com/api/GetSeries.php?seriesname=".urlencode($name)));
-  echo (string) $xml->Series->children()->IMDB_ID;
+<script type="text/javascript">
+window.setInterval(function(){
+$.getJSON('api.php', function(data) {
+	$('.download-bars').remove();
+  var items = [];
+  $.each(data.jobs, function() {
+    var percent = Math.round((this['mb'] - this['mbleft']) / this['mb'] * 100);
+    var active = '';
+    if (data['state'] == "Downloading")
+    {
+    	active = 'active';
+    }
+    items.push('<div class="progress progress-striped ' + active + '"><div class="bar" style="width: ' + percent + '%;"></div></div>');
+  });
+  $('<div/>', {
+    'class': 'download-bars',
+    html: items.join('')
+  }).appendTo('body');
+});
+}, 1000);
+</script>
 
-?>
+</body></html>
