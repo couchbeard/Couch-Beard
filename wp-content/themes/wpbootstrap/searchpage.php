@@ -79,7 +79,7 @@ if (isset($_GET['id'])) {
 					{ ?>
 						<button class="btn btn-inverse pull-right disabled" disabled="disabled"><i><?php _e('Movie added', 'wpbootstrap'); ?></i></button>
 						<script>
-							$('#checkOverlay').attr('src', '<?php print IMAGES; ?>/download_logo.png');
+							$('#checkOverlay').attr('src', '<?php print IMAGES; ?>/download_logo_square.png');
 							$('#checkOverlay').css("visibility", "visible");
 						</script>					
 					<?php }
