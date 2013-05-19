@@ -39,7 +39,8 @@ if (isset($_GET['id'])) {
 				</div>
 				<div class="span1">
 					<?php 
-						$time = explode('min', $data->runtime[0])[0]; 
+						$extime = explode('min', $data->runtime[0]);
+						$time = $extime[0]; 
 						$h = intval($time / 60);
 						$m = ($h > 0) ? intval($time % 60) : intval($time);
 
