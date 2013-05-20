@@ -432,6 +432,20 @@ function sb_addShow($id) {
 }
 
 
+/**
+ * Check if series is in Sick Beard
+ * @param  string $id IMDb id
+ * @return bool     Success
+ */
+function sb_showAdded($id) {
+	$url = sb_getURL() . '/?cmd=shows';
+	$json = file_get_contents($url);
+	$res = (array) json_decode($json)->data;
+	return (in_array(imdb_to_tvdb($id), array_keys($res)) ? "true" : "false");
+}
+add_action( 'thesis_hook', 'sb_showAdded');
+
+
 
 
 /////////////////
@@ -570,5 +584,21 @@ function xbmc_movieOwned($imdb_id)
 	return false;
 }
 add_action( 'thesis_hook', 'xbmc_movieOwned');
+
+
+
+
+
+/**
+ * Converts IMDb ID to TVDB ID
+ * @param  string $imdb_id IMDb ID
+ * @return string     TVDB ID
+ */
+function imdb_to_tvdb($imdb)
+{
+	$xml = simplexml_load_string(file_get_contents("http://thetvdb.com/api/GetSeriesByRemoteID.php?imdbid=".$imdb));
+	return (string) $xml->Series->children()->seriesid;
+}
+add_action( 'thesis_hook', 'imdb_to_tvdb');
 
 ?>

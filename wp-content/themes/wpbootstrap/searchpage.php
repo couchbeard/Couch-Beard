@@ -102,11 +102,6 @@ if (isset($_GET['id'])) {
 	</div>
 <?php
 }
-function imdb_to_tvdb($imdb)
-{
-	$xml = simplexml_load_string(file_get_contents("http://thetvdb.com/api/GetSeriesByRemoteID.php?imdbid=".$imdb));
-	return (string) $xml->Series->children()->seriesid;
-}
 
 ?>
 
