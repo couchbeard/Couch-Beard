@@ -256,8 +256,13 @@ function cp_getURL() {
  */
 function cp_version(){
 	$url = cp_getURL() . '/app.version';
-	$json = file_get_contents($url);
-	if (!$json)
+	$ctx=stream_context_create(array('http'=>
+	    array(
+	        'timeout' => 5 // 20 minutes
+	    )
+	));
+	$json = file_get_contents($url, false, $ctx);
+	if (empty($json))
 		throw new Exception('Couchpotato offline');
 
 	$data = json_decode($json);
@@ -271,8 +276,13 @@ add_action( 'thesis_hook', 'cp_version');
  */
 function cp_available(){
 	$url = cp_getURL() . '/app.available';
-	$json = file_get_contents($url);
-	if (!$json)
+	$ctx=stream_context_create(array('http'=>
+	    array(
+	        'timeout' => 5 // 20 minutes
+	    )
+	));
+	$json = file_get_contents($url, false, $ctx);
+	if (empty($json))
 		throw new Exception('Couchpotato offline');
 
 	$data = json_decode($json);
@@ -287,8 +297,13 @@ add_action( 'thesis_hook', 'cp_available');
  */
 function cp_addMovie($id){
 	$url = cp_getURL() . '/movie.add/?identifier=' . $id;
-	$json = file_get_contents($url);
-	if (!$json)
+	$ctx=stream_context_create(array('http'=>
+	    array(
+	        'timeout' => 5 // 20 minutes
+	    )
+	));
+	$json = file_get_contents($url, false, $ctx);
+	if (empty($json))
 		throw new Exception('Couchpotato offline');
 
 	$data = json_decode($json);
@@ -303,8 +318,13 @@ add_action( 'thesis_hook', 'cp_addMovie');
  */
 function cp_removeMovie($id){
 	$url = cp_getURL() . '/movie.delete?id=' . $id . '&delete_from=wanted';
-	$json = file_get_contents($url);
-	if (!$json)
+	$ctx=stream_context_create(array('http'=>
+	    array(
+	        'timeout' => 5 // 20 minutes
+	    )
+	));
+	$json = file_get_contents($url, false, $ctx);
+	if (empty($json))
 		throw new Exception('Couchpotato offline');
 
 	$data = json_decode($json);
@@ -318,8 +338,13 @@ add_action( 'thesis_hook', 'cp_removeMovie');
  */
 function cp_getMovies(){
 	$url = cp_getURL() . '/movie.list?status=active';
-	$json = file_get_contents($url);
-	if (!$json)
+	$ctx=stream_context_create(array('http'=>
+	    array(
+	        'timeout' => 5 // 20 minutes
+	    )
+	));
+	$json = file_get_contents($url, false, $ctx);
+	if (empty($json))
 		throw new Exception('Couchpotato offline');
 
 	$data = json_decode($json);
@@ -334,8 +359,13 @@ add_action( 'thesis_hook', 'cp_getMovies');
  */
 function cp_refreshMovie($id){
 	$url = cp_getURL() . '/movie.list?id=' . $id;
-	$json = file_get_contents($url);
-	if (!$json)
+	$ctx=stream_context_create(array('http'=>
+	    array(
+	        'timeout' => 5 // 20 minutes
+	    )
+	));
+	$json = file_get_contents($url, false, $ctx);
+	if (empty($json))
 		throw new Exception('Couchpotato offline');
 
 	$data = json_decode($json);
@@ -349,8 +379,13 @@ add_action( 'thesis_hook', 'cp_refreshMovie');
  */
 function cp_update() {
 	$url = cp_getURL() . '/updater.check';
-	$json = file_get_contents($url);
-	if (!$json)
+	$ctx=stream_context_create(array('http'=>
+	    array(
+	        'timeout' => 5 // 20 minutes
+	    )
+	));
+	$json = file_get_contents($url, false, $ctx);
+	if (empty($json))
 		throw new Exception('Couchpotato offline');
 
 	$data = json_decode($json);
@@ -366,8 +401,13 @@ add_action( 'thesis_hook', 'cp_update');
 function cp_movieWanted($imdb_id)
 {
 	$url = cp_getURL() . '/movie.get/?id=' . $imdb_id;
-	$json = file_get_contents($url);
-	if (!$json)
+	$ctx=stream_context_create(array('http'=>
+	    array(
+	        'timeout' => 5 // 20 minutes
+	    )
+	));
+	$json = file_get_contents($url, false, $ctx);
+	if (empty($json))
 		throw new Exception('Couchpotato offline');
 
 	$res = json_decode($json);
