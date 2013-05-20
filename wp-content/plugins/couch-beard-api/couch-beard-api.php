@@ -240,8 +240,7 @@ function curl_download($Url, $headers = null){
     if (!function_exists('curl_init')){
         die('Sorry cURL is not installed!');
     }
- 
-    // OK cool - then let's create a new cURL resource handle
+
     $ch = curl_init();
  
     // Now set some options (most are optional)
@@ -317,7 +316,6 @@ function cp_version(){
 	$data = json_decode($json);
  	return $data->version;
 }
-add_action( 'thesis_hook', 'cp_version');
 
 /**
  * Get connection status to Couchpotato
@@ -330,7 +328,6 @@ function cp_available(){
 	$data = json_decode($json);
  	return $data->success;
 }
-add_action( 'thesis_hook', 'cp_available');
 
 /**
  * Add movie to Couchpotato
@@ -344,7 +341,6 @@ function cp_addMovie($id){
 	$data = json_decode($json);
  	return $data->added;
 }
-add_action( 'thesis_hook', 'cp_addMovie');
 
 /**
  * Remove movie from wanted list in Couchpotato
@@ -358,7 +354,6 @@ function cp_removeMovie($id){
 	$data = json_decode($json);
  	return $data->success;
 }
-add_action( 'thesis_hook', 'cp_removeMovie');
 
 /**
  * Get all wanted movies in Couchpotato
@@ -371,7 +366,6 @@ function cp_getMovies(){
 	$data = json_decode($json);
  	return $data;
 }
-add_action( 'thesis_hook', 'cp_getMovies');
 
 /**
  * Refresh a movie in Couchpotato
@@ -385,7 +379,6 @@ function cp_refreshMovie($id){
 	$data = json_decode($json);
  	return $data->success;
 }
-add_action( 'thesis_hook', 'cp_refreshMovie');
 
 /**
  * Looking for updates to Couchpotato
@@ -398,7 +391,6 @@ function cp_update() {
 	$data = json_decode($json);
  	return $data->update_available;
 }
-add_action( 'thesis_hook', 'cp_update');
 
 /**
  * Looking for a specific movie in CouchPotato
@@ -421,7 +413,6 @@ function cp_movieWanted($imdb_id)
 	}
 	return false;
 }
-add_action( 'thesis_hook', 'cp_movieWanted');
 
 
 
@@ -441,7 +432,6 @@ function sb_version() {
 	$data = json_decode($json);
  	return $data->data->sb_version;
 }
-add_action( 'thesis_hook', 'sb_version');
 
 /**
  * Get sickbeard url
@@ -488,7 +478,6 @@ function sb_showAdded($id) {
 	$res = (array) json_decode($json)->data;
 	return (in_array(imdb_to_tvdb($id), array_keys($res)) ? "true" : "false");
 }
-add_action( 'thesis_hook', 'sb_showAdded');
 
 
 
@@ -508,7 +497,6 @@ function sab_version(){
 	$data = json_decode($json);
  	return $data->version;
 }
-add_action( 'thesis_hook', 'sab_version');
 
 /**
  * Get sabnzbd url
@@ -543,7 +531,6 @@ function sab_getCurrentDownloads() {
 	$data = json_decode($json);
 	return $data->jobs;
 }
-add_action( 'thesis_hook', 'sab_getCurrentDownloads');
 
 
 
@@ -595,7 +582,6 @@ function xbmc_getMovies() {
 	return $data->result->movies;
 
 }
-add_action( 'thesis_hook', 'xbmc_getMovies');
 
 /**
  * Check if movie is in XBMC
@@ -613,7 +599,6 @@ function xbmc_movieOwned($imdb_id)
 	}
 	return false;
 }
-add_action( 'thesis_hook', 'xbmc_movieOwned');
 
 
 
@@ -629,6 +614,5 @@ function imdb_to_tvdb($imdb)
 	$xml = simplexml_load_string(file_get_contents("http://thetvdb.com/api/GetSeriesByRemoteID.php?imdbid=".$imdb));
 	return (string) $xml->Series->children()->seriesid;
 }
-add_action( 'thesis_hook', 'imdb_to_tvdb');
 
 ?>

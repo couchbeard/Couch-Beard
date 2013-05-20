@@ -17,7 +17,6 @@ jQuery(document).ready(function ($) {
             .appendTo(ul);
             
         }
-        console.log(item);
         var inner_html =
         '<a id="movieSearch">' +
                 '<div class="list_item_container">' +

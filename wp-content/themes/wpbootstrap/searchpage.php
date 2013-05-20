@@ -7,58 +7,49 @@ Template Name: Search Page
 <?php get_header(); ?>
 <?php
 if (isset($_GET['id'])) {
-	$url = "http://imdbapi.org/?id=".$_GET['id']."&episode=0&limit=1&plot=full";
-
-	$json = file_get_contents($url);
-
-	$data = json_decode($json);
+	//$url = "http://imdbapi.org/?id=".$_GET['id']."&episode=0&limit=1&plot=full";
+	$data = getMovieData($_GET['id']);
 ?>
-	<legend><?php echo $data->title; ?></legend>
+	<legend><?php echo $data->Title; ?></legend>
 	<div class="row">
 		<div class="span3">
+			<img id="wantedOverlay" src="<?php print IMAGES; ?>/download_logo_square.png" />
 			<img id="checkOverlay" src="<?php print IMAGES; ?>/check.png" />
-			<img id="searchpageCover" src="<?php echo $data->poster; ?>" class="img-rounded"/>
-			<?php if ($data->rating != null && $data->rating != "") { ?>
-				<div class="rating" data-average="<?php echo $data->rating; ?>" data-id="1" data-toggle="tooltip" data-placement="bottom" title="<?php echo $data->rating . ' / ' . number_format($data->rating_count, 0, '.', ' '); ?>"></div>
+			<div id="searchCover">
+				<img id="searchpageCover" src="<?php echo ($data->Poster == 'N/A') ? IMAGES . '/no_cover.png' : $data->Poster; ?>" class="img-rounded"/>
+			</div>
+			<?php if (!empty($data->imdbRating)) { ?>
+				<div class="rating" data-average="<?php echo floatval($data->imdbRating); ?>" data-id="1" data-toggle="tooltip" data-placement="bottom" title="<?php echo $data->imdbRating . ' / ' . number_format($data->imdbVotes, 0, '.', ' '); ?>"></div>
 
-				<div class="ratingtext"><center><p class="lead"><?php echo $data->rating; ?></p></center></div>
+				<div class="ratingtext"><center><p class="lead"><?php echo $data->imdbRating; ?></p></center></div>
 			<?php } ?>			
 		</div>
 		<div class="span9">
 			<div class="row">
 				<div class="span8 pull-left">
-					<p class="lead pline"><?php echo implode(', ', $data->genres); ?></p>
+					<p class="lead pline"><?php echo $data->Genre; ?></p>
 				</div>
 				<div class="span1">
-					<p class="lead"><?php echo $data->year; ?></p>
+					<p class="lead"><?php echo $data->Year; ?></p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="span8 pull-left">
-					<p class="lead pline"><?php echo implode(', ', $data->country); ?></p>
+					<p class="lead pline"><?php //$data->country; ?></p>
 				</div>
 				<div class="span1">
-					<?php 
-						$extime = explode('min', $data->runtime[0]);
-						$time = $extime[0]; 
-						$h = intval($time / 60);
-						$m = ($h > 0) ? intval($time % 60) : intval($time);
-
-						if ($h > 0 || $m > 0) {
-					?>
-							<p class="lead"><?php echo (($h > 0) ? $h : '0') . ':' . (($m > 9) ? $m : '0' . $m); ?></p>
-					<?php } ?>
+					<p class="lead"><?php echo date("h:i", strtotime($data->Runtime)); ?></p>
 				</div>				
 			</div>
 			<div class="row">
 				<div class="span8 pull-left">
-					<p class="lead pline"><?php echo implode(', ', $data->actors); ?></p>
+					<p class="lead pline"><?php echo $data->Actors; ?></p>
 				</div>
 			</div>
 			<br />
 			<div class="row">
 				<div class="span9 pull-left">
-					<p><?php echo $data->plot; ?></p>
+					<p><?php echo $data->Plot; ?></p>
 				</div>
 			</div>
 		</div>
@@ -67,20 +58,19 @@ if (isset($_GET['id'])) {
 		<div class="span2 pull-right">
 			<?php
 			
-			if($data->type == 'M' || $data->type == 'TV') {
-					if (xbmc_movieOwned($data->imdb_id))
+			if($data->Type == 'movie') {
+					if (xbmc_movieOwned($data->imdbID))
 					{ ?>
 						<button class="btn btn-inverse pull-right disabled" disabled="disabled"><i><?php _e('Movie owned', 'wpbootstrap'); ?></i></button>
 						<script>
 							$('#checkOverlay').css("visibility", "visible");
 						</script>
 					<?php }
-					else if (cp_movieWanted($data->imdb_id))
+					else if (cp_movieWanted($data->imdbID))
 					{ ?>
 						<button class="btn btn-inverse pull-right disabled" disabled="disabled"><i><?php _e('Movie added', 'wpbootstrap'); ?></i></button>
 						<script>
-							$('#checkOverlay').attr('src', '<?php print IMAGES; ?>/download_logo_square.png');
-							$('#checkOverlay').css("visibility", "visible");
+							$('#wantedOverlay').css("visibility", "visible");
 						</script>					
 					<?php }
 					else
@@ -89,12 +79,12 @@ if (isset($_GET['id'])) {
 						<button class="btn btn-inverse pull-right" id="addMovie"><?php _e('Add movie', 'wpbootstrap'); ?></button>
 					<?php
 					}
-			} else if ($data->type == 'TVS') { ?>
+			} else if ($data->Type == 'series') { ?>
 				<button class="btn btn-inverse pull-right" id="addTV"><?php _e('Add TV show', 'wpbootstrap'); ?></button>
 			<?php } ?>
 		</div>
 		<div class="span1 pull-left">
-			<a href="<?php echo $data->imdb_url; ?>" target="_blank"><img id="imdblogo" alt="IMDB" src="<?php print IMAGES; ?>/imdb-logo.png" /></a>
+			<a href="<?php echo 'test'; ?>" target="_blank"><img id="imdblogo" alt="IMDB" src="<?php print IMAGES; ?>/imdb-logo.png" /></a>
 		</div>	
 	</div>
 <?php
@@ -152,15 +142,15 @@ $(function() {
             data: {  
                 action: 'addMovie',
                 security: '<?php echo $ajax_nonce; ?>',
-                id: '<?php echo $data->imdb_id; ?>'
+                id: '<?php echo $data->imdbID; ?>'
             },
             success: function(data, textStatus, XMLHttpRequest) {
             	if (data == 1) {
-					create("default", { title:'<?php _e("Movie added", "wpbootstrap"); ?>', text:'<?php printf(__("%s was added", "wpbootstrap"), $data->title); ?>'});
+					create("default", { title:'<?php _e("Movie added", "wpbootstrap"); ?>', text:'<?php printf(__("%s was added", "wpbootstrap"), $data->Title); ?>'});
 					$('#addMovie').attr("disabled", true);
 					$('#addMovie').html('<i>Movie added</i>');
 	        	} else {
-	        		create("withIcon", { title:'Error!', text:'<?php printf(__("%s was not added", "wpbootstrap"), $data->title); ?>', icon:'<?php print IMAGES; ?>/alert.png' },{ 
+	        		create("withIcon", { title:'Error!', text:'<?php printf(__("%s was not added", "wpbootstrap"), $data->Title); ?>', icon:'<?php print IMAGES; ?>/alert.png' },{ 
 						expires:false});
 	        	}
             },  
@@ -178,11 +168,12 @@ $(function() {
             data: {  
                 action: 'addTV',
                 security: '<?php echo $ajax_nonce; ?>',
-                id: '<?php if ($data->type != "M") echo imdb_to_tvdb($data->imdb_id); ?>'
+                id: '<?php echo 123; ?>'
+                //if ($data->type != "movie") echo imdb_to_tvdb($data->imdbID);
             },
             success: function(data, textStatus, XMLHttpRequest) {
 				if (data == 1) {
-					create("default", { title:'<?php _e("TV show added", "wpbootstrap"); ?>', text:'<?php printf(__("%s was added", "wpbootstrap"), $data->title); ?>'});
+					create("default", { title:'<?php _e("TV show added", "wpbootstrap"); ?>', text:'<?php printf(__("%s was added", "wpbootstrap"), $data->Title); ?>'});
 					$('#addTV').attr("disabled", true);
 					$('#addTV').html('<i>TV show added</i>');
 	        	} else {

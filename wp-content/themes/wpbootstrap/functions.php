@@ -78,10 +78,71 @@ function myprefix_autocomplete_search_form(){
     wp_enqueue_style( 'myprefix-jquery-ui' );  
 } 
 
+/**
+ * Download website
+ * @param  string $Url Download URL
+ * @return $json      Website
+ */
+function curl($Url, $headers = null){
+ 
+    // is cURL installed yet?
+    if (!function_exists('curl_init')){
+        die('Sorry cURL is not installed!');
+    }
+
+    $ch = curl_init();
+ 
+    // Set URL to download
+    curl_setopt($ch, CURLOPT_URL, $Url);
+ 
+    // Set a referer
+    //curl_setopt($ch, CURLOPT_REFERER, "http://www.example.org/yay.htm");
+ 
+    // User agent
+    curl_setopt($ch, CURLOPT_USERAGENT, $defined_vars['HTTP_USER_AGENT']);
+ 
+    // Include header in result? (0 = yes, 1 = no)
+    curl_setopt($ch, CURLOPT_HEADER, 0);
+
+    // Set header
+    if (!empty($headers))
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers); 
+ 
+    // Should cURL return or print out the data? (true = return, false = print)
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+ 
+    // Timeout in seconds
+    curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+ 
+    // Download the given URL, and return output
+    $output = curl_exec($ch);
+ 
+    // Close the cURL resource, and free system resources
+    curl_close($ch);
+ 
+    return $output;
+}
+add_action( 'thesis_hook', 'curl');
+
+/**
+ * Get movie data by ID
+ * @param  string $id IMDB id
+ * @return array     Movie data
+ */
+function getMovieData($id) {
+    $url = "http://www.omdbapi.com/?i=" . $_GET['id'];
+    $json = curl_download($url);
+
+    $data = json_decode($json);
+
+    return $data;
+}
+
 function myprefix_autocomplete_suggestions() {
     $url = "http://imdbapi.org/?q=".$_REQUEST['term']."&episode=0&limit=10";
+    //$url = "http://www.omdbapi.com/?s=".$_REQUEST['term'];
 
-    $imdb = file_get_contents($url);
+    $imdb = curl($url);
 
     if(!$_SERVER["HTTP_X_REQUESTED_WITH"] || !$_GET['term']){
         _e('error', 'wpbootstrap');
@@ -90,23 +151,32 @@ function myprefix_autocomplete_suggestions() {
 
     $json = json_decode($imdb);
 
+    // $movies = array();
+    // foreach($json as $movie)
+    // {
+    //     $new_url = "http://www.omdbapi.com/?i=".$movie->imdbID."&plot=full";
+    //     $new_json = curl($new_url);
+    //     array_push($movies, json_decode($new_json));
+    // }
     $suggestions = array();
-    foreach($json as $movie){
-        if ($movie->type == "M" || $movie->type == "TV" || $movie->type == "TVS")
-        {
-            $suggestion = array();
-            $string = (strlen($movie->title) > 50) ? substr($movie->title, 0, 45).'...' : $movie->title;
-            $searchpage = get_page_by_title( 'Search' );
-            $suggestion['searchpageid'] =  $searchpage->ID;
-            $suggestion['imdbid'] = (string) $movie->imdb_id;
-            $suggestion['label'] = $movie->title;
-            $suggestion['title'] = $string;
-            $suggestion['year'] = ($movie->year ? $movie->year : "?");
-            $suggestion['type'] = $movie->type;
-            $suggestion['image'] = $movie->poster;
-            $suggestions[]= $suggestion;
-        }
+    $suggestion = array();
+    foreach ($json as $id) {
+        $movieurl = "http://www.omdbapi.com/?i=".$id->imdb_id;
+        $data = curl($movieurl);
+        $movie = json_decode($data);
+
+        $string = (strlen($movie->Title) > 50) ? substr($movie->Title, 0, 45).'...' : $movie->Title;
+        $searchpage = get_page_by_title( 'Search' );
+        $suggestion['searchpageid'] =  $searchpage->ID;
+        $suggestion['imdbid'] = (string) $movie->imdbID;
+        $suggestion['label'] = $movie->Title;
+        $suggestion['title'] = $string;
+        $suggestion['year'] = ($movie->Year ? $movie->Year : "?");
+        $suggestion['type'] = $movie->Type;
+        $suggestion['image'] = ($movie->Poster == 'N/A') ? IMAGES . '/no_cover.png' : $movie->Poster;
+        $suggestions[]= $suggestion;
     }
+
     echo $_GET["callback"] . "(" . json_encode($suggestions) . ")";
     exit;
 }  

@@ -43,7 +43,7 @@ p, h1, h2, h3, h4, body, legend {
 .rating {
 	margin-top: 5px;
 	left: 0;
-	margin-left: 18px;
+	margin-left: 40px;
 }
 
 .ratingtext {
@@ -56,7 +56,7 @@ p, h1, h2, h3, h4, body, legend {
 	top: 30%;
 }
 
-#checkOverlay {
+#checkOverlay, #wantedOverlay {
 	position: absolute;
 	float: left;
 	margin: 10px;
@@ -64,6 +64,16 @@ p, h1, h2, h3, h4, body, legend {
 	height:40px;
 	opacity: 0.6;
 	visibility: hidden;
+}
+
+#searchCover {
+	background: #000;
+    float:left;
+    margin: 5px;
+}
+
+#searchpageCover:hover {
+	opacity:.3;
 }
 
 .poster {
