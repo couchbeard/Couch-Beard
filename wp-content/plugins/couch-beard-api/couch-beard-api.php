@@ -177,6 +177,14 @@ function couchbeardapi_admin() {
 } // END FUNCTION
 
 
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////
+// Private call functions 																  
+////////////////////////////////////////////////////////////////////////////////////
+
 /**
  * Get API key
  * @param  string $name name of the application
@@ -221,8 +229,56 @@ global $wpdb;
 	return $user;
 }
 
+/**
+ * Download website
+ * @param  string $Url Download URL
+ * @return $json      Website
+ */
+function curl_download($Url, $headers = null){
+ 
+    // is cURL installed yet?
+    if (!function_exists('curl_init')){
+        die('Sorry cURL is not installed!');
+    }
+ 
+    // OK cool - then let's create a new cURL resource handle
+    $ch = curl_init();
+ 
+    // Now set some options (most are optional)
+ 
+    // Set URL to download
+    curl_setopt($ch, CURLOPT_URL, $Url);
+ 
+    // Set a referer
+    //curl_setopt($ch, CURLOPT_REFERER, "http://www.example.org/yay.htm");
+ 
+    // User agent
+    curl_setopt($ch, CURLOPT_USERAGENT, $defined_vars['HTTP_USER_AGENT']);
+ 
+    // Include header in result? (0 = yes, 1 = no)
+    curl_setopt($ch, CURLOPT_HEADER, 0);
+
+    // Set header
+    if (!empty($headers))
+    	curl_setopt($ch, CURLOPT_HTTPHEADER, $headers); 
+ 
+    // Should cURL return or print out the data? (true = return, false = print)
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+ 
+    // Timeout in seconds
+    curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+ 
+    // Download the given URL, and return output
+    $output = curl_exec($ch);
+ 
+    // Close the cURL resource, and free system resources
+    curl_close($ch);
+ 
+    return $output;
+}
+
 ////////////////////////////////////////////////////////////////////////////////////
-// Call functions 																  
+// Public call functions 																  
 ////////////////////////////////////////////////////////////////////////////////////
 
 ///////////////
@@ -256,14 +312,7 @@ function cp_getURL() {
  */
 function cp_version(){
 	$url = cp_getURL() . '/app.version';
-	$ctx=stream_context_create(array('http'=>
-	    array(
-	        'timeout' => 5 // 20 minutes
-	    )
-	));
-	$json = file_get_contents($url, false, $ctx);
-	if (empty($json))
-		throw new Exception('Couchpotato offline');
+	$json = curl_download($url);
 
 	$data = json_decode($json);
  	return $data->version;
@@ -276,14 +325,7 @@ add_action( 'thesis_hook', 'cp_version');
  */
 function cp_available(){
 	$url = cp_getURL() . '/app.available';
-	$ctx=stream_context_create(array('http'=>
-	    array(
-	        'timeout' => 5 // 20 minutes
-	    )
-	));
-	$json = file_get_contents($url, false, $ctx);
-	if (empty($json))
-		throw new Exception('Couchpotato offline');
+	$json = curl_download($url);
 
 	$data = json_decode($json);
  	return $data->success;
@@ -297,14 +339,7 @@ add_action( 'thesis_hook', 'cp_available');
  */
 function cp_addMovie($id){
 	$url = cp_getURL() . '/movie.add/?identifier=' . $id;
-	$ctx=stream_context_create(array('http'=>
-	    array(
-	        'timeout' => 5 // 20 minutes
-	    )
-	));
-	$json = file_get_contents($url, false, $ctx);
-	if (empty($json))
-		throw new Exception('Couchpotato offline');
+	$json = curl_download($url);
 
 	$data = json_decode($json);
  	return $data->added;
@@ -318,14 +353,7 @@ add_action( 'thesis_hook', 'cp_addMovie');
  */
 function cp_removeMovie($id){
 	$url = cp_getURL() . '/movie.delete?id=' . $id . '&delete_from=wanted';
-	$ctx=stream_context_create(array('http'=>
-	    array(
-	        'timeout' => 5 // 20 minutes
-	    )
-	));
-	$json = file_get_contents($url, false, $ctx);
-	if (empty($json))
-		throw new Exception('Couchpotato offline');
+	$json = curl_download($url);
 
 	$data = json_decode($json);
  	return $data->success;
@@ -338,14 +366,7 @@ add_action( 'thesis_hook', 'cp_removeMovie');
  */
 function cp_getMovies(){
 	$url = cp_getURL() . '/movie.list?status=active';
-	$ctx=stream_context_create(array('http'=>
-	    array(
-	        'timeout' => 5 // 20 minutes
-	    )
-	));
-	$json = file_get_contents($url, false, $ctx);
-	if (empty($json))
-		throw new Exception('Couchpotato offline');
+	$json = curl_download($url);
 
 	$data = json_decode($json);
  	return $data;
@@ -359,14 +380,7 @@ add_action( 'thesis_hook', 'cp_getMovies');
  */
 function cp_refreshMovie($id){
 	$url = cp_getURL() . '/movie.list?id=' . $id;
-	$ctx=stream_context_create(array('http'=>
-	    array(
-	        'timeout' => 5 // 20 minutes
-	    )
-	));
-	$json = file_get_contents($url, false, $ctx);
-	if (empty($json))
-		throw new Exception('Couchpotato offline');
+	$json = curl_download($url);
 
 	$data = json_decode($json);
  	return $data->success;
@@ -379,14 +393,7 @@ add_action( 'thesis_hook', 'cp_refreshMovie');
  */
 function cp_update() {
 	$url = cp_getURL() . '/updater.check';
-	$ctx=stream_context_create(array('http'=>
-	    array(
-	        'timeout' => 5 // 20 minutes
-	    )
-	));
-	$json = file_get_contents($url, false, $ctx);
-	if (empty($json))
-		throw new Exception('Couchpotato offline');
+	$json = curl_download($url);
 
 	$data = json_decode($json);
  	return $data->update_available;
@@ -400,15 +407,8 @@ add_action( 'thesis_hook', 'cp_update');
  */
 function cp_movieWanted($imdb_id)
 {
-	$url = cp_getURL() . '/movie.get/?id=' . $imdb_id;
-	$ctx=stream_context_create(array('http'=>
-	    array(
-	        'timeout' => 5 // 20 minutes
-	    )
-	));
-	$json = file_get_contents($url, false, $ctx);
-	if (empty($json))
-		throw new Exception('Couchpotato offline');
+	$url = cp_getURL() . '/movie.get/?id=' . $imdb_id;	
+	$json = curl_download($url);
 
 	$res = json_decode($json);
 	if ($res->success)
@@ -436,7 +436,8 @@ add_action( 'thesis_hook', 'cp_movieWanted');
  */
 function sb_version() {
 	$url = sb_getURL() . '/?cmd=sb';
-	$json = file_get_contents($url);
+	$json = curl_download($url);
+
 	$data = json_decode($json);
  	return $data->data->sb_version;
 }
@@ -457,6 +458,9 @@ function sb_getURL() {
 		", 
 		'Sickbeard'
 	));
+	if (empty($ip))
+		throw new Exception('Ip empty');
+
 	$url = "http://" . $ip . "/api/" . getAPI('Sickbeard');
 	return $url;
 }
@@ -479,7 +483,8 @@ function sb_addShow($id) {
  */
 function sb_showAdded($id) {
 	$url = sb_getURL() . '/?cmd=shows';
-	$json = file_get_contents($url);
+	$json = curl_download($url);
+
 	$res = (array) json_decode($json)->data;
 	return (in_array(imdb_to_tvdb($id), array_keys($res)) ? "true" : "false");
 }
@@ -498,7 +503,8 @@ add_action( 'thesis_hook', 'sb_showAdded');
  */
 function sab_version(){
 	$url = sab_getURL() . 'version';
-	$json = file_get_contents($url);
+	$json = curl_download($url);
+
 	$data = json_decode($json);
  	return $data->version;
 }
@@ -519,6 +525,9 @@ function sab_getURL() {
 		", 
 		'SabNZBD'
 	));
+	if (empty($ip))
+		throw new Exception('No IP');
+
 	$url = "http://" . $ip . "/api?apikey=" . getAPI('SabNZBD') . "&output=json&mode=";
 	return $url;
 }
@@ -529,9 +538,7 @@ function sab_getURL() {
  */
 function sab_getCurrentDownloads() {
 	$url = sab_getURL() . "qstatus";
-	$json = file_get_contents($url);
-	if (!$json)
-		throw new Exception('SabNZBD offline');
+	$json = curl_download($url);
 
 	$data = json_decode($json);
 	return $data->jobs;
@@ -577,26 +584,13 @@ function xbmc_getMovies() {
 	$json = "{\"jsonrpc\": \"2.0\", \"method\": \"VideoLibrary.GetMovies\", \"params\": { \"properties\" : [\"art\", \"rating\", \"playcount\", \"year\", \"imdbnumber\"], \"sort\": { \"order\": \"ascending\", \"method\": \"label\", \"ignorearticle\": true } }, \"id\": \"libMovies\"}";
 	$json = urlencode($json);
 	$url = xbmc_getURL() . "/jsonrpc?request=" . $json;
-	$opts = array('http' =>
-	array(
-	 "header"  => "Content-Type: application/json\r\n".
-	 "Authorization: Basic ".base64_encode($xbmc->username . ":" . $xbmc->password),
-	 'timeout' => 60
-	)
-	);
-	                     
-	$context  = stream_context_create($opts);
-	if (!$context)
-		throw new Exception('XBMC offline');
 
-	try {
-		$result = file_get_contents($url, true, $context);
-	} catch (Exception $e) {
-		throw new Exception('XBMC offline');
-	}
-	if (!$result)
-		throw new Exception('XBMC offline');
+	$header = array(
+		"Content-Type: application/json",
+        "Authorization: Basic " . base64_encode($xbmc->username . ":" . $xbmc->password)
+    ); 
 
+	$result = curl_download($url, $header);
 	$data = json_decode($result);
 	return $data->result->movies;
 
@@ -610,16 +604,12 @@ add_action( 'thesis_hook', 'xbmc_getMovies');
  */
 function xbmc_movieOwned($imdb_id)
 {
-	try {
-		foreach(xbmc_getMovies() as $movie)
+	foreach(xbmc_getMovies() as $movie)
+	{
+		if ($movie->imdbnumber == $imdb_id)
 		{
-			if ($movie->imdbnumber == $imdb_id)
-			{
-				return true;
-			}
+			return true;
 		}
-	} catch (Exception $e) {
-		return false;
 	}
 	return false;
 }

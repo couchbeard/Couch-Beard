@@ -66,16 +66,16 @@ if (isset($_GET['id'])) {
 	<div class="row">
 		<div class="span2 pull-right">
 			<?php
+			
 			if($data->type == 'M' || $data->type == 'TV') {
-				try {
-					/*if (xbmc_movieOwned($data->imdb_id))
+					if (xbmc_movieOwned($data->imdb_id))
 					{ ?>
 						<button class="btn btn-inverse pull-right disabled" disabled="disabled"><i><?php _e('Movie owned', 'wpbootstrap'); ?></i></button>
 						<script>
 							$('#checkOverlay').css("visibility", "visible");
 						</script>
 					<?php }
-					else*/ if (cp_movieWanted($data->imdb_id))
+					else if (cp_movieWanted($data->imdb_id))
 					{ ?>
 						<button class="btn btn-inverse pull-right disabled" disabled="disabled"><i><?php _e('Movie added', 'wpbootstrap'); ?></i></button>
 						<script>
@@ -89,9 +89,6 @@ if (isset($_GET['id'])) {
 						<button class="btn btn-inverse pull-right" id="addMovie"><?php _e('Add movie', 'wpbootstrap'); ?></button>
 					<?php
 					}
-				} catch (Exception $e) {
-					// TODO bar with 'Connection lost'
-				}
 			} else if ($data->type == 'TVS') { ?>
 				<button class="btn btn-inverse pull-right" id="addTV"><?php _e('Add TV show', 'wpbootstrap'); ?></button>
 			<?php } ?>
