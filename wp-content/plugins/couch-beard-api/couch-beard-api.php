@@ -361,7 +361,7 @@ function cp_addMovie($id){
  */
 function cp_removeMovie($id){
 	try {
-		$url = cp_getURL() . '/movie.delete?id=' . $id . '&delete_from=wanted';
+		$url = cp_getURL() . '/movie.delete/?id=' . $id . '&delete_from=wanted';
 		$json = curl_download($url);
 
 		$data = json_decode($json);
@@ -377,11 +377,11 @@ function cp_removeMovie($id){
  */
 function cp_getMovies(){
 	try {
-		$url = cp_getURL() . '/movie.list?status=active';
+		$url = cp_getURL() . '/movie.list/?status=active';
 		$json = curl_download($url);
 
 		$data = json_decode($json);
-	 	return $data;
+	 	return $data->movies;
 	} catch (Exception $e) {
 		return false;
 	}
@@ -394,7 +394,7 @@ function cp_getMovies(){
  */
 function cp_refreshMovie($id){
 	try {
-		$url = cp_getURL() . '/movie.list?id=' . $id;
+		$url = cp_getURL() . '/movie.list/?id=' . $id;
 		$json = curl_download($url);
 
 		$data = json_decode($json);
@@ -550,6 +550,18 @@ function sb_getShow($id) {
 function sb_showAdded($id) {
 	$res = (array) sb_getShows();
 	return (in_array(imdb_to_tvdb($id), array_keys($res)) ? sb_getShow($id) : false);
+}
+
+function sb_getFuture() {
+	try {
+		$url = sb_getURL() . '/?cmd=future&sort=date';
+		$json = curl_download($url);
+
+		$data = json_decode($json);
+		return $data->data;
+	} catch (Exception $e) {
+		return false;
+	}
 }
 
 

@@ -143,6 +143,10 @@ function login_redirect() {
 }
 add_action( 'wp', 'login_redirect' );
 
+function getSearchpageID() {
+    return get_page_by_title( 'Search' )->ID;
+}
+
 function myprefix_autocomplete_suggestions() {
     $url = "http://www.omdbapi.com/?s=" . urlencode($_REQUEST['term']);
 
@@ -166,7 +170,7 @@ function myprefix_autocomplete_suggestions() {
 
             $string = (strlen($movie->Title) > 50) ? substr($movie->Title, 0, 45).'...' : $movie->Title;
             $searchpage = get_page_by_title( 'Search' );
-            $suggestion['searchpageid'] =  $searchpage->ID;
+            $suggestion['searchpageid'] = getSearchpageID();
             $suggestion['imdbid'] = (string) $movie->imdbID;
             $suggestion['label'] = $movie->Title;
             $suggestion['title'] = $string;
