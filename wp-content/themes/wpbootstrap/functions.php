@@ -138,6 +138,12 @@ function getMovieData($id) {
     return $data;
 }
 
+function login_redirect() {
+    if (!is_user_logged_in())
+        auth_redirect();
+}
+add_action( 'wp', 'login_redirect' );
+
 function myprefix_autocomplete_suggestions() {
     $url = "http://www.omdbapi.com/?s=" . urlencode($_REQUEST['term']);
 
