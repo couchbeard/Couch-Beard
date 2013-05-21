@@ -40,6 +40,16 @@ p, h1, h2, h3, h4, body, legend {
 	width: 210px;
 }
 
+#coverOverlay {
+	position: absolute;
+	float: left;
+	margin: 90px;
+	z-index:10;
+	height:40px;
+	opacity: 0.8;
+	display: none;
+}
+
 .rating {
 	margin-top: 5px;
 	left: 0;
@@ -72,8 +82,17 @@ p, h1, h2, h3, h4, body, legend {
     margin: 5px;
 }
 
-#searchpageCover:hover {
+#searchpageCover {
+	width: 100%;
+	height: 100%;
+}
+
+#searchCover:hover #searchpageCover {
 	opacity:.3;
+}
+
+#searchCover:hover #coverOverlay {
+	display: inline;
 }
 
 .poster {

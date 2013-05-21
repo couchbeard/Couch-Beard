@@ -9,6 +9,7 @@ Template Name: Search Page
 if (isset($_GET['id'])) {
 	//$url = "http://imdbapi.org/?id=".$_GET['id']."&episode=0&limit=1&plot=full";
 	$data = getMovieData($_GET['id']);
+	if (!isset($data->Error)) {
 ?>
 	<legend><?php echo $data->Title; ?></legend>
 	<div class="row">
@@ -16,13 +17,21 @@ if (isset($_GET['id'])) {
 			<img id="wantedOverlay" src="<?php print IMAGES; ?>/download_logo_square.png" />
 			<img id="checkOverlay" src="<?php print IMAGES; ?>/check.png" />
 			<div id="searchCover">
+				<div id="coverOverlay">
+					<center>
+						<div class="opensans">
+							<?php echo $data->imdbRating; ?>
+						</div>
+						<br /><br /><br /><br />
+						<div class="josefinslab">
+							<?php echo $data->imdbVotes; ?>
+						</div>
+					</center>
+				</div>
 				<img id="searchpageCover" src="<?php echo ($data->Poster == 'N/A') ? IMAGES . '/no_cover.png' : $data->Poster; ?>" class="img-rounded"/>
 			</div>
-			<?php if (!empty($data->imdbRating)) { ?>
-				<div class="rating" data-average="<?php echo floatval($data->imdbRating); ?>" data-id="1" data-toggle="tooltip" data-placement="bottom" title="<?php echo $data->imdbRating . ' / ' . number_format($data->imdbVotes, 0, '.', ' '); ?>"></div>
-
-				<div class="ratingtext"><center><p class="lead"><?php echo $data->imdbRating; ?></p></center></div>
-			<?php } ?>			
+			<div class="rating" data-average="<?php echo floatval($data->imdbRating); ?>" data-id="1" data-toggle="tooltip" data-placement="bottom" title="<?php echo $data->imdbRating . ' / ' . $data->imdbVotes; ?>"></div>
+			<div class="ratingtext"><center><p class="lead"><?php echo $data->imdbRating; ?></p></center></div>	
 		</div>
 		<div class="span9">
 			<div class="row">
@@ -38,7 +47,17 @@ if (isset($_GET['id'])) {
 					<p class="lead pline"><?php //$data->country; ?></p>
 				</div>
 				<div class="span1">
-					<p class="lead"><?php echo date("h:i", strtotime($data->Runtime)); ?></p>
+					<?php
+						$time = explode('h', $data->Runtime);
+						if (strpos($data->Runtime, 'h')) {
+							$h = trim($time[0]);
+							$m = trim(explode('min', $time[1])[0]);
+						} else {
+							$h = 0;
+							$m = trim(explode('min', $time[0])[0]);
+						}
+					?>
+					<p class="lead"><?php echo $h . ':' . ((strlen($m) < 2) ? '0' . $m : $m); ?></p>
 				</div>				
 			</div>
 			<div class="row">
@@ -47,6 +66,12 @@ if (isset($_GET['id'])) {
 				</div>
 			</div>
 			<br />
+			<div class="row">
+				<div class="span8 pull-left">
+					<p class="lead pline"><?php echo $data->Writer; ?></p>
+				</div>
+			</div>
+			<br />			
 			<div class="row">
 				<div class="span9 pull-left">
 					<p><?php echo $data->Plot; ?></p>
@@ -84,10 +109,13 @@ if (isset($_GET['id'])) {
 			<?php } ?>
 		</div>
 		<div class="span1 pull-left">
-			<a href="<?php echo 'test'; ?>" target="_blank"><img id="imdblogo" alt="IMDB" src="<?php print IMAGES; ?>/imdb-logo.png" /></a>
+			<a href="http://www.imdb.com/title/<?php echo $data->imdbID; ?>" target="_blank"><img id="imdblogo" alt="IMDB" src="<?php print IMAGES; ?>/imdb-logo.png" /></a>
 		</div>	
 	</div>
 <?php
+	} else {
+		printf(__('No movie found with ID: <strong>%s</strong>', 'wpbootstrap'), $_GET['id']);
+	}
 }
 
 ?>
@@ -130,7 +158,6 @@ $(function() {
 			$('.rating').tooltip('show');
 		}		
 	);
-
 
 	$notifyContainer = $("#notification").notify();   
 

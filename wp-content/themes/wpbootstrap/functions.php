@@ -130,7 +130,7 @@ add_action( 'thesis_hook', 'curl');
  * @return array     Movie data
  */
 function getMovieData($id) {
-    $url = "http://www.omdbapi.com/?i=" . $_GET['id'];
+    $url = "http://www.omdbapi.com/?i=" . $_GET['id'] . "&plot=full";
     $json = curl_download($url);
 
     $data = json_decode($json);
@@ -139,46 +139,41 @@ function getMovieData($id) {
 }
 
 function myprefix_autocomplete_suggestions() {
-    $url = "http://imdbapi.org/?q=".$_REQUEST['term']."&episode=0&limit=10";
-    //$url = "http://www.omdbapi.com/?s=".$_REQUEST['term'];
+    $url = "http://www.omdbapi.com/?s=" . urlencode($_REQUEST['term']);
 
     $imdb = curl($url);
 
     if(!$_SERVER["HTTP_X_REQUESTED_WITH"] || !$_GET['term']){
         _e('error', 'wpbootstrap');
-        exit;
+        exit();
     }
 
-    $json = json_decode($imdb);
+    $json = json_decode($imdb)->Search;
 
-    // $movies = array();
-    // foreach($json as $movie)
-    // {
-    //     $new_url = "http://www.omdbapi.com/?i=".$movie->imdbID."&plot=full";
-    //     $new_json = curl($new_url);
-    //     array_push($movies, json_decode($new_json));
-    // }
     $suggestions = array();
-    $suggestion = array();
-    foreach ($json as $id) {
-        $movieurl = "http://www.omdbapi.com/?i=".$id->imdb_id;
-        $data = curl($movieurl);
-        $movie = json_decode($data);
+    $suggestion = array();    
 
-        $string = (strlen($movie->Title) > 50) ? substr($movie->Title, 0, 45).'...' : $movie->Title;
-        $searchpage = get_page_by_title( 'Search' );
-        $suggestion['searchpageid'] =  $searchpage->ID;
-        $suggestion['imdbid'] = (string) $movie->imdbID;
-        $suggestion['label'] = $movie->Title;
-        $suggestion['title'] = $string;
-        $suggestion['year'] = ($movie->Year ? $movie->Year : "?");
-        $suggestion['type'] = $movie->Type;
-        $suggestion['image'] = ($movie->Poster == 'N/A') ? IMAGES . '/no_cover.png' : $movie->Poster;
-        $suggestions[]= $suggestion;
+    if (!isset($json->Error)) {
+        foreach ($json as $data) {
+            $new_url = "http://www.omdbapi.com/?i=" . $data->imdbID;
+            $new_json = curl($new_url);
+            $movie = json_decode($new_json);
+
+            $string = (strlen($movie->Title) > 50) ? substr($movie->Title, 0, 45).'...' : $movie->Title;
+            $searchpage = get_page_by_title( 'Search' );
+            $suggestion['searchpageid'] =  $searchpage->ID;
+            $suggestion['imdbid'] = (string) $movie->imdbID;
+            $suggestion['label'] = $movie->Title;
+            $suggestion['title'] = $string;
+            $suggestion['year'] = $movie->Year;
+            $suggestion['type'] = $movie->Type;
+            $suggestion['image'] = ($movie->Poster == 'N/A') ? IMAGES . '/no_cover.png' : $movie->Poster;
+            $suggestions[]= $suggestion;
+        }
     }
 
     echo $_GET["callback"] . "(" . json_encode($suggestions) . ")";
-    exit;
+    exit();
 }  
 
 
@@ -204,8 +199,8 @@ add_action('wp_enqueue_scripts', 'custom_scripts');
 
 function custom_styles() 
 {
-    wp_register_style( 'googletangerine', 'http://fonts.googleapis.com/css?family=Tangerine');
-    wp_enqueue_style( 'googletangerine');
+    //wp_register_style( 'Ranchoeffect', 'http://fonts.googleapis.com/css?family=Rancho&effect=shadow-multiple');
+    //wp_enqueue_style( 'Ranchoeffect');
 }
 add_action( 'wp_enqueue_scripts', 'custom_styles' );
 
