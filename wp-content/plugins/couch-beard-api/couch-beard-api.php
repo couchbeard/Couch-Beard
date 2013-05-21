@@ -618,8 +618,6 @@ function xbmc_sendNotification($title, $message)
 	$json = urlencode($json);
 	$url = xbmc_getURL() . "/jsonrpc?request=" . $json;
 
-	echo $url;
-
 	$header = array(
 		"Content-Type: application/json",
         "Authorization: Basic " . base64_encode($xbmc->username . ":" . $xbmc->password)
