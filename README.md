@@ -13,7 +13,7 @@ Feel free to donate to the project or add issues.
 
 Installation
 ===========
-First you need an apache server with PHP 5.3 or above and MySQL database.
+First you need an apache server with PHP 5.3 or above and MySQL database. cURL has to be enabled in php.ini (;extension=php_curl.dll)
 
 This could be more simple and should be in future release.
 
