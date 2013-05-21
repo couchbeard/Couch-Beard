@@ -177,7 +177,7 @@ $(function() {
 					$('#addMovie').attr("disabled", true);
 					$('#addMovie').html('<i>Movie added</i>');
 	        	} else {
-	        		create("withIcon", { title:'Error!', text:'<?php printf(__("%s was not added", "wpbootstrap"), $data->Title); ?>', icon:'<?php print IMAGES; ?>/alert.png' },{ 
+	        		create("withIcon", { title:'Error!', text:'<?php printf(__("<strong>%s</strong> was not added", "wpbootstrap"), $data->Title); ?>', icon:'<?php print IMAGES; ?>/alert.png' },{ 
 						expires:false});
 	        	}
             },  
@@ -204,7 +204,7 @@ $(function() {
 					$('#addTV').attr("disabled", true);
 					$('#addTV').html('<i>TV show added</i>');
 	        	} else {
-	        		create("withIcon", { title:'Error!', text:'<?php printf(__("%s was not added", "wpbootstrap"), $data->title); ?>', icon:'<?php print IMAGES; ?>/alert.png' },{ 
+	        		create("withIcon", { title:'Not implemented', text:'<?php printf(__("<strong>%s</strong> was not added", "wpbootstrap"), $data->Title); ?>', icon:'<?php print IMAGES; ?>/alert.png' },{ 
 						expires:false});
 	        	}            	
             },  

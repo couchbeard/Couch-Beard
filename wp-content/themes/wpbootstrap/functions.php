@@ -13,7 +13,7 @@ function addTVFunction()
 {
     check_ajax_referer( 'keyy', 'security' );
     //echo sb_addShow($_POST['id']);
-    echo 1;
+    echo 0;
     exit();
 }
 add_action('wp_ajax_addTV', 'addTVFunction');  // Only logged in users
