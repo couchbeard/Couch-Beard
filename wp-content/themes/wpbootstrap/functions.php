@@ -121,7 +121,6 @@ function curl($Url, $headers = null){
  
     return $output;
 }
-add_action( 'thesis_hook', 'curl');
 
 /**
  * Get movie data by ID
@@ -129,8 +128,8 @@ add_action( 'thesis_hook', 'curl');
  * @return array     Movie data
  */
 function getMovieData($id) {
-    $url = "http://www.omdbapi.com/?i=" . $_GET['id'] . "&plot=full";
-    $json = curl_download($url);
+    $url = "http://www.omdbapi.com/?i=" . $id . "&plot=full";
+    $json = curl($url);
 
     $data = json_decode($json);
 
@@ -202,6 +201,8 @@ function custom_scripts()
     wp_enqueue_style( 'myprefix-jquery-ui' );
     wp_register_script('jnotify', get_template_directory_uri() . '/Scripts/jquery.notify.js', array('jquery', 'jquery-ui-autocomplete'));
     wp_enqueue_script('jnotify');
+    wp_register_script('lazyload', get_template_directory_uri() . '/Scripts/jquery.lazyload.js', array('jquery'));
+    wp_enqueue_script('lazyload');    
  
 }
 add_action('wp_enqueue_scripts', 'custom_scripts');

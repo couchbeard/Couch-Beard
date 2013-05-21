@@ -1,12 +1,12 @@
+<div class="span12">
 <?php
-	include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-	if (!is_plugin_active('couch-beard-api/couch-beard-api.php')) {
-		printf(__('Could not find %s plugin. You need to activate %s ', 'wpbootstrap'), 'couch-beard-api', 'couch-beard-api');
+	$shows = sb_getShows();
+	if (empty($shows)) {
+		_e('No shows wanted', 'wpbootstrap');
 		exit();
 	}
 	?>
-	<div class="span12">	
-	<?php foreach (sb_getShows() as $key => $val) { 
+	<?php foreach ($shows as $key => $val) { 
 		echo $val->show_name . ' (' . $key . ')';
 		echo '<br />';
 	?>
@@ -64,4 +64,4 @@
 		}
 	}
 ?>
-	</div>
+</div>

@@ -1,20 +1,22 @@
-<?php
-	include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-	if (!is_plugin_active('couch-beard-api/couch-beard-api.php')) {
-		printf(__('Could not find %s plugin. You need to activate %s ', 'wpbootstrap'), 'couch-beard-api', 'couch-beard-api');
+	<?php
+	$movies = cp_getMovies();
+	if (empty($movies)) {
+		_e('No movies wanted', 'wpbootstrap');
 		exit();
 	}
-	?>
-	<div class="span12">	
-	<?php foreach (cp_getMovies() as $val) { 
+?>
+	<div class="row">
+		<div class="span12">
+<?php
+	foreach ($movies as $val) { 
 		$movie = $val->library->info;
 	?>
 			<div id="wantedSearchCover">
 				<a class="nolink" href="<?php echo get_permalink(getSearchpageID()) . '&id=' . $movie->imdb; ?>">
 					<div id="wantedCoverOverlay">
-						<p class="nolink"><?php echo $movie->original_title; ?></p>
+						<p class="nolink"><?php echo $movie->original_title . ' (' . $movie->year . ')'; ?></p>
 					</div>
-					<img id="wantedSearchpageCover" src="<?php echo $movie->images->poster[0]; ?>" class="img-rounded"/>
+					<img id="wantedSearchpageCover" src="<?php print IMAGES; ?>/no_cover.png" data-original="<?php echo $movie->images->poster[0]; ?>" class="lazy"/>
 				</a>
 			</div>		
 		<!--<div class="row">
@@ -36,3 +38,15 @@
 		<br /> -->
 		<?php } ?>
 	</div>
+</div>
+
+<script>
+	$(function() {
+		$("img.lazy").lazyload({
+			event : "sporty"
+		});
+	});
+	$(window).bind("load", function() { 
+	    var timeout = setTimeout(function() {$("img.lazy").trigger("sporty")}, 2000);
+	}); 
+</script>

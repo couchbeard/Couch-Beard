@@ -6,13 +6,13 @@ Template Name: Search Page
 <?php $ajax_nonce = wp_create_nonce("keyy"); ?>
 <?php get_header(); ?>
 <?php
-if (isset($_GET['id'])) {
-	$data = getMovieData($_GET['id']);
+if (isset($_GET['id'])) {	
 	include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 	if (!is_plugin_active('couch-beard-api/couch-beard-api.php')) {
 		printf(__('Could not find %s plugin. You need to activate %s ', 'wpbootstrap'), 'couch-beard-api', 'couch-beard-api');
 		exit();
 	}
+	$data = getMovieData($_GET['id']);
 	if (!isset($data->Error)) {
 ?>
 	<legend><?php echo $data->Title; ?></legend>

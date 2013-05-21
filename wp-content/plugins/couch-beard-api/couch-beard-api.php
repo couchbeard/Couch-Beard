@@ -658,11 +658,15 @@ function xbmc_getURL() {
  * Get all XBMC movies
  * @return array all XBMC movies
  */
-function xbmc_getMovies() {
+function xbmc_getMovies($start = '', $end = '') {
 	try {
 		$xbmc = getLogin('XBMC');
 
-		$json = "{\"jsonrpc\": \"2.0\", \"method\": \"VideoLibrary.GetMovies\", \"params\": { \"properties\" : [\"art\", \"rating\", \"playcount\", \"year\", \"imdbnumber\"], \"sort\": { \"order\": \"ascending\", \"method\": \"label\", \"ignorearticle\": true } }, \"id\": \"libMovies\"}";
+		if (empty($start) && empty($end))
+			$json = "{\"jsonrpc\": \"2.0\", \"method\": \"VideoLibrary.GetMovies\", \"params\": { \"properties\" : [\"art\", \"thumbnail\", \"rating\", \"playcount\", \"year\", \"imdbnumber\"], \"sort\": { \"order\": \"ascending\", \"method\": \"label\", \"ignorearticle\": true } }, \"id\": \"libMovies\"}";
+		else
+			$json = "{\"jsonrpc\": \"2.0\", \"method\": \"VideoLibrary.GetMovies\", \"params\": { \"limits\": { \"start\" : " . $start . ", \"end\" : " . intval($start + $end) . " }, \"properties\" : [\"art\", \"thumbnail\", \"rating\", \"playcount\", \"year\", \"imdbnumber\"], \"sort\": { \"order\": \"ascending\", \"method\": \"label\", \"ignorearticle\": true} }, \"id\": \"libMovies\"}";
+		
 		$json = urlencode($json);
 		$url = xbmc_getURL() . "/jsonrpc?request=" . $json;
 
@@ -702,11 +706,13 @@ function xbmc_movieOwned($imdb_id)
 }
 
 
-function xbmc_getShows() {
+function xbmc_getShows($start = '', $end = '') {
 	try {
 		$xbmc = getLogin('XBMC');
-
-		$json = "{\"jsonrpc\": \"2.0\", \"method\": \"VideoLibrary.GetTVShows\", \"params\": { \"properties\" : [\"art\", \"rating\", \"playcount\", \"year\", \"imdbnumber\"], \"sort\": { \"order\": \"ascending\", \"method\": \"label\", \"ignorearticle\": true } }, \"id\": \"libShows\"}";
+		if (empty($start) || empty($end))
+			$json = "{\"jsonrpc\": \"2.0\", \"method\": \"VideoLibrary.GetTVShows\", \"params\": { \"properties\" : [\"art\", \"rating\", \"playcount\", \"year\", \"imdbnumber\"], \"sort\": { \"order\": \"ascending\", \"method\": \"label\", \"ignorearticle\": true } }, \"id\": \"libShows\"}";
+		else
+			$json = "{\"jsonrpc\": \"2.0\", \"method\": \"VideoLibrary.GetTVShows\", \"params\": { \"limits\": { \"start\" : " . $start . ", \"end\" : " . $start + $end . " }, \"properties\" : [\"art\", \"rating\", \"playcount\", \"year\", \"imdbnumber\"], \"sort\": { \"order\": \"ascending\", \"method\": \"label\", \"ignorearticle\": true} }, \"id\": \"libShows\"}";
 		$json = urlencode($json);
 		$url = xbmc_getURL() . "/jsonrpc?request=" . $json;
 

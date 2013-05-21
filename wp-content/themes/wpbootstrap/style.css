@@ -36,6 +36,14 @@ p, h1, h2, h3, h4, body, legend {
 	margin-bottom: 19px;
 }
 
+#genreButtons {
+	margin-bottom: 12px;
+}
+
+#searchBar {
+	display: none;
+}
+
 .nolink, .nolink:hover {
    	cursor: default;
    	text-decoration: none;
