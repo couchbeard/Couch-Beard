@@ -604,6 +604,33 @@ function xbmc_movieOwned($imdb_id)
 	return false;
 }
 
+/**
+ * Send a notification to XBMC
+ * @param  string $title title
+ * @param  string $message message
+ * @return bool     Success
+ */
+function xbmc_sendNotification($title, $message)
+{
+	$xbmc = getLogin('XBMC');
+
+	$json = "{\"jsonrpc\": \"2.0\", \"method\": \"GUI.ShowNotification\", \"params\": {\"title\" : \"".$title."\", \"message\" : \"".$message."\" }, \"id\": \"1\"}";
+	$json = urlencode($json);
+	$url = xbmc_getURL() . "/jsonrpc?request=" . $json;
+
+	echo $url;
+
+	$header = array(
+		"Content-Type: application/json",
+        "Authorization: Basic " . base64_encode($xbmc->username . ":" . $xbmc->password)
+    ); 
+
+	$result = curl_download($url, $header);
+	$data = json_decode($result);
+
+	return ($data->result == "OK");
+}
+
 
 
 /**
