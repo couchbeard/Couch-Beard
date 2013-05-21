@@ -16,7 +16,7 @@
 <!-- 7. WordPress will then import each of the posts, pages, comments, categories, etc. -->
 <!--    contained in this file into your site. -->
 
-<!-- generator="WordPress/3.5.1" created="2013-05-18 11:53" -->
+<!-- generator="WordPress/3.5.1" created="2013-05-21 20:12" -->
 <rss version="2.0"
 	xmlns:excerpt="http://wordpress.org/export/1.2/excerpt/"
 	xmlns:content="http://purl.org/rss/1.0/modules/content/"
@@ -29,7 +29,7 @@
 	<title>Couch Beard</title>
 	<link>http://localhost/git/Couch-Beard</link>
 	<description>Just another WordPress site</description>
-	<pubDate>Sat, 18 May 2013 11:53:24 +0000</pubDate>
+	<pubDate>Tue, 21 May 2013 20:12:41 +0000</pubDate>
 	<language>en-US</language>
 	<wp:wxr_version>1.2</wp:wxr_version>
 	<wp:base_site_url>http://localhost/git/Couch-Beard</wp:base_site_url>
@@ -46,15 +46,15 @@
 	<item>
 		<title>Hello world!</title>
 		<link>http://localhost/git/Couch-Beard/?p=1</link>
-		<pubDate>Wed, 15 May 2013 15:35:42 +0000</pubDate>
+		<pubDate>Sat, 18 May 2013 12:39:27 +0000</pubDate>
 		<dc:creator>admin</dc:creator>
 		<guid isPermaLink="false">http://localhost/git/Couch-Beard/?p=1</guid>
 		<description></description>
 		<content:encoded><![CDATA[Welcome to WordPress. This is your first post. Edit or delete it, then start blogging!]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
 		<wp:post_id>1</wp:post_id>
-		<wp:post_date>2013-05-15 15:35:42</wp:post_date>
-		<wp:post_date_gmt>2013-05-15 15:35:42</wp:post_date_gmt>
+		<wp:post_date>2013-05-18 12:39:27</wp:post_date>
+		<wp:post_date_gmt>2013-05-18 12:39:27</wp:post_date_gmt>
 		<wp:comment_status>open</wp:comment_status>
 		<wp:ping_status>open</wp:ping_status>
 		<wp:post_name>hello-world</wp:post_name>
@@ -71,6 +71,74 @@
 			<wp:comment_author_email></wp:comment_author_email>
 			<wp:comment_author_url>http://wordpress.org/</wp:comment_author_url>
 			<wp:comment_author_IP></wp:comment_author_IP>
+			<wp:comment_date>2013-05-18 12:39:27</wp:comment_date>
+			<wp:comment_date_gmt>2013-05-18 12:39:27</wp:comment_date_gmt>
+			<wp:comment_content><![CDATA[Hi, this is a comment.
+To delete a comment, just log in and view the post&#039;s comments. There you will have the option to edit or delete them.]]></wp:comment_content>
+			<wp:comment_approved>1</wp:comment_approved>
+			<wp:comment_type></wp:comment_type>
+			<wp:comment_parent>0</wp:comment_parent>
+			<wp:comment_user_id>0</wp:comment_user_id>
+		</wp:comment>
+	</item>
+	<item>
+		<title>Sample Page</title>
+		<link>http://localhost/git/Couch-Beard/?page_id=2</link>
+		<pubDate>Sat, 18 May 2013 12:39:27 +0000</pubDate>
+		<dc:creator>admin</dc:creator>
+		<guid isPermaLink="false">http://localhost/git/Couch-Beard/?page_id=2</guid>
+		<description></description>
+		<content:encoded><![CDATA[]]></content:encoded>
+		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
+		<wp:post_id>2</wp:post_id>
+		<wp:post_date>2013-05-18 12:39:27</wp:post_date>
+		<wp:post_date_gmt>2013-05-18 12:39:27</wp:post_date_gmt>
+		<wp:comment_status>open</wp:comment_status>
+		<wp:ping_status>open</wp:ping_status>
+		<wp:post_name>sample-page</wp:post_name>
+		<wp:status>publish</wp:status>
+		<wp:post_parent>0</wp:post_parent>
+		<wp:menu_order>0</wp:menu_order>
+		<wp:post_type>page</wp:post_type>
+		<wp:post_password></wp:post_password>
+		<wp:is_sticky>0</wp:is_sticky>
+		<wp:postmeta>
+			<wp:meta_key>_wp_page_template</wp:meta_key>
+			<wp:meta_value><![CDATA[default]]></wp:meta_value>
+		</wp:postmeta>
+		<wp:postmeta>
+			<wp:meta_key>_edit_last</wp:meta_key>
+			<wp:meta_value><![CDATA[1]]></wp:meta_value>
+		</wp:postmeta>
+	</item>
+	<item>
+		<title>Hello world!</title>
+		<link>http://localhost/git/Couch-Beard/?p=5</link>
+		<pubDate>Wed, 15 May 2013 15:35:42 +0000</pubDate>
+		<dc:creator>admin</dc:creator>
+		<guid isPermaLink="false">http://localhost/git/Couch-Beard/?p=1</guid>
+		<description></description>
+		<content:encoded><![CDATA[Welcome to WordPress. This is your first post. Edit or delete it, then start blogging!]]></content:encoded>
+		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
+		<wp:post_id>5</wp:post_id>
+		<wp:post_date>2013-05-15 15:35:42</wp:post_date>
+		<wp:post_date_gmt>2013-05-15 15:35:42</wp:post_date_gmt>
+		<wp:comment_status>open</wp:comment_status>
+		<wp:ping_status>open</wp:ping_status>
+		<wp:post_name>hello-world-2</wp:post_name>
+		<wp:status>publish</wp:status>
+		<wp:post_parent>0</wp:post_parent>
+		<wp:menu_order>0</wp:menu_order>
+		<wp:post_type>post</wp:post_type>
+		<wp:post_password></wp:post_password>
+		<wp:is_sticky>0</wp:is_sticky>
+		<category domain="category" nicename="uncategorized"><![CDATA[Uncategorized]]></category>
+		<wp:comment>
+			<wp:comment_id>2</wp:comment_id>
+			<wp:comment_author><![CDATA[Mr WordPress]]></wp:comment_author>
+			<wp:comment_author_email></wp:comment_author_email>
+			<wp:comment_author_url>http://wordpress.org/</wp:comment_author_url>
+			<wp:comment_author_IP></wp:comment_author_IP>
 			<wp:comment_date>2013-05-15 15:35:42</wp:comment_date>
 			<wp:comment_date_gmt>2013-05-15 15:35:42</wp:comment_date_gmt>
 			<wp:comment_content><![CDATA[Hi, this is a comment.
@@ -83,7 +151,7 @@ To delete a comment, just log in and view the post&#039;s comments. There you wi
 	</item>
 	<item>
 		<title>Sample Page</title>
-		<link>http://localhost/git/Couch-Beard/?page_id=2</link>
+		<link>http://localhost/git/Couch-Beard/?page_id=6</link>
 		<pubDate>Wed, 15 May 2013 15:35:42 +0000</pubDate>
 		<dc:creator>admin</dc:creator>
 		<guid isPermaLink="false">http://localhost/git/Couch-Beard/?page_id=2</guid>
@@ -98,12 +166,12 @@ To delete a comment, just log in and view the post&#039;s comments. There you wi
 
 As a new WordPress user, you should go to <a href="http://localhost/git/Couch-Beard/wp-admin/">your dashboard</a> to delete this page and create new pages for your content. Have fun!]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>2</wp:post_id>
+		<wp:post_id>6</wp:post_id>
 		<wp:post_date>2013-05-15 15:35:42</wp:post_date>
 		<wp:post_date_gmt>2013-05-15 15:35:42</wp:post_date_gmt>
 		<wp:comment_status>open</wp:comment_status>
 		<wp:ping_status>open</wp:ping_status>
-		<wp:post_name>sample-page</wp:post_name>
+		<wp:post_name>sample-page-2</wp:post_name>
 		<wp:status>trash</wp:status>
 		<wp:post_parent>0</wp:post_parent>
 		<wp:menu_order>0</wp:menu_order>
@@ -125,14 +193,14 @@ As a new WordPress user, you should go to <a href="http://localhost/git/Couch-Be
 	</item>
 	<item>
 		<title>Home</title>
-		<link>http://localhost/git/Couch-Beard/?page_id=5</link>
+		<link>http://localhost/git/Couch-Beard/?page_id=7</link>
 		<pubDate>Wed, 15 May 2013 15:41:42 +0000</pubDate>
 		<dc:creator>admin</dc:creator>
 		<guid isPermaLink="false">http://localhost/git/Couch-Beard/?page_id=5</guid>
 		<description></description>
 		<content:encoded><![CDATA[]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>5</wp:post_id>
+		<wp:post_id>7</wp:post_id>
 		<wp:post_date>2013-05-15 15:41:42</wp:post_date>
 		<wp:post_date_gmt>2013-05-15 15:41:42</wp:post_date_gmt>
 		<wp:comment_status>open</wp:comment_status>
@@ -151,14 +219,14 @@ As a new WordPress user, you should go to <a href="http://localhost/git/Couch-Be
 	</item>
 	<item>
 		<title>Movies</title>
-		<link>http://localhost/git/Couch-Beard/?page_id=6</link>
+		<link>http://localhost/git/Couch-Beard/?page_id=8</link>
 		<pubDate>Wed, 15 May 2013 15:41:59 +0000</pubDate>
 		<dc:creator>admin</dc:creator>
 		<guid isPermaLink="false">http://localhost/git/Couch-Beard/?page_id=6</guid>
 		<description></description>
 		<content:encoded><![CDATA[Couchpotato]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>6</wp:post_id>
+		<wp:post_id>8</wp:post_id>
 		<wp:post_date>2013-05-15 15:41:59</wp:post_date>
 		<wp:post_date_gmt>2013-05-15 15:41:59</wp:post_date_gmt>
 		<wp:comment_status>open</wp:comment_status>
@@ -174,17 +242,21 @@ As a new WordPress user, you should go to <a href="http://localhost/git/Couch-Be
 			<wp:meta_key>_edit_last</wp:meta_key>
 			<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
+		<wp:postmeta>
+			<wp:meta_key>_wp_page_template</wp:meta_key>
+			<wp:meta_value><![CDATA[default]]></wp:meta_value>
+		</wp:postmeta>
 	</item>
 	<item>
 		<title>Tv-Series</title>
-		<link>http://localhost/git/Couch-Beard/?page_id=8</link>
+		<link>http://localhost/git/Couch-Beard/?page_id=9</link>
 		<pubDate>Wed, 15 May 2013 15:42:14 +0000</pubDate>
 		<dc:creator>admin</dc:creator>
 		<guid isPermaLink="false">http://localhost/git/Couch-Beard/?page_id=8</guid>
 		<description></description>
 		<content:encoded><![CDATA[Sickbeard]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>8</wp:post_id>
+		<wp:post_id>9</wp:post_id>
 		<wp:post_date>2013-05-15 15:42:14</wp:post_date>
 		<wp:post_date_gmt>2013-05-15 15:42:14</wp:post_date_gmt>
 		<wp:comment_status>open</wp:comment_status>
@@ -229,22 +301,22 @@ As a new WordPress user, you should go to <a href="http://localhost/git/Couch-Be
 	</item>
 	<item>
 		<title></title>
-		<link>http://localhost/git/Couch-Beard/?p=12</link>
-		<pubDate>Wed, 15 May 2013 15:43:07 +0000</pubDate>
+		<link>http://localhost/git/Couch-Beard/?p=11</link>
+		<pubDate>Sat, 18 May 2013 12:40:05 +0000</pubDate>
 		<dc:creator>admin</dc:creator>
-		<guid isPermaLink="false">http://localhost/git/Couch-Beard/?p=12</guid>
+		<guid isPermaLink="false">http://localhost/git/Couch-Beard/?p=11</guid>
 		<description></description>
 		<content:encoded><![CDATA[ ]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>12</wp:post_id>
-		<wp:post_date>2013-05-15 15:43:07</wp:post_date>
-		<wp:post_date_gmt>2013-05-15 15:43:07</wp:post_date_gmt>
+		<wp:post_id>11</wp:post_id>
+		<wp:post_date>2013-05-18 12:40:05</wp:post_date>
+		<wp:post_date_gmt>2013-05-18 12:40:05</wp:post_date_gmt>
 		<wp:comment_status>open</wp:comment_status>
 		<wp:ping_status>open</wp:ping_status>
-		<wp:post_name>12</wp:post_name>
+		<wp:post_name>11</wp:post_name>
 		<wp:status>publish</wp:status>
 		<wp:post_parent>0</wp:post_parent>
-		<wp:menu_order>3</wp:menu_order>
+		<wp:menu_order>5</wp:menu_order>
 		<wp:post_type>nav_menu_item</wp:post_type>
 		<wp:post_password></wp:post_password>
 		<wp:is_sticky>0</wp:is_sticky>
@@ -284,22 +356,77 @@ As a new WordPress user, you should go to <a href="http://localhost/git/Couch-Be
 	</item>
 	<item>
 		<title></title>
+		<link>http://localhost/git/Couch-Beard/?p=12</link>
+		<pubDate>Sat, 18 May 2013 12:40:05 +0000</pubDate>
+		<dc:creator>admin</dc:creator>
+		<guid isPermaLink="false">http://localhost/git/Couch-Beard/?p=12</guid>
+		<description></description>
+		<content:encoded><![CDATA[ ]]></content:encoded>
+		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
+		<wp:post_id>12</wp:post_id>
+		<wp:post_date>2013-05-18 12:40:05</wp:post_date>
+		<wp:post_date_gmt>2013-05-18 12:40:05</wp:post_date_gmt>
+		<wp:comment_status>open</wp:comment_status>
+		<wp:ping_status>open</wp:ping_status>
+		<wp:post_name>12</wp:post_name>
+		<wp:status>publish</wp:status>
+		<wp:post_parent>0</wp:post_parent>
+		<wp:menu_order>3</wp:menu_order>
+		<wp:post_type>nav_menu_item</wp:post_type>
+		<wp:post_password></wp:post_password>
+		<wp:is_sticky>0</wp:is_sticky>
+		<category domain="nav_menu" nicename="user"><![CDATA[User]]></category>
+		<wp:postmeta>
+			<wp:meta_key>_menu_item_type</wp:meta_key>
+			<wp:meta_value><![CDATA[post_type]]></wp:meta_value>
+		</wp:postmeta>
+		<wp:postmeta>
+			<wp:meta_key>_menu_item_menu_item_parent</wp:meta_key>
+			<wp:meta_value><![CDATA[0]]></wp:meta_value>
+		</wp:postmeta>
+		<wp:postmeta>
+			<wp:meta_key>_menu_item_object_id</wp:meta_key>
+			<wp:meta_value><![CDATA[9]]></wp:meta_value>
+		</wp:postmeta>
+		<wp:postmeta>
+			<wp:meta_key>_menu_item_object</wp:meta_key>
+			<wp:meta_value><![CDATA[page]]></wp:meta_value>
+		</wp:postmeta>
+		<wp:postmeta>
+			<wp:meta_key>_menu_item_target</wp:meta_key>
+			<wp:meta_value><![CDATA[]]></wp:meta_value>
+		</wp:postmeta>
+		<wp:postmeta>
+			<wp:meta_key>_menu_item_classes</wp:meta_key>
+			<wp:meta_value><![CDATA[a:1:{i:0;s:0:"";}]]></wp:meta_value>
+		</wp:postmeta>
+		<wp:postmeta>
+			<wp:meta_key>_menu_item_xfn</wp:meta_key>
+			<wp:meta_value><![CDATA[]]></wp:meta_value>
+		</wp:postmeta>
+		<wp:postmeta>
+			<wp:meta_key>_menu_item_url</wp:meta_key>
+			<wp:meta_value><![CDATA[]]></wp:meta_value>
+		</wp:postmeta>
+	</item>
+	<item>
+		<title></title>
 		<link>http://localhost/git/Couch-Beard/?p=13</link>
-		<pubDate>Wed, 15 May 2013 15:43:07 +0000</pubDate>
+		<pubDate>Sat, 18 May 2013 12:40:06 +0000</pubDate>
 		<dc:creator>admin</dc:creator>
 		<guid isPermaLink="false">http://localhost/git/Couch-Beard/?p=13</guid>
 		<description></description>
 		<content:encoded><![CDATA[ ]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
 		<wp:post_id>13</wp:post_id>
-		<wp:post_date>2013-05-15 15:43:07</wp:post_date>
-		<wp:post_date_gmt>2013-05-15 15:43:07</wp:post_date_gmt>
+		<wp:post_date>2013-05-18 12:40:06</wp:post_date>
+		<wp:post_date_gmt>2013-05-18 12:40:06</wp:post_date_gmt>
 		<wp:comment_status>open</wp:comment_status>
 		<wp:ping_status>open</wp:ping_status>
 		<wp:post_name>13</wp:post_name>
 		<wp:status>publish</wp:status>
 		<wp:post_parent>0</wp:post_parent>
-		<wp:menu_order>2</wp:menu_order>
+		<wp:menu_order>1</wp:menu_order>
 		<wp:post_type>nav_menu_item</wp:post_type>
 		<wp:post_password></wp:post_password>
 		<wp:is_sticky>0</wp:is_sticky>
@@ -340,131 +467,18 @@ As a new WordPress user, you should go to <a href="http://localhost/git/Couch-Be
 	<item>
 		<title></title>
 		<link>http://localhost/git/Couch-Beard/?p=14</link>
-		<pubDate>Wed, 15 May 2013 15:43:07 +0000</pubDate>
+		<pubDate>Sat, 18 May 2013 12:40:06 +0000</pubDate>
 		<dc:creator>admin</dc:creator>
 		<guid isPermaLink="false">http://localhost/git/Couch-Beard/?p=14</guid>
 		<description></description>
 		<content:encoded><![CDATA[ ]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
 		<wp:post_id>14</wp:post_id>
-		<wp:post_date>2013-05-15 15:43:07</wp:post_date>
-		<wp:post_date_gmt>2013-05-15 15:43:07</wp:post_date_gmt>
+		<wp:post_date>2013-05-18 12:40:06</wp:post_date>
+		<wp:post_date_gmt>2013-05-18 12:40:06</wp:post_date_gmt>
 		<wp:comment_status>open</wp:comment_status>
 		<wp:ping_status>open</wp:ping_status>
 		<wp:post_name>14</wp:post_name>
-		<wp:status>publish</wp:status>
-		<wp:post_parent>0</wp:post_parent>
-		<wp:menu_order>1</wp:menu_order>
-		<wp:post_type>nav_menu_item</wp:post_type>
-		<wp:post_password></wp:post_password>
-		<wp:is_sticky>0</wp:is_sticky>
-		<category domain="nav_menu" nicename="user"><![CDATA[User]]></category>
-		<wp:postmeta>
-			<wp:meta_key>_menu_item_type</wp:meta_key>
-			<wp:meta_value><![CDATA[post_type]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_menu_item_menu_item_parent</wp:meta_key>
-			<wp:meta_value><![CDATA[0]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_menu_item_object_id</wp:meta_key>
-			<wp:meta_value><![CDATA[6]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_menu_item_object</wp:meta_key>
-			<wp:meta_value><![CDATA[page]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_menu_item_target</wp:meta_key>
-			<wp:meta_value><![CDATA[]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_menu_item_classes</wp:meta_key>
-			<wp:meta_value><![CDATA[a:1:{i:0;s:0:"";}]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_menu_item_xfn</wp:meta_key>
-			<wp:meta_value><![CDATA[]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_menu_item_url</wp:meta_key>
-			<wp:meta_value><![CDATA[]]></wp:meta_value>
-		</wp:postmeta>
-	</item>
-	<item>
-		<title></title>
-		<link>http://localhost/git/Couch-Beard/?p=15</link>
-		<pubDate>Thu, 01 Jan 1970 00:00:00 +0000</pubDate>
-		<dc:creator>admin</dc:creator>
-		<guid isPermaLink="false">http://localhost/git/Couch-Beard/?p=15</guid>
-		<description></description>
-		<content:encoded><![CDATA[ ]]></content:encoded>
-		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>15</wp:post_id>
-		<wp:post_date>2013-05-15 15:42:49</wp:post_date>
-		<wp:post_date_gmt>0000-00-00 00:00:00</wp:post_date_gmt>
-		<wp:comment_status>open</wp:comment_status>
-		<wp:ping_status>open</wp:ping_status>
-		<wp:post_name></wp:post_name>
-		<wp:status>draft</wp:status>
-		<wp:post_parent>0</wp:post_parent>
-		<wp:menu_order>1</wp:menu_order>
-		<wp:post_type>nav_menu_item</wp:post_type>
-		<wp:post_password></wp:post_password>
-		<wp:is_sticky>0</wp:is_sticky>
-		<wp:postmeta>
-			<wp:meta_key>_menu_item_type</wp:meta_key>
-			<wp:meta_value><![CDATA[post_type]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_menu_item_menu_item_parent</wp:meta_key>
-			<wp:meta_value><![CDATA[0]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_menu_item_object_id</wp:meta_key>
-			<wp:meta_value><![CDATA[5]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_menu_item_object</wp:meta_key>
-			<wp:meta_value><![CDATA[page]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_menu_item_target</wp:meta_key>
-			<wp:meta_value><![CDATA[]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_menu_item_classes</wp:meta_key>
-			<wp:meta_value><![CDATA[a:1:{i:0;s:0:"";}]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_menu_item_xfn</wp:meta_key>
-			<wp:meta_value><![CDATA[]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_menu_item_url</wp:meta_key>
-			<wp:meta_value><![CDATA[]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_menu_item_orphaned</wp:meta_key>
-			<wp:meta_value><![CDATA[1368632569]]></wp:meta_value>
-		</wp:postmeta>
-	</item>
-	<item>
-		<title></title>
-		<link>http://localhost/git/Couch-Beard/?p=16</link>
-		<pubDate>Wed, 15 May 2013 15:43:18 +0000</pubDate>
-		<dc:creator>admin</dc:creator>
-		<guid isPermaLink="false">http://localhost/git/Couch-Beard/?p=16</guid>
-		<description></description>
-		<content:encoded><![CDATA[ ]]></content:encoded>
-		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>16</wp:post_id>
-		<wp:post_date>2013-05-15 15:43:18</wp:post_date>
-		<wp:post_date_gmt>2013-05-15 15:43:18</wp:post_date_gmt>
-		<wp:comment_status>open</wp:comment_status>
-		<wp:ping_status>open</wp:ping_status>
-		<wp:post_name>16</wp:post_name>
 		<wp:status>publish</wp:status>
 		<wp:post_parent>0</wp:post_parent>
 		<wp:menu_order>1</wp:menu_order>
@@ -560,6 +574,176 @@ As a new WordPress user, you should go to <a href="http://localhost/git/Couch-Be
 		<wp:postmeta>
 			<wp:meta_key>_edit_last</wp:meta_key>
 			<wp:meta_value><![CDATA[1]]></wp:meta_value>
+		</wp:postmeta>
+	</item>
+	<item>
+		<title>Wanted</title>
+		<link>http://localhost/git/Couch-Beard/?page_id=22</link>
+		<pubDate>Tue, 21 May 2013 17:19:36 +0000</pubDate>
+		<dc:creator>admin</dc:creator>
+		<guid isPermaLink="false">http://localhost/git/Couch-Beard/?page_id=22</guid>
+		<description></description>
+		<content:encoded><![CDATA[]]></content:encoded>
+		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
+		<wp:post_id>22</wp:post_id>
+		<wp:post_date>2013-05-21 19:19:36</wp:post_date>
+		<wp:post_date_gmt>2013-05-21 17:19:36</wp:post_date_gmt>
+		<wp:comment_status>open</wp:comment_status>
+		<wp:ping_status>open</wp:ping_status>
+		<wp:post_name>wanted</wp:post_name>
+		<wp:status>publish</wp:status>
+		<wp:post_parent>8</wp:post_parent>
+		<wp:menu_order>0</wp:menu_order>
+		<wp:post_type>page</wp:post_type>
+		<wp:post_password></wp:post_password>
+		<wp:is_sticky>0</wp:is_sticky>
+		<wp:postmeta>
+			<wp:meta_key>_edit_last</wp:meta_key>
+			<wp:meta_value><![CDATA[1]]></wp:meta_value>
+		</wp:postmeta>
+		<wp:postmeta>
+			<wp:meta_key>_wp_page_template</wp:meta_key>
+			<wp:meta_value><![CDATA[template_wanted_movies.php]]></wp:meta_value>
+		</wp:postmeta>
+	</item>
+	<item>
+		<title></title>
+		<link>http://localhost/git/Couch-Beard/?p=23</link>
+		<pubDate>Tue, 21 May 2013 17:19:58 +0000</pubDate>
+		<dc:creator>admin</dc:creator>
+		<guid isPermaLink="false">http://localhost/git/Couch-Beard/?p=23</guid>
+		<description></description>
+		<content:encoded><![CDATA[ ]]></content:encoded>
+		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
+		<wp:post_id>23</wp:post_id>
+		<wp:post_date>2013-05-21 19:19:58</wp:post_date>
+		<wp:post_date_gmt>2013-05-21 17:19:58</wp:post_date_gmt>
+		<wp:comment_status>open</wp:comment_status>
+		<wp:ping_status>open</wp:ping_status>
+		<wp:post_name>23</wp:post_name>
+		<wp:status>publish</wp:status>
+		<wp:post_parent>8</wp:post_parent>
+		<wp:menu_order>2</wp:menu_order>
+		<wp:post_type>nav_menu_item</wp:post_type>
+		<wp:post_password></wp:post_password>
+		<wp:is_sticky>0</wp:is_sticky>
+		<category domain="nav_menu" nicename="user"><![CDATA[User]]></category>
+		<wp:postmeta>
+			<wp:meta_key>_menu_item_type</wp:meta_key>
+			<wp:meta_value><![CDATA[post_type]]></wp:meta_value>
+		</wp:postmeta>
+		<wp:postmeta>
+			<wp:meta_key>_menu_item_menu_item_parent</wp:meta_key>
+			<wp:meta_value><![CDATA[13]]></wp:meta_value>
+		</wp:postmeta>
+		<wp:postmeta>
+			<wp:meta_key>_menu_item_object_id</wp:meta_key>
+			<wp:meta_value><![CDATA[22]]></wp:meta_value>
+		</wp:postmeta>
+		<wp:postmeta>
+			<wp:meta_key>_menu_item_object</wp:meta_key>
+			<wp:meta_value><![CDATA[page]]></wp:meta_value>
+		</wp:postmeta>
+		<wp:postmeta>
+			<wp:meta_key>_menu_item_target</wp:meta_key>
+			<wp:meta_value><![CDATA[]]></wp:meta_value>
+		</wp:postmeta>
+		<wp:postmeta>
+			<wp:meta_key>_menu_item_classes</wp:meta_key>
+			<wp:meta_value><![CDATA[a:1:{i:0;s:0:"";}]]></wp:meta_value>
+		</wp:postmeta>
+		<wp:postmeta>
+			<wp:meta_key>_menu_item_xfn</wp:meta_key>
+			<wp:meta_value><![CDATA[]]></wp:meta_value>
+		</wp:postmeta>
+		<wp:postmeta>
+			<wp:meta_key>_menu_item_url</wp:meta_key>
+			<wp:meta_value><![CDATA[]]></wp:meta_value>
+		</wp:postmeta>
+	</item>
+	<item>
+		<title>Wanted</title>
+		<link>http://localhost/git/Couch-Beard/?page_id=26</link>
+		<pubDate>Tue, 21 May 2013 17:28:43 +0000</pubDate>
+		<dc:creator>admin</dc:creator>
+		<guid isPermaLink="false">http://localhost/git/Couch-Beard/?page_id=26</guid>
+		<description></description>
+		<content:encoded><![CDATA[]]></content:encoded>
+		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
+		<wp:post_id>26</wp:post_id>
+		<wp:post_date>2013-05-21 19:28:43</wp:post_date>
+		<wp:post_date_gmt>2013-05-21 17:28:43</wp:post_date_gmt>
+		<wp:comment_status>open</wp:comment_status>
+		<wp:ping_status>open</wp:ping_status>
+		<wp:post_name>wanted</wp:post_name>
+		<wp:status>publish</wp:status>
+		<wp:post_parent>9</wp:post_parent>
+		<wp:menu_order>0</wp:menu_order>
+		<wp:post_type>page</wp:post_type>
+		<wp:post_password></wp:post_password>
+		<wp:is_sticky>0</wp:is_sticky>
+		<wp:postmeta>
+			<wp:meta_key>_edit_last</wp:meta_key>
+			<wp:meta_value><![CDATA[1]]></wp:meta_value>
+		</wp:postmeta>
+		<wp:postmeta>
+			<wp:meta_key>_wp_page_template</wp:meta_key>
+			<wp:meta_value><![CDATA[template_wanted_tv.php]]></wp:meta_value>
+		</wp:postmeta>
+	</item>
+	<item>
+		<title></title>
+		<link>http://localhost/git/Couch-Beard/?p=28</link>
+		<pubDate>Tue, 21 May 2013 17:29:00 +0000</pubDate>
+		<dc:creator>admin</dc:creator>
+		<guid isPermaLink="false">http://localhost/git/Couch-Beard/?p=28</guid>
+		<description></description>
+		<content:encoded><![CDATA[ ]]></content:encoded>
+		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
+		<wp:post_id>28</wp:post_id>
+		<wp:post_date>2013-05-21 19:29:00</wp:post_date>
+		<wp:post_date_gmt>2013-05-21 17:29:00</wp:post_date_gmt>
+		<wp:comment_status>open</wp:comment_status>
+		<wp:ping_status>open</wp:ping_status>
+		<wp:post_name>28</wp:post_name>
+		<wp:status>publish</wp:status>
+		<wp:post_parent>9</wp:post_parent>
+		<wp:menu_order>4</wp:menu_order>
+		<wp:post_type>nav_menu_item</wp:post_type>
+		<wp:post_password></wp:post_password>
+		<wp:is_sticky>0</wp:is_sticky>
+		<category domain="nav_menu" nicename="user"><![CDATA[User]]></category>
+		<wp:postmeta>
+			<wp:meta_key>_menu_item_type</wp:meta_key>
+			<wp:meta_value><![CDATA[post_type]]></wp:meta_value>
+		</wp:postmeta>
+		<wp:postmeta>
+			<wp:meta_key>_menu_item_menu_item_parent</wp:meta_key>
+			<wp:meta_value><![CDATA[12]]></wp:meta_value>
+		</wp:postmeta>
+		<wp:postmeta>
+			<wp:meta_key>_menu_item_object_id</wp:meta_key>
+			<wp:meta_value><![CDATA[26]]></wp:meta_value>
+		</wp:postmeta>
+		<wp:postmeta>
+			<wp:meta_key>_menu_item_object</wp:meta_key>
+			<wp:meta_value><![CDATA[page]]></wp:meta_value>
+		</wp:postmeta>
+		<wp:postmeta>
+			<wp:meta_key>_menu_item_target</wp:meta_key>
+			<wp:meta_value><![CDATA[]]></wp:meta_value>
+		</wp:postmeta>
+		<wp:postmeta>
+			<wp:meta_key>_menu_item_classes</wp:meta_key>
+			<wp:meta_value><![CDATA[a:1:{i:0;s:0:"";}]]></wp:meta_value>
+		</wp:postmeta>
+		<wp:postmeta>
+			<wp:meta_key>_menu_item_xfn</wp:meta_key>
+			<wp:meta_value><![CDATA[]]></wp:meta_value>
+		</wp:postmeta>
+		<wp:postmeta>
+			<wp:meta_key>_menu_item_url</wp:meta_key>
+			<wp:meta_value><![CDATA[]]></wp:meta_value>
 		</wp:postmeta>
 	</item>
 </channel>
