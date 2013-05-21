@@ -310,11 +310,15 @@ function cp_getURL() {
  * @return string Version
  */
 function cp_version(){
-	$url = cp_getURL() . '/app.version';
-	$json = curl_download($url);
+	try {
+		$url = cp_getURL() . '/app.version';
+		$json = curl_download($url);
 
-	$data = json_decode($json);
- 	return $data->version;
+		$data = json_decode($json);
+	 	return $data->version;
+	} catch (Exception $e) {
+		return false;
+	}
 }
 
 /**
@@ -322,11 +326,15 @@ function cp_version(){
  * @return bool Connection status
  */
 function cp_available(){
-	$url = cp_getURL() . '/app.available';
-	$json = curl_download($url);
+	try {
+		$url = cp_getURL() . '/app.available';
+		$json = curl_download($url);
 
-	$data = json_decode($json);
- 	return $data->success;
+		$data = json_decode($json);
+	 	return $data->success;
+	} catch (Exception $e) {
+		return false;
+	}
 }
 
 /**
@@ -335,11 +343,15 @@ function cp_available(){
  * @return bool     Adding status
  */
 function cp_addMovie($id){
-	$url = cp_getURL() . '/movie.add/?identifier=' . $id;
-	$json = curl_download($url);
+	try {
+		$url = cp_getURL() . '/movie.add/?identifier=' . $id;
+		$json = curl_download($url);
 
-	$data = json_decode($json);
- 	return $data->added;
+		$data = json_decode($json);
+	 	return $data->added;
+	} catch (Exception $e) {
+		return false;
+	}
 }
 
 /**
@@ -348,11 +360,15 @@ function cp_addMovie($id){
  * @return bool     Success
  */
 function cp_removeMovie($id){
-	$url = cp_getURL() . '/movie.delete?id=' . $id . '&delete_from=wanted';
-	$json = curl_download($url);
+	try {
+		$url = cp_getURL() . '/movie.delete?id=' . $id . '&delete_from=wanted';
+		$json = curl_download($url);
 
-	$data = json_decode($json);
- 	return $data->success;
+		$data = json_decode($json);
+	 	return $data->success;
+	} catch (Exception $e) {
+		return false;
+	}
 }
 
 /**
@@ -360,11 +376,15 @@ function cp_removeMovie($id){
  * @return array Movies
  */
 function cp_getMovies(){
-	$url = cp_getURL() . '/movie.list?status=active';
-	$json = curl_download($url);
+	try {
+		$url = cp_getURL() . '/movie.list?status=active';
+		$json = curl_download($url);
 
-	$data = json_decode($json);
- 	return $data;
+		$data = json_decode($json);
+	 	return $data;
+	} catch (Exception $e) {
+		return false;
+	}
 }
 
 /**
@@ -373,11 +393,15 @@ function cp_getMovies(){
  * @return bool     Success
  */
 function cp_refreshMovie($id){
-	$url = cp_getURL() . '/movie.list?id=' . $id;
-	$json = curl_download($url);
+	try {
+		$url = cp_getURL() . '/movie.list?id=' . $id;
+		$json = curl_download($url);
 
-	$data = json_decode($json);
- 	return $data->success;
+		$data = json_decode($json);
+	 	return $data->success;
+	} catch (Exception $e) {
+		return false;
+	}
 }
 
 /**
@@ -385,11 +409,15 @@ function cp_refreshMovie($id){
  * @return bool update available
  */
 function cp_update() {
-	$url = cp_getURL() . '/updater.check';
-	$json = curl_download($url);
+	try {
+		$url = cp_getURL() . '/updater.check';
+		$json = curl_download($url);
 
-	$data = json_decode($json);
- 	return $data->update_available;
+		$data = json_decode($json);
+	 	return $data->update_available;
+	} catch (Exception $e) {
+		return false;
+	}
 }
 
 /**
@@ -399,19 +427,23 @@ function cp_update() {
  */
 function cp_movieWanted($imdb_id)
 {
-	$url = cp_getURL() . '/movie.get/?id=' . $imdb_id;	
-	$json = curl_download($url);
+	try {
+		$url = cp_getURL() . '/movie.get/?id=' . $imdb_id;	
+		$json = curl_download($url);
 
-	$res = json_decode($json);
-	if ($res->success)
-	{
-		if (count($res->movie->releases))
+		$res = json_decode($json);
+		if ($res->success)
 		{
-			return false;
+			if (count($res->movie->releases))
+			{
+				return false;
+			}
+			return true;
 		}
-		return true;
+		return false;
+	} catch (Exception $e) {
+		return false;
 	}
-	return false;
 }
 
 
@@ -426,11 +458,15 @@ function cp_movieWanted($imdb_id)
  * @return string Version
  */
 function sb_version() {
-	$url = sb_getURL() . '/?cmd=sb';
-	$json = curl_download($url);
+	try {
+		$url = sb_getURL() . '/?cmd=sb';
+		$json = curl_download($url);
 
-	$data = json_decode($json);
- 	return $data->data->sb_version;
+		$data = json_decode($json);
+	 	return $data->data->sb_version;
+ 	} catch (Exception $e) {
+		return false;
+	}
 }
 
 /**
@@ -461,8 +497,50 @@ function sb_getURL() {
  * @return bool     Success
  */
 function sb_addShow($id) {
-	$url = sb_getURL() . '/?cmd_show.addnew&tvdbid=' . $id;
-	// TODO
+	try {
+		$url = sb_getURL() . '/?cmd=show.addnew&tvdbid=' . imdb_to_tvdb($id);
+		$json = curl_download($url);
+
+		$data = json_decode($json);
+		if ($data->result == 'failure')
+			return false;
+		return true;
+	} catch (Exception $e) {
+		return false;
+	}
+}
+
+/**
+ * Get all TV shows in Sickbeard
+ * @return array TV shows
+ */
+function sb_getShows() {
+	try {
+		$url = sb_getURL() . '/?cmd=shows';
+		$json = curl_download($url);
+
+		$data = json_decode($json);
+		return $data->data;
+	} catch (Exception $e) {
+		return false;
+	}
+}
+
+/**
+ * Get a specific show info
+ * @param  string $id IMDB id
+ * @return array     TV show data
+ */
+function sb_getShow($id) {
+	try {
+		$url = sb_getURL() . '/?cmd=show&tvdbid=' . imdb_to_tvdb($id);
+		$json = curl_download($url);
+
+		$data = json_decode($json);
+		return $data->data;
+	} catch (Exception $e) {
+		return false;
+	}
 }
 
 
@@ -472,11 +550,8 @@ function sb_addShow($id) {
  * @return bool     Success
  */
 function sb_showAdded($id) {
-	$url = sb_getURL() . '/?cmd=shows';
-	$json = curl_download($url);
-
-	$res = (array) json_decode($json)->data;
-	return (in_array(imdb_to_tvdb($id), array_keys($res)) ? "true" : "false");
+	$res = (array) sb_getShows();
+	return (in_array(imdb_to_tvdb($id), array_keys($res)) ? sb_getShow($id) : false);
 }
 
 
@@ -491,11 +566,15 @@ function sb_showAdded($id) {
  * @return string Version
  */
 function sab_version(){
-	$url = sab_getURL() . 'version';
-	$json = curl_download($url);
+	try {
+		$url = sab_getURL() . 'version';
+		$json = curl_download($url);
 
-	$data = json_decode($json);
- 	return $data->version;
+		$data = json_decode($json);
+	 	return $data->version;
+ 	} catch (Exception $e) {
+		return false;
+	}
 }
 
 /**
@@ -525,11 +604,15 @@ function sab_getURL() {
  * @return array downloads
  */
 function sab_getCurrentDownloads() {
-	$url = sab_getURL() . "qstatus";
-	$json = curl_download($url);
+	try {
+		$url = sab_getURL() . "qstatus";
+		$json = curl_download($url);
 
-	$data = json_decode($json);
-	return $data->jobs;
+		$data = json_decode($json);
+		return $data->jobs;
+	} catch (Exception $e) {
+		return false;
+	}
 }
 
 
@@ -566,20 +649,24 @@ function xbmc_getURL() {
  * @return array all XBMC movies
  */
 function xbmc_getMovies() {
-	$xbmc = getLogin('XBMC');
+	try {
+		$xbmc = getLogin('XBMC');
 
-	$json = "{\"jsonrpc\": \"2.0\", \"method\": \"VideoLibrary.GetMovies\", \"params\": { \"properties\" : [\"art\", \"rating\", \"playcount\", \"year\", \"imdbnumber\"], \"sort\": { \"order\": \"ascending\", \"method\": \"label\", \"ignorearticle\": true } }, \"id\": \"libMovies\"}";
-	$json = urlencode($json);
-	$url = xbmc_getURL() . "/jsonrpc?request=" . $json;
+		$json = "{\"jsonrpc\": \"2.0\", \"method\": \"VideoLibrary.GetMovies\", \"params\": { \"properties\" : [\"art\", \"rating\", \"playcount\", \"year\", \"imdbnumber\"], \"sort\": { \"order\": \"ascending\", \"method\": \"label\", \"ignorearticle\": true } }, \"id\": \"libMovies\"}";
+		$json = urlencode($json);
+		$url = xbmc_getURL() . "/jsonrpc?request=" . $json;
 
-	$header = array(
-		"Content-Type: application/json",
-        "Authorization: Basic " . base64_encode($xbmc->username . ":" . $xbmc->password)
-    ); 
+		$header = array(
+			"Content-Type: application/json",
+	        "Authorization: Basic " . base64_encode($xbmc->username . ":" . $xbmc->password)
+	    ); 
 
-	$result = curl_download($url, $header);
-	$data = json_decode($result);
-	return $data->result->movies;
+		$result = curl_download($url, $header);
+		$data = json_decode($result);
+		return $data->result->movies;
+	} catch (Exception $e) {
+		return false;
+	}
 
 }
 
@@ -604,6 +691,42 @@ function xbmc_movieOwned($imdb_id)
 	return false;
 }
 
+function xbmc_getShows() {
+	try {
+		$xbmc = getLogin('XBMC');
+
+		$json = "{\"jsonrpc\": \"2.0\", \"method\": \"VideoLibrary.GetTVShows\", \"params\": { \"properties\" : [\"art\", \"rating\", \"playcount\", \"year\", \"imdbnumber\"], \"sort\": { \"order\": \"ascending\", \"method\": \"label\", \"ignorearticle\": true } }, \"id\": \"libShows\"}";
+		$json = urlencode($json);
+		$url = xbmc_getURL() . "/jsonrpc?request=" . $json;
+
+		$header = array(
+			"Content-Type: application/json",
+	        "Authorization: Basic " . base64_encode($xbmc->username . ":" . $xbmc->password)
+	    ); 
+
+		$result = curl_download($url, $header);
+		$data = json_decode($result);
+		return $data->result->tvshows;
+	} catch (Exception $e) {
+		return false;
+	}
+}
+
+function xbmc_showOwned($id)
+{
+	$shows = xbmc_getShows();
+	if (empty($shows))
+		return false;
+	$showID = imdb_to_tvdb($id);
+	foreach($shows as $show)
+	{
+		if ($show->imdbnumber == $showID)
+		{
+			return true;
+		}
+	}
+	return false;
+}
 
 
 /**

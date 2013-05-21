@@ -4,7 +4,7 @@
 function addMovieFunction()
 {
     check_ajax_referer( 'keyy', 'security' );
-    echo cp_addMovie($_POST['id']);
+    echo (bool) cp_addMovie($_POST['id']);
     exit();
 }
 add_action('wp_ajax_addMovie', 'addMovieFunction');  // Only logged in users
@@ -12,8 +12,7 @@ add_action('wp_ajax_addMovie', 'addMovieFunction');  // Only logged in users
 function addTVFunction()
 {
     check_ajax_referer( 'keyy', 'security' );
-    //echo sb_addShow($_POST['id']);
-    echo 0;
+    echo (bool) sb_addShow($_POST['id']);
     exit();
 }
 add_action('wp_ajax_addTV', 'addTVFunction');  // Only logged in users

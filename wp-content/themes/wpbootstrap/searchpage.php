@@ -6,14 +6,13 @@ Template Name: Search Page
 <?php $ajax_nonce = wp_create_nonce("keyy"); ?>
 <?php get_header(); ?>
 <?php
-include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-if (!is_plugin_active('couch-beard-api/couch-beard-api.php')) {
-	printf(__('Could not find %s plugin. You need to activate %s ', 'wpbootstrap'), 'couch-beard-api', 'couch-beard-api');
-	exit();
-}
-
 if (isset($_GET['id'])) {
 	$data = getMovieData($_GET['id']);
+	include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+	if (!is_plugin_active('couch-beard-api/couch-beard-api.php')) {
+		printf(__('Could not find %s plugin. You need to activate %s ', 'wpbootstrap'), 'couch-beard-api', 'couch-beard-api');
+		exit();
+	}
 	if (!isset($data->Error)) {
 ?>
 	<legend><?php echo $data->Title; ?></legend>
@@ -109,11 +108,32 @@ if (isset($_GET['id'])) {
 					{
 					?>
 						<button class="btn btn-inverse pull-right" id="addMovie"><?php _e('Add movie', 'wpbootstrap'); ?></button>
-					<?php
+			<?php
 					}
-			} else if ($data->Type == 'series') { ?>
-				<button class="btn btn-inverse pull-right" id="addTV"><?php _e('Add TV show', 'wpbootstrap'); ?></button>
-			<?php } ?>
+			} else if ($data->Type == 'series') {
+				$show = sb_showAdded($data->imdbID);
+				if ($show) { 
+				?>
+					<script>
+						$('#wantedOverlay').css('visibility', 'visible');
+					</script>
+					<?php if ($show->status == 'Continuing') { ?>
+						<button class="btn btn-inverse pull-right disabled" disabled="disabled"><i><?php _e('TV show continuing', 'wpbootstrap'); ?></i></button>
+					<?php } else { ?>
+						<button class="btn btn-inverse pull-right disabled" disabled="disabled"><i><?php _e('TV show ended', 'wpbootstrap'); ?></i></button>
+					<?php } ?>
+				<?php } else { ?>
+					<button class="btn btn-inverse pull-right" id="addTV"><?php _e('Add TV show', 'wpbootstrap'); ?></button>
+				<?php } ?>
+				<?php if (xbmc_showOwned($data->imdbID)) { ?>
+					<script>
+						if ($('#wantedOverlay').show()) {
+							$('#wantedOverlay').css('margin-top', '60px');
+						}
+						$('#checkOverlay').css('visibility', 'visible');
+					</script>
+				<?php }
+			} ?>
 		</div>
 		<div class="span1 pull-left">
 			<a href="http://www.imdb.com/title/<?php echo $data->imdbID; ?>" target="_blank"><img id="imdblogo" alt="IMDB" src="<?php print IMAGES; ?>/imdb-logo.png" /></a>
@@ -124,7 +144,6 @@ if (isset($_GET['id'])) {
 		printf(__('No movie found with ID: <strong>%s</strong>', 'wpbootstrap'), $_GET['id']);
 	}
 }
-
 ?>
 
 <div id="notification">
@@ -202,8 +221,7 @@ $(function() {
             data: {  
                 action: 'addTV',
                 security: '<?php echo $ajax_nonce; ?>',
-                id: '<?php echo 123; ?>'
-                //if ($data->type != "movie") echo imdb_to_tvdb($data->imdbID);
+                id: '<?php echo $data->imdbID; ?>'
             },
             success: function(data, textStatus, XMLHttpRequest) {
 				if (data == 1) {
