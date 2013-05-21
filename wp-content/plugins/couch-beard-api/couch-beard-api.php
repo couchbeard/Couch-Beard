@@ -602,6 +602,17 @@ function xbmc_movieOwned($imdb_id)
 
 
 
+/**
+ * Check if movie is in XBMC and not in Sick Beard
+ * @param  string $imdb_id IMDb movie ID
+ * @return bool     Success
+ */
+function xbmc_not_sb($imdb_id)
+{
+	return (xbmc_movieOwned($imdb_id) && !sb_showAdded($imdb_id));
+}
+
+
 
 
 /**
