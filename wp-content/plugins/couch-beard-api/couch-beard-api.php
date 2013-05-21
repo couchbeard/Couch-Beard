@@ -590,7 +590,11 @@ function xbmc_getMovies() {
  */
 function xbmc_movieOwned($imdb_id)
 {
-	foreach(xbmc_getMovies() as $movie)
+	$movies = xbmc_getMovies();
+	if (empty($movies))
+		return false;
+
+	foreach($movies as $movie)
 	{
 		if ($movie->imdbnumber == $imdb_id)
 		{
@@ -622,7 +626,7 @@ function xbmc_not_sb($imdb_id)
  */
 function imdb_to_tvdb($imdb)
 {
-	$xml = simplexml_load_string(file_get_contents("http://thetvdb.com/api/GetSeriesByRemoteID.php?imdbid=".$imdb));
+	$xml = simplexml_load_string(curl_download("http://thetvdb.com/api/GetSeriesByRemoteID.php?imdbid=".$imdb));
 	return (string) $xml->Series->children()->seriesid;
 }
 
