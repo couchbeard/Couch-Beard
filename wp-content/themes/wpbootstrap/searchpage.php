@@ -6,8 +6,13 @@ Template Name: Search Page
 <?php $ajax_nonce = wp_create_nonce("keyy"); ?>
 <?php get_header(); ?>
 <?php
+include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+if (!is_plugin_active('couch-beard-api/couch-beard-api.php')) {
+	printf(__('Could not find %s plugin. You need to activate %s ', 'wpbootstrap'), 'couch-beard-api', 'couch-beard-api');
+	exit();
+}
+
 if (isset($_GET['id'])) {
-	//$url = "http://imdbapi.org/?id=".$_GET['id']."&episode=0&limit=1&plot=full";
 	$data = getMovieData($_GET['id']);
 	if (!isset($data->Error)) {
 ?>
@@ -51,10 +56,12 @@ if (isset($_GET['id'])) {
 						$time = explode('h', $data->Runtime);
 						if (strpos($data->Runtime, 'h')) {
 							$h = trim($time[0]);
-							$m = trim(explode('min', $time[1])[0]);
+							$m = explode('min', $time[1]);
+							$m = trim($m[0]);
 						} else {
 							$h = 0;
-							$m = trim(explode('min', $time[0])[0]);
+							$m = explode('min', $time[0]);
+							$m = trim($m[0]);
 						}
 					?>
 					<p class="lead"><?php echo $h . ':' . ((strlen($m) < 2) ? '0' . $m : $m); ?></p>
