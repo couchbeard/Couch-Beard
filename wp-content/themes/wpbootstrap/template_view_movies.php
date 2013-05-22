@@ -45,21 +45,23 @@ Template Name: Wanted Movies
 	<div class="span5 pull-right">
 		<button class="btn btn-link nolink" id="search" style="cursor: pointer;"><strong><?php _e('Search', 'wpbootstrap'); ?></strong></button>
 	</div>
-</legend>
-	<div class="row" id="searchBar">
-		<form class="form-search">
-			<div class="span3">
-				<input type="text" class="span3" placeholder="<?php _e('Search', 'wpbootstrap'); ?>" />
-			</div>
-			<div class="span9 pull-right">
-				<div class="span9 pull-right" data-toggle="buttons-checkbox">
-					<?php foreach ($genres as $g) { ?>
-				  	<button type="button" class="btn btn-inverse span2" id="genreButtons" value="<?php echo $g; ?>"><?php echo $g; ?></button>
-				  	<?php } ?>
+<div class="row">
+		<div class="span12" id="searchBar">
+			<form class="form-search">
+				<div class="row">
+					<center><input type="text" id="searchInput" class="span5" placeholder="<?php _e('Search', 'wpbootstrap'); ?>" /></center>
 				</div>
-			</div>
-		</form>
-	</div>
+				<div class="row">
+					<div class="center" data-toggle="buttons-checkbox">
+						<?php foreach ($genres as $g) { ?>
+					  		<button type="button" class="btn btn-inverse span2" id="genreButtons" value="<?php echo $g; ?>"><?php echo $g; ?></button>
+					  	<?php } ?>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>	
+</legend>
    	<?php
 	include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 	if (!is_plugin_active('couch-beard-api/couch-beard-api.php')) {

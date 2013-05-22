@@ -37,11 +37,26 @@ p, h1, h2, h3, h4, body, legend {
 }
 
 #genreButtons {
-	margin-bottom: 12px;
+	margin-bottom: 10px;
 }
 
 #searchBar {
 	display: none;
+	position: absolute;
+	margin-top: 20px;
+	background-color: rgba(0, 0, 0, 0.85);
+	border:2px solid;
+	border-radius:10px;
+	border-color: #000;	
+}
+
+#searchInput {
+	margin: 20px;
+}
+
+.center {
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .nolink, .nolink:hover {
