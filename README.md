@@ -8,7 +8,13 @@ Search for movies and TV shows with a single search bar. The search bar is using
 Share your movie and TV collection from XBMC on the website and view server information.
 
 
-Feel free to donate to the project or add issues.
+Feel free to donate to the project or add issues. [![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.com/dk/cgi-bin/webscr?cmd=_flow&SESSION=D1UVPvXkDBbeUoW-pOIiviXJAFT2PmPIe7CjjuYi_MYkRgvAid0ZjL32lrG&dispatch=5885d80a13c0db1f8e263663d3faee8d14f86393d55a810282b64afed84968ec)
+
+![preview thumb](http://i.imgur.com/Mk4qKtO.png)
+
+![preview thumb](http://i.imgur.com/XIeuwlb.png)
+
+![preview thumb](http://i.imgur.com/RBupXCZ.png)
 
 
 Installation
@@ -39,7 +45,7 @@ This could be more simple and should be in future releases.
 
 License
 ===========
-License: http://creativecommons.org/licenses/by-nc-sa/3.0/deed.en
+[CC BY-NC-SA 3.0](http://creativecommons.org/licenses/by-nc-sa/3.0/deed)
 
 [![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.com/dk/cgi-bin/webscr?cmd=_flow&SESSION=D1UVPvXkDBbeUoW-pOIiviXJAFT2PmPIe7CjjuYi_MYkRgvAid0ZjL32lrG&dispatch=5885d80a13c0db1f8e263663d3faee8d14f86393d55a810282b64afed84968ec)
 
