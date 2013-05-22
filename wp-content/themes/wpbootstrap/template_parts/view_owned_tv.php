@@ -13,7 +13,7 @@
 	<?php
 	foreach ($shows as $show) { ?>
 			<div id="wantedSearchCover">
-				<a class="nolink" href="<?php echo get_permalink(getSearchpageID()) . '&id=' . $show->imdbnumber; ?>">
+				<a class="nolink" href="<?php echo get_permalink(getSearchpageID()) . '&id=' . tvdb_to_imdb($show->label); ?>">
 					<div id="wantedCoverOverlay">
 						<p class="nolink"><?php echo $show->label . ' (' . $show->year . ')'; ?></p>
 					</div>

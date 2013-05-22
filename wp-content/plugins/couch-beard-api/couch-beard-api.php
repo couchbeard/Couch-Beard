@@ -811,4 +811,16 @@ function imdb_to_tvdb($imdb)
 	return (string) $xml->Series->children()->seriesid;
 }
 
+
+/**
+ * Converts TVDB ID to IMDb ID
+ * @param  string $name name of show
+ * @return string     IMDb ID
+ */
+function tvdb_to_imdb($name)
+{
+  $xml = simplexml_load_string(file_get_contents("http://thetvdb.com/api/GetSeries.php?seriesname=".urlencode($name)));
+  return (string) $xml->Series->children()->IMDB_ID;
+}
+
 ?>
