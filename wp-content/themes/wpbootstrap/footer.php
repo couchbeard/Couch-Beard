@@ -3,6 +3,7 @@
 			<div class="row">
 				<div class="span2">
 		   			 <p>&copy; <?php echo date('Y'); ?> <?php bloginfo( 'name' ); ?></p>
+		   			 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/deed"><img alt="Creative Commons licens" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/80x15.png" /></a>
 		    	</div>
 		    	<div class="span1 pull-right">
 					<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" class="pull-right">
