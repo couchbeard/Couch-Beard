@@ -52,6 +52,22 @@ function couchbeardapi_activate() {
 }
 register_activation_hook( __FILE__, 'couchbeardapi_activate' );
 
+function couchbeardapi_deactivate() {
+	global $wpdb;
+	global $table_name;
+
+	if ($wpdb->get_var('SHOW TABLES LIKE ' . $table_name) != $table_name) 
+    {
+        $sql = "DROP TABLE " . $table_name;
+
+        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+        dbDelta( $sql );
+
+        add_option('api_database_version', '1.0');
+    }	
+}
+register_uninstall_hook( __FILE__, 'couchbeardapi_deactivate' );
+
 function couchbeardapi_admin_actions() {
 	$page_title = "Couch Beard APIs";
 	$menu_title = "Couch Beard APIs";
@@ -710,9 +726,9 @@ function xbmc_getShows($start = '', $end = '') {
 	try {
 		$xbmc = getLogin('XBMC');
 		if (empty($start) || empty($end))
-			$json = "{\"jsonrpc\": \"2.0\", \"method\": \"VideoLibrary.GetTVShows\", \"params\": { \"properties\" : [\"art\", \"rating\", \"playcount\", \"year\", \"imdbnumber\"], \"sort\": { \"order\": \"ascending\", \"method\": \"label\", \"ignorearticle\": true } }, \"id\": \"libShows\"}";
+			$json = "{\"jsonrpc\": \"2.0\", \"method\": \"VideoLibrary.GetTVShows\", \"params\": { \"properties\" : [\"art\", \"thumbnail\", \"rating\", \"playcount\", \"year\", \"imdbnumber\"], \"sort\": { \"order\": \"ascending\", \"method\": \"label\", \"ignorearticle\": true } }, \"id\": \"libTvShows\"}";
 		else
-			$json = "{\"jsonrpc\": \"2.0\", \"method\": \"VideoLibrary.GetTVShows\", \"params\": { \"limits\": { \"start\" : " . $start . ", \"end\" : " . $start + $end . " }, \"properties\" : [\"art\", \"rating\", \"playcount\", \"year\", \"imdbnumber\"], \"sort\": { \"order\": \"ascending\", \"method\": \"label\", \"ignorearticle\": true} }, \"id\": \"libShows\"}";
+			$json = "{\"jsonrpc\": \"2.0\", \"method\": \"VideoLibrary.GetTVShows\", \"params\": { \"limits\": { \"start\" : " . $start . ", \"end\" : " . $start + $end . " }, \"properties\" : [\"art\", \"thumbnail\", \"rating\", \"playcount\", \"year\", \"imdbnumber\"], \"sort\": { \"order\": \"ascending\", \"method\": \"label\", \"ignorearticle\": true} }, \"id\": \"libTvShows\"}";
 		$json = urlencode($json);
 		$url = xbmc_getURL() . "/jsonrpc?request=" . $json;
 

@@ -17,7 +17,7 @@
 					<div id="wantedCoverOverlay">
 						<p class="nolink"><?php echo $movie->label . ' (' . $movie->year . ')'; ?></p>
 					</div>
-					<img class="lazy" id="wantedSearchpageCover" src="<?php print IMAGES; ?>/no_cover.png" data-original="<?php echo urldecode(substr($movie->thumbnail, 8, -1)); ?>" class="img-rounded"/>
+					<img class="lazy" id="wantedSearchpageCover" src="<?php print IMAGES; ?>/no_cover.png" data-original="<?php echo urldecode(substr($movie->thumbnail, 8, -1)); ?>"/>
 				</a>
 			</div>	
 		<!--<div class="row">
