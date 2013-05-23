@@ -5,8 +5,7 @@
 	$movies = xbmc_getMovies($offset, $limit);
 	if (empty($movies)) {
 		_e('No movies owned', 'wpbootstrap');
-		exit();
-	}
+	} else {
 	?>
 	<div class="row">
 		<div class="span12">
@@ -53,6 +52,7 @@
 		</ul>
 </div>
 </div>
+<?php } ?>
 
 <script>
 	$(function() {

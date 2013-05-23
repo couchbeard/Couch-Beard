@@ -2,8 +2,7 @@
 	$movies = cp_getMovies();
 	if (empty($movies)) {
 		_e('No movies wanted', 'wpbootstrap');
-		exit();
-	}
+	} else {
 ?>
 	<div class="row">
 		<div class="span12">
@@ -39,7 +38,7 @@
 		<?php } ?>
 	</div>
 </div>
-
+<?php } ?>
 <script>
 	$(function() {
 		$("img.lazy").lazyload({

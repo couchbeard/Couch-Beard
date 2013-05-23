@@ -2,9 +2,8 @@
 <?php
 	$shows = sb_getShows();
 	if (empty($shows)) {
-		_e('No shows wanted', 'wpbootstrap');
-		exit();
-	}
+		_e('No TV shows wanted', 'wpbootstrap');
+	} else {
 	?>
 	<?php foreach ($shows as $key => $val) { 
 		echo $val->show_name . ' (' . $key . ')';
@@ -65,3 +64,4 @@
 	}
 ?>
 </div>
+<?php } ?>

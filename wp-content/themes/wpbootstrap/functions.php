@@ -147,37 +147,38 @@ function getSearchpageID() {
 }
 
 function myprefix_autocomplete_suggestions() {
-    $url = "http://www.omdbapi.com/?s=" . urlencode($_REQUEST['term']);
-
+    //$url = "http://www.omdbapi.com/?s=" . urlencode($_REQUEST['term']);
+    $url = "http://imdbapi.org/?q=" . $_REQUEST['term'] . "&episode=0&limit=10";
     $imdb = curl($url);
 
-    if(!$_SERVER["HTTP_X_REQUESTED_WITH"] || !$_GET['term']){
+    if(!$_SERVER["HTTP_X_REQUESTED_WITH"] || !$_GET['term']) {
         _e('error', 'wpbootstrap');
         exit();
     }
 
-    $json = json_decode($imdb)->Search;
+    $json = json_decode($imdb);
 
-    $suggestions = array();
-    $suggestion = array();    
+    $suggestions = array();  
 
-    if (!isset($json->Error)) {
+    if (!empty($json) && !isset($json->error)) {
         foreach ($json as $data) {
-            $new_url = "http://www.omdbapi.com/?i=" . $data->imdbID;
-            $new_json = curl($new_url);
-            $movie = json_decode($new_json);
-
-            $string = (strlen($movie->Title) > 50) ? substr($movie->Title, 0, 45).'...' : $movie->Title;
-            $searchpage = get_page_by_title( 'Search' );
-            $suggestion['searchpageid'] = getSearchpageID();
-            $suggestion['imdbid'] = (string) $movie->imdbID;
-            $suggestion['label'] = $movie->Title;
-            $suggestion['title'] = $string;
-            $suggestion['year'] = $movie->Year;
-            $suggestion['type'] = $movie->Type;
-            $suggestion['image'] = ($movie->Poster == 'N/A') ? IMAGES . '/no_cover.png' : $movie->Poster;
-            $suggestions[]= $suggestion;
+            if ($data->type == 'M' || $data->type == 'TVS' || $data->type == 'TV') {
+                $suggestion = array();
+                $string = (strlen($data->title) > 50) ? substr($data->title, 0, 45).'...' : $data->title;
+                $searchpage = get_page_by_title( 'Search' );
+                $suggestion['searchpageid'] = getSearchpageID();
+                $suggestion['imdbid'] = (string) $data->imdb_id;
+                $suggestion['label'] = $data->title;
+                $suggestion['title'] = $string;
+                $suggestion['year'] = $data->year;
+                $suggestion['image'] = (empty($data->poster)) ? IMAGES . '/no_cover.png' : $data->poster;
+                $suggestions[] = $suggestion;
+            }
         }
+    } else {
+        $suggestion = array();
+        $suggestion['imdbid'] = -1;
+        $suggestions[] = $suggestion;
     }
 
     echo $_GET["callback"] . "(" . json_encode($suggestions) . ")";
@@ -202,7 +203,9 @@ function custom_scripts()
     wp_register_script('jnotify', get_template_directory_uri() . '/Scripts/jquery.notify.js', array('jquery', 'jquery-ui-autocomplete'));
     wp_enqueue_script('jnotify');
     wp_register_script('lazyload', get_template_directory_uri() . '/Scripts/jquery.lazyload.js', array('jquery'));
-    wp_enqueue_script('lazyload');    
+    wp_enqueue_script('lazyload');
+    wp_register_script('jic', get_template_directory_uri() . '/Scripts/JIC.js', array('jquery'));
+    wp_enqueue_script('jic');     
  
 }
 add_action('wp_enqueue_scripts', 'custom_scripts');

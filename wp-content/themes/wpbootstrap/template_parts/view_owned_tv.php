@@ -4,9 +4,8 @@
 	$offset = ($page - 1) * $limit;
 	$shows = xbmc_getShows($offset, $limit);
 	if (empty($shows)) {
-		_e('No movies owned', 'wpbootstrap');
-		exit();
-	}
+		_e('No TV shows owned', 'wpbootstrap');
+	} else {
 	?>
 	<div class="row">
 		<div class="span12">
@@ -36,6 +35,7 @@
 		</ul>
 </div>
 </div>
+<?php } ?>
 
 <script>
 	$(function() {

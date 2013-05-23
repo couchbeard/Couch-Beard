@@ -184,11 +184,6 @@ p, h1, h2, h3, h4, body, legend {
 	cursor: pointer;
 }
 
-.ui-autocomplete-loading {
-	background: url('images/loading-icon.gif') no-repeat right center;
-}
-
-
 .opensans {
 	font-family: 'Open sans', serif;
 	font-size: 48px;
@@ -202,6 +197,10 @@ p, h1, h2, h3, h4, body, legend {
 #imdblogo {
 	height: 40px;
 	width: 40px;
+}
+
+.ui-autocomplete-loading {
+	background: url('images/loading-icon.gif') no-repeat right center;
 }
 
 
