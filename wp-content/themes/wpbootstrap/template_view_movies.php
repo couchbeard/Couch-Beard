@@ -68,13 +68,15 @@ Template Name: Wanted Movies
 		printf(__('Could not find %s plugin. You need to activate %s ', 'wpbootstrap'), 'couch-beard-api', 'couch-beard-api');
 		exit();
 	}
-
-   	if ($_GET['movies'] == 'wanted') {
+	?>
+	<div class="row">
+   	<?php if ($_GET['movies'] == 'wanted') {
 		get_template_part( 'template_parts/view_wanted_movies' );
 	} else {
 		get_template_part( 'template_parts/view_owned_movies' );
 	}
-   	?>	
+   	?>
+   	</div>	
 <?php get_footer(); ?>
 
 <script>

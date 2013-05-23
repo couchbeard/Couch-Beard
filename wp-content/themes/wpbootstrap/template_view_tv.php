@@ -22,7 +22,7 @@ Template Name: Wanted TV shows
 			exit();
 		}
 	?>
-
+	<div class="row">
    <?php
    		if ($_GET['shows'] == 'wanted') {
    			get_template_part( 'template_parts/view_wanted_tv' );
@@ -30,4 +30,5 @@ Template Name: Wanted TV shows
    			get_template_part( 'template_parts/view_owned_tv' );
    		}
    ?> 	
+	</div>
 <?php get_footer(); ?>
