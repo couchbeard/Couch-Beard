@@ -1,5 +1,9 @@
 jQuery(document).ready(function ($) {
     var acs_action = 'myprefix_autocompletesearch';
+    $("#movieName").focus(function() {
+
+    });   
+
     $("#movieName").autocomplete({
         minLength   : 2,
         delay       : 50,
@@ -38,4 +42,5 @@ jQuery(document).ready(function ($) {
             .append(inner_html)
             .appendTo( ul );
     };
+    $( "#movieName" ).autocomplete({ position: { my : "right top", at: "right bottom" } });
 });

@@ -96,7 +96,6 @@ Template Name: Wanted Movies
 	});
 
 		$(document).keyup(function(e) {
-			console.log(e.keyCode);
 			if (e.keyCode == 27) { // ESC
 				if ($('#searchBar').css('display') != 'none') {
 					$('#searchBar').slideUp('slow', function() {
