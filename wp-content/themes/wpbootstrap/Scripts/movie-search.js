@@ -10,10 +10,10 @@ jQuery(document).ready(function ($) {
             window.location.href = '?page_id=' + ui.item.searchpageid + '&id=' + ui.item.imdbid;
         }
     }).data( "ui-autocomplete" )._renderItem = function( ul, item ) {
-        if (item === null || item.title === null || item.imdbid == -1) {
+        if (item === null || item.imdbid == -1) {
             return $( "<li></li>" )
             .data( "item.autocomplete", item )
-            .append("No results")
+            .append(item.title)
             .appendTo(ul);
         }
         var inner_html =

@@ -178,6 +178,7 @@ function myprefix_autocomplete_suggestions() {
     } else {
         $suggestion = array();
         $suggestion['imdbid'] = -1;
+        $suggestion['title'] = __('No results', 'wpbootstrap');
         $suggestions[] = $suggestion;
     }
 
