@@ -69,14 +69,12 @@ Template Name: Wanted Movies
 		exit();
 	}
 	?>
-	<div class="row">
    	<?php if ($_GET['movies'] == 'wanted') {
 		get_template_part( 'template_parts/view_wanted_movies' );
 	} else {
 		get_template_part( 'template_parts/view_owned_movies' );
 	}
    	?>
-   	</div>	
 <?php get_footer(); ?>
 
 <script>
