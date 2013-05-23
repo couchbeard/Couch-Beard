@@ -1,3 +1,4 @@
+<div class="span12">
 	<?php
 	$page = isset($_GET['page']) ? absint($_GET['page']) : 1;
 	$limit = 14;
@@ -6,10 +7,6 @@
 	if (empty($shows)) {
 		_e('No TV shows owned', 'wpbootstrap');
 	} else {
-	?>
-	<div class="row">
-		<div class="span12">
-	<?php
 	foreach ($shows as $show) { ?>
 			<div id="wantedSearchCover">
 				<a class="nolink" href="<?php echo get_permalink(getSearchpageID()) . '&id=' . tvdb_to_imdb($show->label); ?>">
@@ -33,10 +30,8 @@
 		    	<a href="<?php echo get_permalink() . '&page=' . ($page + 1); ?>">Next</a>
 		  	</li>
 		</ul>
-</div>
-</div>
 <?php } ?>
-
+</div>
 <script>
 	$(function() {
 		$("img.lazy").lazyload({

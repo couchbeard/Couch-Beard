@@ -1,3 +1,4 @@
+<div class="span12">
 	<?php
 	$page = isset($_GET['page']) ? absint($_GET['page']) : 1;
 	$limit = 14;
@@ -6,11 +7,7 @@
 	if (empty($movies)) {
 		_e('No movies owned', 'wpbootstrap');
 	} else {
-	?>
-	<div class="row">
-		<div class="span12">
-	<?php
-	foreach ($movies as $movie) { ?>
+		foreach ($movies as $movie) { ?>
 			<div id="wantedSearchCover">
 				<a class="nolink" href="<?php echo get_permalink(getSearchpageID()) . '&id=' . $movie->imdbnumber; ?>">
 					<div id="wantedCoverOverlay">
@@ -36,24 +33,21 @@
 			</div>
 		</div>
 		<br /> -->
-		<?php } ?>
-
+	<?php } ?>
+	<div class="row">
+		<div class="span12">
+			<ul class="pager">
+				<li class="previous <?php echo ($page > 1) ? '' : 'disabled'; ?>">
+			    	<a href="<?php echo get_permalink() . '&page=' . (($page > 1) ? $page - 1 : 1); ?>">Previous</a>
+		  		</li>
+			  	<li class="next">
+			    	<a href="<?php echo get_permalink() . '&page=' . ($page + 1); ?>">Next</a>
+			  	</li>
+			</ul>
 		</div>
 	</div>
-<div class="row">
-	<div class="span12">
-		<ul class="pager">
-			<li class="previous <?php echo ($page > 1) ? '' : 'disabled'; ?>">
-		    	<a href="<?php echo get_permalink() . '&page=' . (($page > 1) ? $page - 1 : 1); ?>">Previous</a>
-	  		</li>
-		  	<li class="next">
-		    	<a href="<?php echo get_permalink() . '&page=' . ($page + 1); ?>">Next</a>
-		  	</li>
-		</ul>
-</div>
-</div>
 <?php } ?>
-
+</div>
 <script>
 	$(function() {
 		$("img.lazy").lazyload({

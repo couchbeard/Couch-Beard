@@ -1,14 +1,12 @@
+<div class="span12">	
 	<?php
 	$movies = cp_getMovies();
 	if (empty($movies)) {
 		_e('No movies wanted', 'wpbootstrap');
 	} else {
-?>
-	<div class="row">
-		<div class="span12">
-<?php
-	foreach ($movies as $val) { 
-		$movie = $val->library->info;
+
+		foreach ($movies as $val) { 
+			$movie = $val->library->info;
 	?>
 			<div id="wantedSearchCover">
 				<a class="nolink" href="<?php echo get_permalink(getSearchpageID()) . '&id=' . $movie->imdb; ?>">
@@ -36,9 +34,8 @@
 		</div>
 		<br /> -->
 		<?php } ?>
-	</div>
-</div>
 <?php } ?>
+</div>
 <script>
 	$(function() {
 		$("img.lazy").lazyload({

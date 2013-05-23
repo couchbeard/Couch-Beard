@@ -47,6 +47,9 @@ Template Name: Wanted Movies
 	</div>
 <div class="row">
 		<div class="span12" id="searchBar">
+			<div class="pull-right" id="exitSearch">
+				<button type="button" class="close" >&times;</button>
+			</div>
 			<form class="form-search">
 				<div class="row">
 					<center><input type="text" id="searchInput" class="span5" placeholder="<?php _e('Search', 'wpbootstrap'); ?>" /></center>
@@ -69,12 +72,14 @@ Template Name: Wanted Movies
 		exit();
 	}
 	?>
+	<div class="row">
    	<?php if ($_GET['movies'] == 'wanted') {
 		get_template_part( 'template_parts/view_wanted_movies' );
 	} else {
 		get_template_part( 'template_parts/view_owned_movies' );
 	}
    	?>
+   </div>
 <?php get_footer(); ?>
 
 <script>
@@ -88,5 +93,24 @@ Template Name: Wanted Movies
 			    // Animation complete.
 		    });
 		}
-	})
+	});
+
+		$(document).keyup(function(e) {
+			console.log(e.keyCode);
+			if (e.keyCode == 27) { // ESC
+				if ($('#searchBar').css('display') != 'none') {
+					$('#searchBar').slideUp('slow', function() {
+			   			// Animation complete.
+		    		});					
+				}
+			}
+		});
+
+		$('.close').click(function() {
+			if ($('#searchBar').css('display') != 'none') {
+				$('#searchBar').slideUp('slow', function() {
+		   			// Animation complete.
+	    		});					
+			}			
+		});
 </script>

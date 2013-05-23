@@ -43,8 +43,8 @@ p, h1, h2, h3, h4, body, legend {
 #searchBar {
 	display: none;
 	position: absolute;
-	margin-top: 20px;
-	background-color: rgba(0, 0, 0, 0.85);
+	margin-top: 10px;
+	background-color: rgba(0, 0, 0, 0.9);
 	border:2px solid;
 	border-radius:10px;
 	border-color: #000;	
@@ -52,6 +52,21 @@ p, h1, h2, h3, h4, body, legend {
 
 #searchInput {
 	margin: 20px;
+}
+
+#exitSearch {
+	margin: 10px;
+	margin-top: 5px;
+}
+
+.close {
+	color: #fff;
+	opacity: .3;
+	border: none;
+}
+
+.close:hover {
+	color: red;
 }
 
 .center {
