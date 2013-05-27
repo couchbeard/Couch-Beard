@@ -111,7 +111,7 @@ function curl($Url, $headers = null){
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
  
     // Timeout in seconds
-    curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 2);
  
     // Download the given URL, and return output
     $output = curl_exec($ch);
@@ -148,30 +148,37 @@ function getSearchpageID() {
 
 function myprefix_autocomplete_suggestions() {
     //$url = "http://www.omdbapi.com/?s=" . urlencode($_REQUEST['term']);
-    $url = "http://imdbapi.org/?q=" . $_REQUEST['term'] . "&episode=0&limit=10";
+    //$url = "http://imdbapi.org/?q=" . $_REQUEST['term'] . "&episode=0&limit=10";
+    $search = str_replace(array(" ", "(", ")"), array("_", "", ""), $_REQUEST['term']); //format search term
+    $firstchar = substr($search,0,1); //get first character
+    $url = "http://sg.media-imdb.com/suggests/${firstchar}/${search}.json"; //format IMDb suggest URL
     $imdb = curl($url);
+    preg_match('/^imdb\$.*?\((.*?)\)$/ms', $imdb, $matches); //convert JSONP to JSON
 
     if(!$_SERVER["HTTP_X_REQUESTED_WITH"] || !$_GET['term']) {
         _e('error', 'wpbootstrap');
         exit();
     }
 
-    $json = json_decode($imdb);
+    $json = $matches[1];
+    $arr = json_decode($json, true);
 
     $suggestions = array();  
 
-    if (!empty($json) && !isset($json->error)) {
-        foreach ($json as $data) {
-            if ($data->type == 'M' || $data->type == 'TVS' || $data->type == 'TV') {
+    if(isset($arr['d'])) {
+        foreach ($arr['d'] as $data) {
+            if ($data['q'] == "feature" || $data['q'] == "TV series") {
                 $suggestion = array();
-                $string = (strlen($data->title) > 50) ? substr($data->title, 0, 45).'...' : $data->title;
+                $img = preg_replace('/_V1_.*?.jpg/ms', "_V1._SY50.jpg", $data['i'][0]);
+                $string = (strlen($data['l']) > 50) ? substr($data['l'], 0, 45).'...' : $data['l'];
                 $searchpage = get_page_by_title( 'Search' );
                 $suggestion['searchpageid'] = getSearchpageID();
-                $suggestion['imdbid'] = (string) $data->imdb_id;
-                $suggestion['label'] = $data->title;
+                $suggestion['imdbid'] = (string) $data['id'];
+                $suggestion['label'] = $data['l'];
                 $suggestion['title'] = $string;
-                $suggestion['year'] = $data->year;
-                $suggestion['image'] = (empty($data->poster)) ? IMAGES . '/no_cover.png' : $data->poster;
+                $suggestion['year'] = $data['y'];
+                $suggestion['type'] = $data['q'];
+                $suggestion['image'] = (empty($img)) ? IMAGES . '/no_cover.png' : $img;
                 $suggestions[] = $suggestion;
             }
         }
@@ -230,7 +237,7 @@ add_action('init', 'register_my_menus');
 function getMovies()
 {
     $url = "http://imdbapi.org/?q=".$_POST['q']."&episode=0&limit=10";
-
+    $imdb = new IMDb(true, true, 0);
     $imdb = file_get_contents($url);
 
     if(!$_SERVER["HTTP_X_REQUESTED_WITH"] || !$_POST['q']){

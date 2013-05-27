@@ -26,6 +26,19 @@ body {
 	background: url('images/body-bg.gif') repeat;
 }
 
+::-webkit-input-placeholder { color: #888 !important; font-size: 12px; font-style: italic; }
+
+input:focus::-webkit-input-placeholder { opacity: 0; }
+input:focus:-moz-placeholder { opacity: 0; }
+
+#movieName {
+	color: #aaa;
+}
+
+#movieName:focus {
+	color: #222;
+}
+
 p, h1, h2, h3, h4, body, legend {
 	color: #fff;
 }

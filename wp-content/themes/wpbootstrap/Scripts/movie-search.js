@@ -1,18 +1,18 @@
 jQuery(document).ready(function ($) {
     var acs_action = 'myprefix_autocompletesearch';
-    $("#movieName").focus(function() {
-
-    });   
 
     $("#movieName").autocomplete({
         minLength   : 2,
         delay       : 50,
+        cache       : true,
         source: function(req, response) {
             $.getJSON(MyAcSearch.url+'?callback=?&action='+acs_action, req, response);
         },
         select: function(event, ui) {
             window.location.href = '?page_id=' + ui.item.searchpageid + '&id=' + ui.item.imdbid;
         }
+    }).focus(function() {
+        $(this).data("autocomplete").search($(this).val());
     }).data( "ui-autocomplete" )._renderItem = function( ul, item ) {
         if (item === null || item.imdbid == -1) {
             return $( "<li></li>" )
@@ -27,7 +27,7 @@ jQuery(document).ready(function ($) {
                         '<img class="img-rounded" src="' + item.image + '">' +
                     '</div>' +
                     '<div class="badge badge-info pull-right">' +
-                        //item.type +
+                        item.type +
                     '</div>' +
                     '<div class="pull-left">' +
                         '<div class="yearlabel label label-inverse">' + item.year + '</div>' +
@@ -41,6 +41,6 @@ jQuery(document).ready(function ($) {
             .data( "item.autocomplete", item )
             .append(inner_html)
             .appendTo( ul );
-    };
+    }
     $( "#movieName" ).autocomplete({ position: { my : "right top", at: "right bottom" } });
 });
