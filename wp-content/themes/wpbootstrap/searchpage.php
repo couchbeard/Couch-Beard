@@ -11,7 +11,7 @@ if (isset($_GET['id'])) {
 	if (!is_plugin_active('couch-beard-api/couch-beard-api.php')) {
 		printf(__('Could not find %s plugin. You need to activate %s ', 'wpbootstrap'), 'couch-beard-api', 'couch-beard-api');
 	} else {
-		get_template_part( 'movie-info' );
+		get_template_part( 'template_parts/view-movie-info' );
 	}
 }
 get_footer(); ?>
