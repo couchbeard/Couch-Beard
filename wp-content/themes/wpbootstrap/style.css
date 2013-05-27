@@ -43,6 +43,18 @@ p, h1, h2, h3, h4, body, legend {
 	color: #fff;
 }
 
+.inverseback p, .inverseback h3 {
+	color: #000 !important;
+}
+
+#myMovie {
+	width: 80%;
+	padding:0;
+	position: fixed;
+	margin:0;
+	left: 10%;
+}
+
 .navbar-fixed-top,
 .navbar-fixed-bottom {
 	position: static;
@@ -72,7 +84,7 @@ p, h1, h2, h3, h4, body, legend {
 	margin-top: 5px;
 }
 
-.close {
+#close {
 	color: #fff;
 	opacity: .3;
 	border: none;
@@ -213,7 +225,7 @@ p, h1, h2, h3, h4, body, legend {
 }
 
 .opensans {
-	font-family: 'Open sans', serif;
+	font-family: 'Josefin Slab', serif;
 	font-size: 48px;
 }
 

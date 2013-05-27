@@ -17,6 +17,14 @@ function addTVFunction()
 }
 add_action('wp_ajax_addTV', 'addTVFunction');  // Only logged in users
 
+function movieInfoFunction()
+{
+    check_ajax_referer( 'keyy', 'security' );
+    echo getMovieData($_POST['imdb'], 1);
+    exit();
+}
+add_action('wp_ajax_movieInfo', 'movieInfoFunction');  // Only logged in users
+
 function timezone() {
     date_default_timezone_set(get_option('timezone_string'));
 }
@@ -127,9 +135,11 @@ function curl($Url, $headers = null){
  * @param  string $id IMDB id
  * @return array     Movie data
  */
-function getMovieData($id) {
+function getMovieData($id, $jsonret = 0) {
     $url = "http://www.omdbapi.com/?i=" . $id . "&plot=full";
     $json = curl($url);
+    if (!empty($jsonret))
+        return $json;
 
     $data = json_decode($json);
 
@@ -220,8 +230,8 @@ add_action('wp_enqueue_scripts', 'custom_scripts');
 
 function custom_styles() 
 {
-    //wp_register_style( 'Ranchoeffect', 'http://fonts.googleapis.com/css?family=Rancho&effect=shadow-multiple');
-    //wp_enqueue_style( 'Ranchoeffect');
+    wp_register_style( 'googlefonts', 'http://fonts.googleapis.com/css?family=Noto+Sans:400,700|Patrick+Hand+SC|Josefin+Slab:400,700|Lemon|Love+Ya+Like+A+Sister|Montserrat+Subrayada');
+    wp_enqueue_style( 'googlefonts');
 }
 add_action( 'wp_enqueue_scripts', 'custom_styles' );
 

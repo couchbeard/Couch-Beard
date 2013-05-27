@@ -38,28 +38,28 @@
 	if (!empty($today)) { ?>
 		<legend><?php _e('Today', 'wpbootstrap'); ?></legend>
 		<?php foreach ($today as $t) {
-			echo $t->show_name . ' (' . date(__('Y-m-d', 'wpbootstrap'), strtotime($t->airdate)) . ')';
+			echo $t->show_name . ' (' . date(__(get_option('date_format'), 'wpbootstrap'), strtotime($t->airdate)) . ')';
 		}
 	}
 
 	if (!empty($soon)) { ?>
 		<legend><?php _e('Soon', 'wpbootstrap'); ?></legend>
 		<?php foreach ($soon as $s) {
-			echo $s->show_name . ' (' . date(__('Y-m-d', 'wpbootstrap'), strtotime($s->airdate)) . ')';
+			echo $s->show_name . ' (' . date(__(get_option('date_format'), 'wpbootstrap'), strtotime($s->airdate)) . ')';
 		}
 	}
 
 	if (!empty($missed)) { ?>
 		<legend><?php _e('Missed', 'wpbootstrap'); ?></legend>
 		<?php foreach ($missed as $m) {
-			echo $m->show_name . ' (' . date(__('Y-m-d', 'wpbootstrap'), strtotime($m->airdate)) . ')';
+			echo $m->show_name . ' (' . date(__(get_option('date_format'), 'wpbootstrap'), strtotime($m->airdate)) . ')';
 		}
 	}				
 
 	if (!empty($future)) { ?>
 		<legend><?php _e('Future', 'wpbootstrap'); ?></legend>
 		<?php foreach ($later as $l) {
-			echo $l->show_name . ' (' . date(__('Y-m-d', 'wpbootstrap'), strtotime($l->airdate)) . ')';
+			echo $l->show_name . ' (' . date(__(get_option('date_format'), 'wpbootstrap'), strtotime($l->airdate)) . ')';
 		}
 	}
 ?>

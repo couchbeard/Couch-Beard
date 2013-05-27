@@ -48,7 +48,7 @@ Template Name: Wanted Movies
 <div class="row">
 		<div class="span12" id="searchBar">
 			<div class="pull-right" id="exitSearch">
-				<button type="button" class="close" >&times;</button>
+				<button type="button" class="close" id="close">&times;</button>
 			</div>
 			<form class="form-search">
 				<div class="row">

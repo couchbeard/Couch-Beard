@@ -135,7 +135,6 @@
 //   });
 // });
 	$(document).keydown(function(e) {
-		console.log(e.which);
 	    if(e.which == 83 && e.shiftKey) {
 	    	e.preventDefault();
 	        $('#movieName').focus();
