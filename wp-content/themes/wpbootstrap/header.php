@@ -72,8 +72,14 @@
           </div><!--/.nav-collapse -->
         </div>
       </div>
+      <div id="xbmc_menu_box">
+		<p>img</p>
+		<a class="btn btn-mini btn-inverse"><i class="icon-stop icon-white"></i></a>
+		<a class="btn btn-mini btn-inverse"><i class="icon-pause icon-white"></i></a>
+      	<a class="btn btn-mini btn-inverse"><i class="icon-play icon-white"></i></a>
+	</div>
+	<div id="xbmc_menu_button" class="muted">Current running</div>
     </div>
-	
 	<?php
 		$access = false;
 		$menu_items = wp_get_nav_menu_items($menu);
@@ -134,12 +140,65 @@
 //       }
 //   });
 // });
+	$('.icon-play').click(function() {
+		$(this).toggleClass('icon-play icon-white');
+	});
+	$('#xbmc_menu_button').click(function() {
+		$('#xbmc_menu_box').animate({
+		    bottom: '+=10',
+		    height: 'toggle'
+		  }, 500, function() {
+		    	if ($('#xbmc_menu_box').is(':visible')) {
+					writeCookie('xbmc', '1', 1)
+				} else {
+					writeCookie('xbmc', '0', 0);
+				}
+		  });
+	});
 	$(document).keydown(function(e) {
 	    if(e.which == 83 && e.shiftKey) {
 	    	e.preventDefault();
 	        $('#movieName').focus();
 	    }
 	});
+
+	window.onload=function() {
+		if (readCookie('xbmc') == '1') {
+			$('#xbmc_menu_box').animate({
+		    bottom: '+=10',
+		    height: 'toggle'
+		  }, 500, function() {
+		  	
+		  });
+		}
+	};
+
+	function writeCookie(name,value,days) {
+	    var date, expires;
+	    if (days) {
+	        date = new Date();
+	        date.setTime(date.getTime()+(days*24*60*60*1000));
+	        expires = "; expires=" + date.toGMTString();
+	            }else{
+	        expires = "";
+	    }
+	    document.cookie = name + "=" + value + expires + "; path=/";
+	}
+
+	function readCookie(name) {
+	    var i, c, ca, nameEQ = name + "=";
+	    ca = document.cookie.split(';');
+	    for(i=0;i < ca.length;i++) {
+	        c = ca[i];
+	        while (c.charAt(0)==' ') {
+	            c = c.substring(1,c.length);
+	        }
+	        if (c.indexOf(nameEQ) == 0) {
+	            return c.substring(nameEQ.length,c.length);
+	        }
+	    }
+	    return '';
+	}
 	</script>
 <noscript>
 	

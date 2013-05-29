@@ -9,6 +9,13 @@ function addMovieFunction()
 }
 add_action('wp_ajax_addMovie', 'addMovieFunction');  // Only logged in users
 
+function xbmc_sendNotificationFunction() {
+    check_ajax_referer( 'keyy', 'security' );
+    echo (bool) xbmc_sendNotification('Couch Beard message', $_POST['message']);
+    exit();
+}
+add_action('wp_ajax_xbmcSendNotification', 'xbmc_sendNotificationFunction');  // Only logged in users
+
 function addTVFunction()
 {
     check_ajax_referer( 'keyy', 'security' );
@@ -30,12 +37,12 @@ function timezone() {
 }
 add_action('init', 'timezone');
 
-/*function init_sessions() {
+function init_sessions() {
     if (!session_id()) {
         session_start();
     }
 }
-add_action('init', 'init_sessions');*/
+add_action('init', 'init_sessions');
 
 
 // LOGIN SCREEN 

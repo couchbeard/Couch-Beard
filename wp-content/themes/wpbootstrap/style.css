@@ -75,6 +75,27 @@ p, h1, h2, h3, h4, body, legend {
 	border-color: #000;	
 }
 
+#xbmc_menu_box {
+	height: 50%;
+	display: none;
+	background-color: rgba(0, 0, 0, 0.9);
+	border:2px solid;
+	border-radius:5px;
+	border-color: #000;	
+	width: 95%;
+	text-align: center;
+	margin: 0px auto 0px auto;
+	left: 4%;
+	top: 5%;
+}
+
+#xbmc_menu_button {
+	cursor: pointer;
+	text-align: center;
+	background: url('images/handlebutton.png') no-repeat;
+	background-position: center;
+}
+
 #searchInput {
 	margin: 20px;
 }
@@ -180,7 +201,7 @@ p, h1, h2, h3, h4, body, legend {
 }
 
 .pline {
-	display: inline;
+	display: inline-block;
 }
 
 .list_item_container {
@@ -234,6 +255,11 @@ p, h1, h2, h3, h4, body, legend {
 	font-size: 30px;
 }
 
+.josefinslab-small {
+	font-family: 'Josefin Slab', serif;
+	font-size: 14px;
+}
+
 #imdblogo {
 	height: 40px;
 	width: 40px;
@@ -258,7 +284,7 @@ Wanted movies
 }
 
 #wantedCoverOverlay {
-	position: absolute;
+	position: fixed;
 	margin: 10px;
 	float: left;
 	width: 100px;
