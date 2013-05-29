@@ -136,10 +136,15 @@
 	            success: function(data, textStatus, XMLHttpRequest) {
 	            	if (data != "" && data != null) {
 	            		// Not needed to be updated
-	            		if ($('#playingTitle').text() != data.title) {
-		            		$('#playingTitle').text(data.title);
+	            		var title = data.title;
+	            		if (data.type == 'episode')
+	            		{
+	            			title = data.showtitle + ' [' + data.season + 'x' + data.episode + '] - ' + data.title;
+	            		}
+	            		if ($('#playingTitle').text() != title) {
+		            		$('#playingTitle').text(title);
 		            		$('#playingCover').attr('src', function() {
-		            			return decodeURIComponent(data.thumbnail.replace('image://', ''));
+		            			return decodeURIComponent(data.thumbnail.replace('image://', '').replace('.jpg/', '.jpg'));
 		            		});
 		            		clearInterval(timer);
 		            		timer = setInterval(currentPlaying, 1000);
