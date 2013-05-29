@@ -27,14 +27,17 @@
     </div>
 
 
-<h3>Recently added movies</h3>
-<div id="myCarousel" class="carousel slide" style="width: 280px;">
+<table>
+    <tr>
+        <td>
+            <h3>Recently added movies</h3>
+<div id="movieCarousel" class="carousel slide" style="padding: 20px; width: 280px;">
 <div class="carousel-inner">
     <?php
     $data = json_decode(xbmc_getRecentlyAddedMovies());
-    $active = 0;
+    $activem = 0;
     foreach ($data->result->movies as $movie) {
-    echo "<div class='item".($active++ == 0 ? " active" : "")."'>
+    echo "<div class='item".($activem++ == 0 ? " active" : "")."'>
       <img src='" . urldecode(substr($movie->thumbnail, 8, -1)) . "' alt='' style='height:400px; width: 280px;'>
       <div class='carousel-caption'>
         <h4>" . $movie->label . "</h4>
@@ -43,9 +46,33 @@
     }
     ?>
 </div>
-<a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
-<a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
+<a class="left carousel-control" href="#movieCarousel" data-slide="prev">&lsaquo;</a>
+<a class="right carousel-control" href="#movieCarousel" data-slide="next">&rsaquo;</a>
 </div>
+        </td>
+        <td>
+            <h3>Recently added TV show episodes</h3>
+<div id="showCarousel" class="carousel slide" style="padding: 20px; width: 450px;">
+<div class="carousel-inner">
+    <?php
+    $data = json_decode(xbmc_getRecentlyAddedEpisodes());
+    $actives = 0;
+    foreach ($data->result->episodes as $episode) {
+    echo "<div class='item".($actives++ == 0 ? " active" : "")."'>
+      <img src='" . urldecode(substr($episode->thumbnail, 8, -1)) . "' alt='' style='height:400px; width: 450px;'>
+      <div class='carousel-caption'>
+        <h4>" . $episode->showtitle . " [" . $episode->season . "x" . $episode->episode . "]</h4>
+      </div>
+    </div>";
+    }
+    ?>
+</div>
+<a class="left carousel-control" href="#showCarousel" data-slide="prev">&lsaquo;</a>
+<a class="right carousel-control" href="#showCarousel" data-slide="next">&rsaquo;</a>
+</div>
+        </td>
+    </tr>
+</table>
 
 
 

@@ -909,6 +909,13 @@ function xbmc_getRecentlyAddedMovies()
     return $data;
 }
 
+function xbmc_getRecentlyAddedEpisodes()
+{
+    $json = "{\"jsonrpc\": \"2.0\", \"method\": \"VideoLibrary.GetRecentlyAddedEpisodes\", \"params\": { \"properties\" : [\"thumbnail\", \"showtitle\", \"season\", \"episode\"], \"sort\": { \"order\": \"descending\", \"method\": \"dateadded\" } }, \"id\": \"libMovies\"}";
+    $data = xbmc_API($json);
+    return $data;
+}
+
 /**
  * Converts IMDb ID to TVDB ID
  * @param  string $imdb_id IMDb ID
