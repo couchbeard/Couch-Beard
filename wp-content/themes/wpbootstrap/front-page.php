@@ -31,42 +31,42 @@
     <tr>
         <td>
             <h3>Recently added movies</h3>
-<div id="movieCarousel" class="carousel slide" style="padding: 20px; width: 280px;">
-<div class="carousel-inner">
+<div id='movieCarousel' class='carousel slide' style='padding: 20px; width: 280px;'>
+<div class='carousel-inner'>
     <?php
     $data = json_decode(xbmc_getRecentlyAddedMovies());
     foreach ($data->result->movies as $index => $movie) {
-    echo "<div class='item".($index++ == 0 ? " active" : "")."'>
-      <img src='" . urldecode(substr($movie->thumbnail, 8, -1)) . "' alt='' style='height:400px; width: 280px;'>
-      <div class='carousel-caption'>
-        <h4>" . $movie->label . "</h4>
+    echo '<div class="item'.($index++ == 0 ? ' active' : '').'">
+      <img src="' . urldecode(substr($movie->thumbnail, 8, -1)) . '" alt="" style="height:400px; width: 280px;">
+      <div class="carousel-caption">
+        <h4>' . $movie->label . '</h4>
       </div>
-    </div>";
+    </div>';
     }
     ?>
 </div>
-<a class="left carousel-control" href="#movieCarousel" data-slide="prev">&lsaquo;</a>
-<a class="right carousel-control" href="#movieCarousel" data-slide="next">&rsaquo;</a>
+<a class='left carousel-control' href='#movieCarousel' data-slide='prev'>&lsaquo;</a>
+<a class='right carousel-control' href='#movieCarousel' data-slide='next'>&rsaquo;</a>
 </div>
         </td>
         <td>
             <h3>Recently added TV show episodes</h3>
-<div id="showCarousel" class="carousel slide" style="padding: 20px; width: 450px;">
-<div class="carousel-inner">
+<div id='showCarousel' class='carousel slide' style='padding: 20px; width: 450px;'>
+<div class='carousel-inner'>
     <?php
     $data = json_decode(xbmc_getRecentlyAddedEpisodes());
     foreach ($data->result->episodes as $index => $episode) {
-    echo "<div class='item".($index == 0 ? " active" : "")."'>
-      <img src='" . urldecode(substr($episode->thumbnail, 8, -1)) . "' alt='' style='height:400px; width: 450px;'>
-      <div class='carousel-caption'>
-        <h4>" . $episode->showtitle . " [" . $episode->season . "x" . $episode->episode . "]</h4>
+    echo '<div class="item'.($index == 0 ? ' active' : '').'">
+      <img src="' . urldecode(substr($episode->thumbnail, 8, -1)) . '" alt="" style="height:400px; width: 450px;">
+      <div class="carousel-caption">
+        <h4>' . $episode->showtitle . ' [' . $episode->season . 'x' . $episode->episode . ']</h4>
       </div>
-    </div>";
+    </div>';
     }
     ?>
 </div>
-<a class="left carousel-control" href="#showCarousel" data-slide="prev">&lsaquo;</a>
-<a class="right carousel-control" href="#showCarousel" data-slide="next">&rsaquo;</a>
+<a class='left carousel-control' href='#showCarousel' data-slide='prev'>&lsaquo;</a>
+<a class='right carousel-control' href='#showCarousel' data-slide='next'>&rsaquo;</a>
 </div>
         </td>
     </tr>
