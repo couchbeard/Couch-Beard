@@ -17,7 +17,7 @@
           	<?php get_sidebar( 'front-footer-3' ); ?>
         </div>
         
-        <button class="btn" data-toggle="collapse" data-target="#message">XBMC</button>
+        <button class="btn" id="sendnoti" data-toggle="collapse" data-target="#message">XBMC</button>
         <div id="message" class="collapse out" style="margin: 10px;">
                     <input id='notificationfield' type='text' placeholder='Notification' />
                     <span class="label label-success" style="display: none;"><i class="icon-ok icon-white"></i> Success</span>  
@@ -29,9 +29,12 @@
 
 <script>
 $(function() {
+    $('#sendnoti').on('click', function() {
+        $("#notificationfield").focus();
+    });
+
     $('#notificationfield').on('keypress', function(e) {
         if(e.which == 13) {
-            console.log('test');
             jQuery.ajax({  
                 type: 'POST',
                 cache: false,  
@@ -47,15 +50,14 @@ $(function() {
                         setTimeout(function() {
                             $("#message").collapse('hide');
                             $('#notificationfield').val('');
-                            $('.label-success').css('display', 'none');
+                            $('.label-success').fadeOut(500);
                         }, 2000);
 
                         
                     } else {
                         $('.label-important').show();
                         setTimeout(function() {
-                            $('.label-important').fadeOut();
-                            $('.label-success').css('display', 'none');
+                            $('.label-important').fadeOut(500);
                         }, 2000);
                         
                     }
