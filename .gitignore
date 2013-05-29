@@ -1,2 +1,3 @@
 .DS_STORE
 wp-config.php
+/cache

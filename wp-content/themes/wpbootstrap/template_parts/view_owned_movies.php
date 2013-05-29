@@ -13,7 +13,7 @@
 					<div id="wantedCoverOverlay">
 						<p class="nolink"><?php echo $movie->label . ' (' . $movie->year . ')'; ?></p>
 					</div>
-					<img class="lazy" id="wantedSearchpageCover" src="<?php print IMAGES; ?>/no_cover.png" data-original="<?php echo resizePoster(urldecode(substr($movie->thumbnail, 8, -1))); ?>"/>
+					<img class="lazy" id="wantedSearchpageCover" src="<?php print IMAGES; ?>/no_cover.png" data-original="<?php echo urldecode(substr($movie->thumbnail, 8, -1)); ?>"/>
 				</a>
 			</div>	
 		<!--<div class="row">
@@ -38,7 +38,7 @@
 		<div class="span12">
 			<ul class="pager">
 				<li class="previous <?php echo ($page > 1) ? '' : 'disabled'; ?>">
-			    	<a href="<?php echo get_permalink() . '&page=' . (($page > 1) ? $page - 1 : 1); ?>">Previous</a>
+			    	<a onClick="<?php echo ($page > 1) ? '' : 'return false'; ?>" href="<?php echo get_permalink() . '&page=' . (($page > 1) ? $page - 1 : 1); ?>">Previous</a>
 		  		</li>
 			  	<li class="next">
 			    	<a href="<?php echo get_permalink() . '&page=' . ($page + 1); ?>">Next</a>
