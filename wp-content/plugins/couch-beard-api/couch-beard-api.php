@@ -880,6 +880,10 @@ function xbmc_getCurrentPlaying() {
     {
         return xbmc_getCurrentMoviePlaying();
     }
+    else if ($data->result[0]->type == "audio")
+    {
+        return xbmc_getCurrentAudioPlaying();
+    }
     return false;
 }
 
@@ -887,6 +891,13 @@ function xbmc_getCurrentPlaying() {
 function xbmc_getCurrentMoviePlaying()
 {
     $json = "{\"jsonrpc\": \"2.0\", \"method\": \"Player.GetItem\", \"params\": { \"properties\": [\"title\", \"album\", \"artist\", \"season\", \"episode\", \"duration\", \"showtitle\", \"tvshowid\", \"thumbnail\", \"file\", \"fanart\", \"streamdetails\"], \"playerid\": 1 }, \"id\": \"VideoGetItem\"}";
+    $data = xbmc_API($json);
+    return $data->result->item;
+}
+
+function xbmc_getCurrentAudioPlaying()
+{
+    $json = "{\"jsonrpc\": \"2.0\", \"method\": \"Player.GetItem\", \"params\": { \"properties\": [\"title\", \"album\", \"artist\", \"duration\", \"thumbnail\", \"file\", \"fanart\", \"streamdetails\"], \"playerid\": 0 }, \"id\": \"AudioGetItem\"}";
     $data = xbmc_API($json);
     return $data->result->item;
 }
