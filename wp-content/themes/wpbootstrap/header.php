@@ -53,7 +53,7 @@
 			<ul class="nav pull-right">
 				<?php if (is_user_logged_in()) { ?>
 				<div class="navbar-search span2" id="searchform">
-					<input type="text" id="movieName" name="query" class="input-large search-query" placeholder="<?php _e('Search', 'wpbootstrap'); ?>	(Shift + S)" />
+					<input type="text" id="movieName" name="query" class="input-large search-query" placeholder="<?php _e('Search', 'wpbootstrap'); ?>	(Alt + S)" />
 				</div>
 				<div class="span1 offset1">
 					<div class="btn-group">
@@ -187,7 +187,7 @@
 		  });
 	});
 	$(document).keydown(function(e) {
-	    if(e.which == 83 && e.shiftKey) {
+	    if(e.which == 83 && e.altKey) {
 	    	e.preventDefault();
 	        $('#movieName').focus();
 	    }
