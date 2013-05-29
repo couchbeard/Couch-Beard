@@ -76,7 +76,7 @@
       <div class="currentPlayingBox" style="<?php try { echo (xbmc_getCurrentPlaying()) ? 'display: inline;' : 'display: none;'; } catch(Exception $e) { echo 'display: none;'; } ?>">
 	      <div id="xbmc_menu_box">
 			<legend id="playingTitle"></legend>
-			<img id="playingCover" src="<?php print IMAGES; ?>/no_cover.png" data-original="" class="lazy"/>
+			<img id="playingCover" src="<?php print IMAGES; ?>/no_cover.png"/>
 
 			<a class="btn btn-mini btn-inverse"><i class="icon-stop icon-white"></i></a>
 			<a class="btn btn-mini btn-inverse"><i class="icon-pause icon-white"></i></a>
@@ -135,21 +135,24 @@
 	            },
 	            success: function(data, textStatus, XMLHttpRequest) {
 	            	if (data != "" && data != null) {
-	            		if ($('.currentPlayingBox').css('display') == 'none')
-	            			$('.currentPlayingBox').show();
-
 	            		// Not needed to be updated
 	            		if ($('#playingTitle').text() != data.title) {
 		            		$('#playingTitle').text(data.title);
-		            		$('#playingCover').attr('data-original', function() {
+		            		$('#playingCover').attr('src', function() {
 		            			return decodeURIComponent(data.thumbnail.replace('image://', ''));
 		            		});
 		            		clearInterval(timer);
+		            		timer = setInterval(currentPlaying, 1000);
 		            	}
-	            		timer = setInterval(currentPlaying, 1000);
+		            	if ($('.currentPlayingBox').css('display') == 'none') {
+	            			$('.currentPlayingBox').slideDown(200);
+	            		}
 	            	}
 	            },  
 	            error: function(MLHttpRequest, textStatus, errorThrown) {
+	            	if ($('.currentPlayingBox').css('display') != 'none') {
+	            		$('.currentPlayingBox').slideUp(200);
+	            	}
 	           		clearInterval(timer);
             		timer = setInterval(currentPlaying, 5000);    
 	            }  
@@ -157,6 +160,9 @@
 		}
 		currentPlaying();
 		var timer = setInterval(currentPlaying, 1000);
+
+		$("img.lazy").lazyload({
+		});
 	});
 	
 	$('.icon-play').click(function() {
@@ -219,15 +225,6 @@
 	    }
 	    return '';
 	}
-
-	$(function() {
-		$("img.lazy").lazyload({
-			event : "sporty"
-		});
-	});
-	$(window).bind("load", function() { 
-	    var timeout = setTimeout(function() {$("img.lazy").trigger("sporty")}, 2000);
-	});
 	</script>
 <noscript>
 	
