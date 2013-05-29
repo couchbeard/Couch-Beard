@@ -24,7 +24,7 @@
 	<div class="span12">
 		<ul class="pager">
 			<li class="previous <?php echo ($page > 1) ? '' : 'disabled'; ?>">
-		    	<a href="<?php echo get_permalink() . '&page=' . (($page > 1) ? $page - 1 : 1); ?>">Previous</a>
+		    	<a onClick="<?php echo ($page > 1) ? '' : 'return false'; ?>" href="<?php echo get_permalink() . '&page=' . (($page > 1) ? $page - 1 : 1); ?>">Previous</a>
 	  		</li>
 		  	<li class="next">
 		    	<a href="<?php echo get_permalink() . '&page=' . ($page + 1); ?>">Next</a>
@@ -39,6 +39,6 @@
 		});
 	});
 	$(window).bind("load", function() { 
-	    var timeout = setTimeout(function() {$("img.lazy").trigger("sporty")}, 2000);
+	    var timeout = setTimeout(function() {$("img.lazy").trigger("sporty")}, 500);
 	}); 
 </script>

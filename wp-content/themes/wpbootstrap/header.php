@@ -143,6 +143,7 @@
 	$('.icon-play').click(function() {
 		$(this).toggleClass('icon-play icon-white');
 	});
+
 	$('#xbmc_menu_button').click(function() {
 		$('#xbmc_menu_box').animate({
 		    bottom: '+=10',
