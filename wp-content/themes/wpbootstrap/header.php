@@ -22,6 +22,7 @@
   </head>
 
   <body>
+  	<?php $ajax_nonce = wp_create_nonce("keyy"); ?>
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
@@ -72,37 +73,18 @@
           </div><!--/.nav-collapse -->
         </div>
       </div>
-      <div id="xbmc_menu_box">
-		<p>img</p>
-		<a class="btn btn-mini btn-inverse"><i class="icon-stop icon-white"></i></a>
-		<a class="btn btn-mini btn-inverse"><i class="icon-pause icon-white"></i></a>
-      	<a class="btn btn-mini btn-inverse"><i class="icon-play icon-white"></i></a>
-	</div>
-	<div id="xbmc_menu_button" class="muted">Current running</div>
-    </div>
-	<?php
-		$access = false;
-		$menu_items = wp_get_nav_menu_items($menu);
-		if ( ( $locations = get_nav_menu_locations() ) && isset( $locations[ $menu ] ) ) {
-			$menus = wp_get_nav_menu_object( $locations[ $menu ] );
+      <div class="currentPlayingBox" style="<?php try { echo (xbmc_getCurrentPlaying()) ? 'display: inline;' : 'display: none;'; } catch(Exception $e) { echo 'display: none;'; } ?>">
+	      <div id="xbmc_menu_box">
+			<legend id="playingTitle"></legend>
+			<img id="playingCover" src="<?php print IMAGES; ?>/no_cover.png" data-original="" class="lazy"/>
 
-			$menu_items = wp_get_nav_menu_items($menus->term_id);
-			foreach ( (array) $menu_items as $key => $menu_item ) {
-				$query = preg_split('/page_id=[0-9]+/', $_SERVER['QUERY_STRING']);
-				$url = explode('://', $menu_item->url);
-				if ($_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'] == $url[1] . $query[1]) {
-					$access = true;
-					break;
-				}
-			}
-		}
-		
-		if (!$access && !is_front_page()) {
-			//wp_redirect( home_url( '/login' ) );
-			//_e('No access!', 'wpbootstrap');
-			//exit();
-		}
-	?>
+			<a class="btn btn-mini btn-inverse"><i class="icon-stop icon-white"></i></a>
+			<a class="btn btn-mini btn-inverse"><i class="icon-pause icon-white"></i></a>
+	      	<a class="btn btn-mini btn-inverse"><i class="icon-play icon-white"></i></a>
+		</div>
+		<div id="xbmc_menu_button" class="muted"><?php _e('Current playing', 'wpbootstrap'); ?></div>
+	</div>
+    </div>
 
 	<script>
 // 	jQuery(document).ready(function ($) {
@@ -140,6 +122,43 @@
 //       }
 //   });
 // });
+	$(function() {
+		function currentPlaying() {
+			jQuery.ajax({  
+	            type: 'POST',
+	            cache: false,  
+	            url: "<?php echo home_url() . '/wp-admin/admin-ajax.php'; ?>",
+	            dataType:'json',  
+	            data: {  
+	                action: 'currentPlaying',
+	                security: '<?php echo $ajax_nonce; ?>'
+	            },
+	            success: function(data, textStatus, XMLHttpRequest) {
+	            	if (data != "" && data != null) {
+	            		if ($('.currentPlayingBox').css('display') == 'none')
+	            			$('.currentPlayingBox').show();
+
+	            		// Not needed to be updated
+	            		if ($('#playingTitle').text() != data.title) {
+		            		$('#playingTitle').text(data.title);
+		            		$('#playingCover').attr('data-original', function() {
+		            			return decodeURIComponent(data.thumbnail.replace('image://', ''));
+		            		});
+		            		clearInterval(timer);
+		            	}
+	            		timer = setInterval(currentPlaying, 1000);
+	            	}
+	            },  
+	            error: function(MLHttpRequest, textStatus, errorThrown) {
+	           		clearInterval(timer);
+            		timer = setInterval(currentPlaying, 5000);    
+	            }  
+	        }); 
+		}
+		currentPlaying();
+		var timer = setInterval(currentPlaying, 1000);
+	});
+	
 	$('.icon-play').click(function() {
 		$(this).toggleClass('icon-play icon-white');
 	});
@@ -200,6 +219,15 @@
 	    }
 	    return '';
 	}
+
+	$(function() {
+		$("img.lazy").lazyload({
+			event : "sporty"
+		});
+	});
+	$(window).bind("load", function() { 
+	    var timeout = setTimeout(function() {$("img.lazy").trigger("sporty")}, 2000);
+	});
 	</script>
 <noscript>
 	

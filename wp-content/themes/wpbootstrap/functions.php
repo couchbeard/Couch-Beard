@@ -32,6 +32,17 @@ function movieInfoFunction()
 }
 add_action('wp_ajax_movieInfo', 'movieInfoFunction');  // Only logged in users
 
+function currentPlayingFunction() 
+{
+    check_ajax_referer( 'keyy', 'security' );
+    echo xbmc_getCurrentPlaying();
+    exit();
+}
+add_action('wp_ajax_currentPlaying', 'currentPlayingFunction');  // Only logged in users
+
+
+// 
+
 function timezone() {
     date_default_timezone_set(get_option('timezone_string'));
 }

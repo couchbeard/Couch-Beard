@@ -756,9 +756,8 @@ function xbmc_API($json)
         );
 
         $result = curl_download($url, $header);
-        $data = json_decode($result);
 
-        return $data;
+        return $result;
     }
     catch (Exception $e)
     {
@@ -780,7 +779,7 @@ function xbmc_getMovies($start = '', $end = '')
         else
             $json = "{\"jsonrpc\": \"2.0\", \"method\": \"VideoLibrary.GetMovies\", \"params\": { \"limits\": { \"start\" : " . intval($start) . ", \"end\" : " . intval($start + $end) . " }, \"properties\" : [\"art\", \"thumbnail\", \"rating\", \"playcount\", \"year\", \"imdbnumber\"], \"sort\": { \"order\": \"ascending\", \"method\": \"label\", \"ignorearticle\": true} }, \"id\": \"libMovies\"}";
 
-        $data = xbmc_API($json);
+        $data = json_decode(xbmc_API($json));
 
         return $data->result->movies;
     }
@@ -820,7 +819,7 @@ function xbmc_getShows($start = '', $end = '')
         else
             $json = "{\"jsonrpc\": \"2.0\", \"method\": \"VideoLibrary.GetTVShows\", \"params\": { \"limits\": { \"start\" : " . intval($start) . ", \"end\" : " . intval($start + $end) . " }, \"properties\" : [\"art\", \"thumbnail\", \"rating\", \"playcount\", \"year\", \"imdbnumber\"], \"sort\": { \"order\": \"ascending\", \"method\": \"label\", \"ignorearticle\": true} }, \"id\": \"libTvShows\"}";
         
-        $data = xbmc_API($json);
+        $data = json_decode(xbmc_API($json));
         return $data->result->tvshows;
     }
     catch (Exception $e)
@@ -854,7 +853,7 @@ function xbmc_showOwned($id)
 function xbmc_sendNotification($title, $message)
 {
     $json = "{\"jsonrpc\": \"2.0\", \"method\": \"GUI.ShowNotification\", \"params\": {\"title\" : \"" . $title . "\", \"message\" : \"" . $message . "\" }, \"id\": \"1\"}";
-    $data = xbmc_API($json);
+    $data = json_decode(xbmc_API($json));
     return ($data->result == "OK");
 }
 
@@ -871,14 +870,14 @@ function xbmc_not_sb($imdb_id)
 
 function xbmc_getCurrentPlaying() {
     $json = "{\"jsonrpc\": \"2.0\", \"method\": \"Player.GetActivePlayers\", \"id\": 1}";
-    $data = xbmc_API($json);
+    $data = json_decode(xbmc_API($json));
     if (empty($data))
     {
-        throw new Exception("Data empty");
+        return false;
     }
     if ($data->result[0]->type == "video")
     {
-        return xbmc_getCurrentMoviePlaying();
+        return json_encode(xbmc_getCurrentMoviePlaying());
     }
     else if ($data->result[0]->type == "audio")
     {
@@ -891,7 +890,7 @@ function xbmc_getCurrentPlaying() {
 function xbmc_getCurrentMoviePlaying()
 {
     $json = "{\"jsonrpc\": \"2.0\", \"method\": \"Player.GetItem\", \"params\": { \"properties\": [\"title\", \"album\", \"artist\", \"season\", \"episode\", \"duration\", \"showtitle\", \"tvshowid\", \"thumbnail\", \"file\", \"fanart\", \"streamdetails\"], \"playerid\": 1 }, \"id\": \"VideoGetItem\"}";
-    $data = xbmc_API($json);
+    $data = json_decode(xbmc_API($json));
     return $data->result->item;
 }
 

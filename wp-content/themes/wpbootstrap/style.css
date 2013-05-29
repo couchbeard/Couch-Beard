@@ -39,6 +39,10 @@ input:focus:-moz-placeholder { opacity: 0; }
 	color: #222;
 }
 
+.currentPlayingBox {
+	display: none;
+}
+
 p, h1, h2, h3, h4, body, legend {
 	color: #fff;
 }
@@ -305,4 +309,15 @@ Wanted movies
 
 #wantedSearchCover:hover #wantedCoverOverlay {
 	display: inline;
+}
+
+
+
+/*
+Current playing box
+ */
+
+#playingCover {
+	max-width: 200px;
+	max-height: 200px;
 }
