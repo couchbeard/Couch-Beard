@@ -35,9 +35,8 @@
 <div class="carousel-inner">
     <?php
     $data = json_decode(xbmc_getRecentlyAddedMovies());
-    $activem = 0;
-    foreach ($data->result->movies as $movie) {
-    echo "<div class='item".($activem++ == 0 ? " active" : "")."'>
+    foreach ($data->result->movies as $index => $movie) {
+    echo "<div class='item".($index++ == 0 ? " active" : "")."'>
       <img src='" . urldecode(substr($movie->thumbnail, 8, -1)) . "' alt='' style='height:400px; width: 280px;'>
       <div class='carousel-caption'>
         <h4>" . $movie->label . "</h4>
@@ -56,9 +55,8 @@
 <div class="carousel-inner">
     <?php
     $data = json_decode(xbmc_getRecentlyAddedEpisodes());
-    $actives = 0;
-    foreach ($data->result->episodes as $episode) {
-    echo "<div class='item".($actives++ == 0 ? " active" : "")."'>
+    foreach ($data->result->episodes as $index => $episode) {
+    echo "<div class='item".($index == 0 ? " active" : "")."'>
       <img src='" . urldecode(substr($episode->thumbnail, 8, -1)) . "' alt='' style='height:400px; width: 450px;'>
       <div class='carousel-caption'>
         <h4>" . $episode->showtitle . " [" . $episode->season . "x" . $episode->episode . "]</h4>
