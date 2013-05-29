@@ -28,23 +28,14 @@
 
 
 <h3>Recently added movies</h3>
-
-<style type="text/css">
-.carousel img
-{
-  height: 400px;
-  width: 275px;
-}
-</style>
-
-<div id="myCarousel" class="carousel slide" style="width: 275px;">
+<div id="myCarousel" class="carousel slide" style="width: 280px;">
 <div class="carousel-inner">
     <?php
     $data = json_decode(xbmc_getRecentlyAddedMovies());
     $active = 0;
     foreach ($data->result->movies as $movie) {
     echo "<div class='item".($active++ == 0 ? " active" : "")."'>
-      <img src='" . urldecode(substr($movie->thumbnail, 8, -1)) . "' alt=''>
+      <img src='" . urldecode(substr($movie->thumbnail, 8, -1)) . "' alt='' style='height:400px; width: 280px;'>
       <div class='carousel-caption'>
         <h4>" . $movie->label . "</h4>
       </div>
