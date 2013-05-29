@@ -901,6 +901,14 @@ function xbmc_getCurrentAudioPlaying()
     return $data->result->item;
 }
 
+
+function xbmc_getRecentlyAddedMovies()
+{
+    $json = "{\"jsonrpc\": \"2.0\", \"method\": \"VideoLibrary.GetRecentlyAddedMovies\", \"params\": { \"properties\" : [\"thumbnail\", \"year\", \"imdbnumber\"], \"sort\": { \"order\": \"descending\", \"method\": \"dateadded\" } }, \"id\": \"libMovies\"}";
+    $data = xbmc_API($json);
+    return $data;
+}
+
 /**
  * Converts IMDb ID to TVDB ID
  * @param  string $imdb_id IMDb ID

@@ -25,12 +25,48 @@
         </div>
 
     </div>
-<?php get_footer(); ?>
 
+
+<h3>Recently added movies</h3>
+
+<style type="text/css">
+.carousel img
+{
+  height: 400px;
+  width: 275px;
+}
+</style>
+
+<div id="myCarousel" class="carousel slide" style="width: 275px;">
+<div class="carousel-inner">
+    <?php
+    $data = json_decode(xbmc_getRecentlyAddedMovies());
+    $active = 0;
+    foreach ($data->result->movies as $movie) {
+    echo "<div class='item".($active++ == 0 ? " active" : "")."'>
+      <img src='" . urldecode(substr($movie->thumbnail, 8, -1)) . "' alt=''>
+      <div class='carousel-caption'>
+        <h4>" . $movie->label . "</h4>
+      </div>
+    </div>";
+    }
+    ?>
+</div>
+<a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+<a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
+</div>
+
+
+
+<?php get_footer(); ?>
 <script>
 $(function() {
     $('#sendnoti').on('click', function() {
         $("#notificationfield").focus();
+    });
+
+    $('.carousel').carousel({
+        interval: 3000
     });
 
     $('#notificationfield').on('keypress', function(e) {
