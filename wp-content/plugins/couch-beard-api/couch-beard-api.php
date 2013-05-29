@@ -868,6 +868,29 @@ function xbmc_not_sb($imdb_id)
     return (xbmc_movieOwned($imdb_id) && !sb_showAdded($imdb_id));
 }
 
+
+function xbmc_getCurrentPlaying() {
+    $json = "{\"jsonrpc\": \"2.0\", \"method\": \"Player.GetActivePlayers\", \"id\": 1}";
+    $data = xbmc_API($json);
+    if (empty($data))
+    {
+        throw new Exception("Data empty");
+    }
+    if ($data->result[0]->type == "video")
+    {
+        return xbmc_getCurrentMoviePlaying();
+    }
+    return false;
+}
+
+
+function xbmc_getCurrentMoviePlaying()
+{
+    $json = "{\"jsonrpc\": \"2.0\", \"method\": \"Player.GetItem\", \"params\": { \"properties\": [\"title\", \"album\", \"artist\", \"season\", \"episode\", \"duration\", \"showtitle\", \"tvshowid\", \"thumbnail\", \"file\", \"fanart\", \"streamdetails\"], \"playerid\": 1 }, \"id\": \"VideoGetItem\"}";
+    $data = xbmc_API($json);
+    return $data->result->item;
+}
+
 /**
  * Converts IMDb ID to TVDB ID
  * @param  string $imdb_id IMDb ID
