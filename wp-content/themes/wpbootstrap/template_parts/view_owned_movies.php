@@ -1,7 +1,7 @@
 <div class="span12">
 	<?php
 	$page = isset($_GET['page']) ? absint($_GET['page']) : 1;
-	$limit = 14;
+	$limit = 21;
 	$offset = ($page - 1) * $limit;
 	$movies = xbmc_getMovies($offset, $limit);
 	if (empty($movies)) {
@@ -13,7 +13,7 @@
 					<div id="wantedCoverOverlay">
 						<p class="nolink"><?php echo $movie->label . ' (' . $movie->year . ')'; ?></p>
 					</div>
-					<img class="lazy" id="wantedSearchpageCover" src="<?php print IMAGES; ?>/no_cover.png" data-original="<?php echo urldecode(substr($movie->thumbnail, 8, -1)); ?>"/>
+					<img class="lazy" id="wantedSearchpageCover" src="<?php print IMAGES; ?>/no_cover.png" data-original="<?php echo resizePoster(urldecode(substr($movie->thumbnail, 8, -1))); ?>"/>
 				</a>
 			</div>	
 		<!--<div class="row">

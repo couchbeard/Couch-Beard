@@ -4,6 +4,14 @@ Template Name: Wanted Movies
  */
 ?>
 
+<?php
+	$cache = new Cache();
+    $cache->start();
+    mt_srand(time());
+    $cache->cacheTime = 3600 * 24; // 1 day
+    $cache->end();
+?>
+
 <?php get_header(); ?>
 <?php
 	$genres = array(

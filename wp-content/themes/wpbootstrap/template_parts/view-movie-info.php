@@ -140,7 +140,7 @@ $data = getMovieData($_GET['id']);
 
 	<div id="withIcon">
 		<a class="ui-notify-close ui-notify-cross" href="#">x</a>
-		<div style="float:left;margin:0 10px 0 0"><img src="#{icon}" alt="warning" /></div>
+		<div style="float:left;margin:0 10px 0 0"><img src="<?php print IMAGES; ?>/alert.png" alt="warning" /></div>
 		<h1>#{title}</h1>
 		<p>#{text}</p>
 	</div>
@@ -189,7 +189,7 @@ $(function() {
 					$('#addMovie').attr("disabled", true);
 					$('#addMovie').html('<i>Movie added</i>');
 	        	} else {
-	        		create("withIcon", { title:'Error!', text:'<?php printf(__("<strong>%s</strong> was not added", "wpbootstrap"), $data->Title); ?>', icon:'<?php print IMAGES; ?>/alert.png' },{ 
+	        		create("withIcon", { title:'Error!', text:'<?php printf(__("<strong>%s</strong> was not added", "wpbootstrap"), $data->Title); ?>' },{ 
 						expires:false});
 	        	}
             },  

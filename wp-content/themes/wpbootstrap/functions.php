@@ -83,6 +83,47 @@ add_action( 'init', 'myprefix_autocomplete_init' );
 function myprefix_autocomplete_search_form(){  
     wp_enqueue_script( 'my_acsearch' );  
     wp_enqueue_style( 'myprefix-jquery-ui' );  
+}
+
+function resizePoster($filename) {
+    $path = "./cache/".base64_encode($filename).".png";
+    if (file_exists($path))
+        return $path;
+
+    // Content type
+    header('Content-Type: image/png');
+
+    // Get new sizes
+    list($width, $height) = getimagesize($filename);
+
+    $std_width = 175;
+    $std_height = 250;
+     
+    $newwidth = (isset($_GET['w']) ? $_GET['w'] : $std_width);
+    $newheight = (isset($_GET['h']) ? $_GET['h'] : $std_height);
+
+    // Load
+    $thumb = imagecreatetruecolor($newwidth, $newheight);
+    if (exif_imagetype($filename) == IMAGETYPE_JPEG)
+    {
+        $source = imagecreatefromjpeg($filename);
+    }
+    else if (exif_imagetype($filename) == IMAGETYPE_PNG)
+    {
+        $source = imagecreatefrompng($filename);
+    }
+    else if (exif_imagetype($filename) == IMAGETYPE_GIF)
+    {
+        $source = imagecreatefromgif($filename);
+    }
+
+    // Resize
+    imagecopyresized($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+
+    // Output
+    imagepng($thumb, $path);
+
+    return $path;
 } 
 
 /**
@@ -474,4 +515,67 @@ class BootstrapNavMenuWalker extends Walker_Nav_Menu
     }
 
 }
+
+class Cache {
+ 
+        // Things not cache
+        var $doNotCache = array();
+ 
+        // General Config Vars
+        var $cacheDir = "./cache";
+        var $cacheTime = 3600; // Seconds
+        var $cacheFile;
+        var $cacheFileName;
+        var $cacheOverride = "true";
+        var $cacheNotice = "\n<!-- Cached by Couch Beard -->";
+ 
+        function __construct()
+        {
+            if ( !is_dir($this->cacheDir) )
+                mkdir($this->cacheDir, 0755);
+        }
+ 
+        function override()
+        {
+            return ( isset($_GET['nocache']) && ( 0 == strcmp(isset($_GET['nocache']), $this->cacheOverride) ) ) ? false : true;
+        } // End override
+ 
+        function start()
+        {
+            if ( ! $this->override() )
+            {
+                // File setup
+                $this->cacheFileName = base64_encode( $_SERVER['REQUEST_URI'] );
+                $this->cacheFile = $this->cacheDir.'/'.$this->cacheFileName;
+                $request = array_slice ( explode('/',$_SERVER['REQUEST_URI']), 2 );
+ 
+                if ( !in_array($request[0], $this->doNotCache) )
+                {
+                    // Check cache or create new cache
+                    if ( file_exists($this->cacheFile) && ( time() - filemtime($this->cacheFile) ) < $this->cacheTime )
+                    {
+                        readfile( $this->cacheFile );
+                        exit(); // Stop page loading when cache found
+                    }
+                    else
+                        ob_start(); // Start the buffer
+                    // End of Magic
+                }
+            }
+        } // End start
+ 
+        function end()
+        {
+            if ( ! $this->override() )
+            {
+                if ( false === file_put_contents( $this->cacheFile, ob_get_contents() . $this->cacheNotice ) )
+                    echo "Trouble"; // Error message
+                ob_clean(); // Close and throw away the buffer
+                // Show the contents from the fresh cache.
+                readfile( $this->cacheFile );
+            }
+        } // End end
+ 
+    } // End Class Cache
+
 ?>

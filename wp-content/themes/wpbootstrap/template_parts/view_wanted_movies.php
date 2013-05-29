@@ -109,7 +109,17 @@
 
 <script>
 	$(document).on("click", "#movieopen", function () {
-	     var imdb = $(this).data('id');
+	    var imdb = $(this).data('id');
+				$("#myMovie #title").text( '' );
+            	$("#myMovie #rating").text( '' );
+            	$("#myMovie #votes").text( '' );
+				$("#myMovie #genres").text( '' );
+            	$("#myMovie #year").text( '' );            	
+				$("#myMovie #runtime").text( '' );
+            	$("#myMovie #actors").text( '' );            	
+				$("#myMovie #writers").text( '' );
+            	$("#myMovie #plot").text( '' );            	
+            	$("#myMovie #poster").attr("src", '');	    
 		jQuery.ajax({ 
             type: 'POST',
             cache: false,  
@@ -146,5 +156,5 @@
 	});
 	$(window).bind("load", function() { 
 	    var timeout = setTimeout(function() {$("img.lazy").trigger("sporty")}, 2000);
-	}); 
+	});
 </script>

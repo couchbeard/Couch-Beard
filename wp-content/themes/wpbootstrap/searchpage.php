@@ -3,6 +3,7 @@
 Template Name: Search Page
 */
 ?>
+
 <?php $ajax_nonce = wp_create_nonce("keyy"); ?>
 <?php get_header(); ?>
 <?php
