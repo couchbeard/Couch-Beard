@@ -16,14 +16,6 @@
         <div class="span4">
           	<?php get_sidebar( 'front-footer-3' ); ?>
         </div>
-        
-        <button class="btn" id="sendnoti" data-toggle="collapse" data-target="#message">XBMC</button>
-        <div id="message" class="collapse out" style="margin: 10px;">
-                    <input id='notificationfield' type='text' placeholder='Notification' />
-                    <span class="label label-success" style="display: none;"><i class="icon-ok icon-white"></i> Success</span>  
-                    <span class="label label-important" style="display: none;"><i class="icon-remove icon-white"></i> Failed</span>
-        </div>
-
     </div>
 
 <?php
@@ -80,10 +72,12 @@ if (!empty($mov) && !empty($tv))
 }
 try
 {
-foreach (sab_getHistory() as $slot)
-{
-    echo '['.$slot->status.'] '.$slot->name.(empty($slot->completed) ? '' : ' <small><em>'.date('d-m-Y H:i', $slot->completed).'</em></small>').'<br />';
-}
+    $sab_history = sab_getHistory();
+    if (!empty($sab_history))
+        foreach ($sab_history as $slot)
+        {
+            echo '['.$slot->status.'] '.$slot->name.(empty($slot->completed) ? '' : ' <small><em>'.date('d-m-Y H:i', $slot->completed).'</em></small>').'<br />';
+        }
 } catch (Exception $e) {}
 
 ?>
@@ -92,10 +86,6 @@ foreach (sab_getHistory() as $slot)
 <?php get_footer(); ?>
 <script>
 $(function() {
-    $('#sendnoti').on('click', function() {
-        $("#notificationfield").focus();
-    });
-
     $('#movieCarousel').carousel({
         interval: Math.floor(Math.random() * 4000) + 2500
     });
@@ -103,41 +93,7 @@ $(function() {
     $('#showCarousel').carousel({
         interval: Math.floor(Math.random() * 4000) + 2500
     });
-
-    $('#notificationfield').on('keypress', function(e) {
-        if(e.which == 13) {
-            jQuery.ajax({  
-                type: 'POST',
-                cache: false,  
-                url: "<?php echo home_url() . '/wp-admin/admin-ajax.php'; ?>",  
-                data: {  
-                    action: 'xbmcSendNotification',
-                    security: '<?php echo $ajax_nonce; ?>',
-                    message: $('#notificationfield').val()
-                },
-                success: function(data, textStatus, XMLHttpRequest) {
-                    if (data == 1) {
-                        $('.label-success').show();
-                        setTimeout(function() {
-                            $("#message").collapse('hide');
-                            $('#notificationfield').val('');
-                            $('.label-success').fadeOut(500);
-                        }, 2000);
-
-                        
-                    } else {
-                        $('.label-important').show();
-                        setTimeout(function() {
-                            $('.label-important').fadeOut(500);
-                        }, 2000);
-                        
-                    }
-                },  
-                error: function(MLHttpRequest, textStatus, errorThrown) {
-                    alert("<?php _e('There was an error adding the movie. The movie was not added.', 'wpbootstrap'); ?>");  
-                }  
-            });
-        }         
+    $("img.lazy").lazyload({
     });
 });
 </script>

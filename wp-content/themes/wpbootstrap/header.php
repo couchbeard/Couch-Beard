@@ -73,14 +73,44 @@
           </div><!--/.nav-collapse -->
         </div>
       </div>
-      <div class="currentPlayingBox" style="<?php try { echo (xbmc_getCurrentPlaying()) ? 'display: inline;' : 'display: none;'; } catch(Exception $e) { echo 'display: none;'; } ?>">
-	      <div id="xbmc_menu_box">
-			<legend id="playingTitle"></legend>
+      <div class="currentPlayingBox">
+      	<div id="xbmc_menu_box_mini">
+			<div class="row-fluid">
+				<div class="span5 pull-left">
+					<p class="lead" id="playingTitle"></p>
+					<div class="span8">
+						<div class="input-append">
+							<input id="notificationfield" type="text" placeholder="<?php _e('Send notification', 'wpbootstrap'); ?>">
+						  	<button class="btn" type="button"><i class="icon-comment"></i></button>
+						</div>
+						<div class="span2 pull-right">
+						<span class="label label-success displaynone" ><i class="icon-ok icon-white"></i> Success</span>  
+                    	<span class="label label-important displaynone"><i class="icon-remove icon-white"></i> Failed</span>
+				    </div>
+				    </div>
+				</div>
+				<div class="span1 pull-right">
+					<p class="lead" id="playingRuntime">12:01</p>
+				</div>
+				<div class="span3 pull-right">
+					<div class="progressbar" id="playingProgress">
+						<div class="bar" style="width: 50%;"></div>
+					</div>
+				</div>
+				<div class="span3 pull-right" id="playButtons">
+					<a class="btn btn-mini btn-inverse"><i class="icon-step-backward icon-white"></i></a>
+					<a class="btn btn-mini btn-inverse"><i class="icon-fast-backward icon-white"></i></a>
+					<a class="btn btn-mini btn-inverse"><i class="icon-stop icon-white"></i></a>
+			      	<a class="btn btn-mini btn-inverse"><i class="icon-play icon-white"></i></a>
+					<a class="btn btn-mini btn-inverse"><i class="icon-pause icon-white"></i></a>
+					<a class="btn btn-mini btn-inverse"><i class="icon-fast-forward icon-white"></i></a>
+					<a class="btn btn-mini btn-inverse"><i class="icon-step-forward icon-white"></i></a>
+				</div>
+			</div>
+		</div>
+        <div id="xbmc_menu_box">
+			<legend></legend>
 			<img id="playingCover" src="<?php print IMAGES; ?>/no_cover.png"/>
-
-			<a class="btn btn-mini btn-inverse"><i class="icon-stop icon-white"></i></a>
-			<a class="btn btn-mini btn-inverse"><i class="icon-pause icon-white"></i></a>
-	      	<a class="btn btn-mini btn-inverse"><i class="icon-play icon-white"></i></a>
 		</div>
 		<div id="xbmc_menu_button" class="muted"><?php _e('Current playing', 'wpbootstrap'); ?></div>
 	</div>
@@ -122,7 +152,45 @@
 //       }
 //   });
 // });
+	var running;
 	$(function() {
+
+		$('#notificationfield').on('keypress', function(e) {
+	        if(e.which == 13) {
+	            jQuery.ajax({  
+	                type: 'POST',
+	                cache: false,  
+	                url: "<?php echo home_url() . '/wp-admin/admin-ajax.php'; ?>",  
+	                data: {  
+	                    action: 'xbmcSendNotification',
+	                    security: '<?php echo $ajax_nonce; ?>',
+	                    message: $('#notificationfield').val()
+	                },
+	                success: function(data, textStatus, XMLHttpRequest) {
+	                    if (data == 1) {
+	                        $('.label-success').show();
+	                        setTimeout(function() {
+	                            $("#message").collapse('hide');
+	                            $('#notificationfield').val('');
+	                            $('.label-success').fadeOut(500);
+	                        }, 2000);
+
+	                        
+	                    } else {
+	                        $('.label-important').show();
+	                        setTimeout(function() {
+	                            $('.label-important').fadeOut(500);
+	                        }, 2000);
+	                        
+	                    }
+	                },  
+	                error: function(MLHttpRequest, textStatus, errorThrown) {
+	                    alert("<?php _e('There was an error adding the movie. The movie was not added.', 'wpbootstrap'); ?>");  
+	                }  
+	            });
+	        }         
+	    });
+		
 		function currentPlaying() {
 			jQuery.ajax({  
 	            type: 'POST',
@@ -136,7 +204,7 @@
 	            success: function(data, textStatus, XMLHttpRequest) {
 	            	if (data != "" && data != null) {
 	            		// Not needed to be updated
-	            		var title = data.title;
+	            		var title = data.label;
 	            		if (data.type == 'episode')
 	            		{
 	            			title = data.showtitle + ' [' + data.season + 'x' + data.episode + '] - ' + data.title;
@@ -149,21 +217,23 @@
 		            		clearInterval(timer);
 		            		timer = setInterval(currentPlaying, 1000);
 		            	}
-		            	if ($('.currentPlayingBox').css('display') == 'none') {
-	            			$('.currentPlayingBox').slideDown(200);
-	            		}
+		            	if (!running && $('#xbmc_menu_box_mini').css('display') == 'none')
+		            		$('#xbmc_menu_box_mini').slideDown(500);
+	            		running = true;
 	            	}
 	            },  
 	            error: function(MLHttpRequest, textStatus, errorThrown) {
-	            	if ($('.currentPlayingBox').css('display') != 'none') {
-	            		$('#xbmc_menu_box').slideUp(500, function() {
-	            			$('.currentPlayingBox').fadeOut(500);
-	            		});
-	           			
-	            		writeCookie('xbmc', '0', 0);
-	            	}
-	           		clearInterval(timer);
-            		timer = setInterval(currentPlaying, 5000);    
+	            	if (running) {
+	            		$('#xbmc_menu_box').slideUp(500);
+	            		$('#xbmc_menu_box_mini').slideUp(500);
+	            		$('#playingProgress').hide();
+		            	running = false;
+		            	clearInterval(timer);
+            			timer = setInterval(currentPlaying, 5000);   
+		            }
+		            if ($('#playingTitle').text() == "" || $('#playingTitle').text() == null) {
+		            	$('#xbmc_menu_box').slideUp(500);
+		            } 
 	            }  
 	        }); 
 		}
@@ -178,35 +248,30 @@
 		$(this).toggleClass('icon-play icon-white');
 	});
 
-	$('#xbmc_menu_button').click(function() {
-		$('#xbmc_menu_box').animate({
-		    bottom: '+=10',
-		    height: 'toggle'
-		  }, 500, function() {
-		    	if ($('#xbmc_menu_box').is(':visible')) {
-					writeCookie('xbmc', '1', 1);
-				} else {
-					writeCookie('xbmc', '0', 0);
-				}
-		  });
-	});
+		$('#xbmc_menu_button').click(function() {
+			if (running == true) {
+				$('#xbmc_menu_box').animate({
+				    bottom: '+=10',
+				    height: 'toggle'
+				  }, 500, function() {
+
+				  });
+			} else {
+				$('#xbmc_menu_box_mini').animate({
+				    bottom: '+=10',
+				    height: 'toggle'
+				  }, 500, function() {
+
+				  });
+			}
+		});
+
 	$(document).keydown(function(e) {
 	    if(e.which == 83 && e.altKey) {
 	    	e.preventDefault();
 	        $('#movieName').focus();
 	    }
 	});
-
-	window.onload=function() {
-		if (readCookie('xbmc') == '1') {
-			$('#xbmc_menu_box').animate({
-		    bottom: '+=10',
-		    height: 'toggle'
-		  }, 500, function() {
-		  	
-		  });
-		}
-	};
 
 	function writeCookie(name,value,days) {
 	    var date, expires;
