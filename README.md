@@ -16,6 +16,8 @@ Feel free to donate to the project or add issues. [![Donate](https://www.paypalo
 
 ![preview thumb](http://i.imgur.com/RBupXCZ.png)
 
+![preview thumb](http://i.imgur.com/KsFrWEG.png)
+
 
 Installation
 ===========
