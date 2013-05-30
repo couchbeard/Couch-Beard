@@ -93,7 +93,7 @@
 					<p class="lead" id="playingRuntime">12:01</p>
 				</div>
 				<div class="span3 pull-right">
-					<div class="progressbar" id="playingProgress">
+					<div class="progressbar playingProgress" id="playingProgress">
 						<div class="bar" style="width: 50%;"></div>
 					</div>
 				</div>

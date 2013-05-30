@@ -727,6 +727,21 @@ function sab_getHistory($start = 0, $limit = 5)
     }
 }
 
+function sab_getQueue() 
+{
+    try
+    {
+        $url = sab_getURL() . 'qstatus';
+        $json = curl_download($url);
+        $data = json_decode($json);
+        return $data->jobs;
+    }
+    catch (Exception $e)
+    {
+        return false;
+    }
+}
+
 
 ///////////////
 // XBMC (xbmc)
@@ -893,7 +908,7 @@ function xbmc_getCurrentPlaying() {
     }
     if ($data->result[0]->type == "video")
     {
-        return json_encode(xbmc_getCurrentMoviePlaying());
+        return xbmc_getCurrentMoviePlaying();
     }
     else if ($data->result[0]->type == "audio")
     {
@@ -937,7 +952,7 @@ function xbmc_getMovieDetails($movieid)
 {
     $json = "{\"jsonrpc\": \"2.0\", \"method\": \"VideoLibrary.GetMovieDetails\", \"params\": { \"properties\": [\"title\", \"genre\", \"year\", \"rating\", \"plot\", \"runtime\", \"imdbnumber\", \"thumbnail\", \"art\"], \"movieid\": " . $movieid . " }, \"id\": \"VideoGetItem\"}";
     $data = json_decode(xbmc_API($json))->result->moviedetails;
-    return json_encode($data);
+    return $data;
 }
 
 /**
