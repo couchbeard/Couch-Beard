@@ -712,6 +712,22 @@ function sab_getCurrentDownloads()
     }
 }
 
+function sab_getHistory()
+{
+    try
+    {
+        $url = sab_getURL() . 'history';
+        $json = curl_download($url);
+        $data = json_decode($json);
+        return $data->history->slots;
+    }
+    catch (Exception $e)
+    {
+        return false;
+    }
+}
+
+
 ///////////////
 // XBMC (xbmc)
 ///////////////
@@ -911,7 +927,7 @@ function xbmc_getRecentlyAddedMovies()
 
 function xbmc_getRecentlyAddedEpisodes()
 {
-    $json = "{\"jsonrpc\": \"2.0\", \"method\": \"VideoLibrary.GetRecentlyAddedEpisodes\", \"params\": { \"properties\" : [\"thumbnail\", \"showtitle\", \"season\", \"episode\"], \"sort\": { \"order\": \"descending\", \"method\": \"dateadded\" } }, \"id\": \"libMovies\"}";
+    $json = "{\"jsonrpc\": \"2.0\", \"method\": \"VideoLibrary.GetRecentlyAddedEpisodes\", \"params\": { \"properties\" : [\"thumbnail\", \"showtitle\", \"season\", \"episode\", \"title\"], \"sort\": { \"order\": \"descending\", \"method\": \"dateadded\" } }, \"id\": \"libMovies\"}";
     $data = xbmc_API($json);
     return $data;
 }

@@ -26,7 +26,12 @@
 
     </div>
 
-
+<?php
+$mov = json_decode(xbmc_getRecentlyAddedMovies());
+$tv = json_decode(xbmc_getRecentlyAddedEpisodes());
+if (!empty($mov) && !empty($tv))
+{
+    ?>
 <table>
     <tr>
         <td>
@@ -34,12 +39,11 @@
 <div id='movieCarousel' class='carousel slide' style='padding: 20px; width: 280px;'>
 <div class='carousel-inner'>
     <?php
-    $data = json_decode(xbmc_getRecentlyAddedMovies());
-    foreach ($data->result->movies as $index => $movie) {
+    foreach ($mov->result->movies as $index => $movie) {
     echo '<div class="item'.($index++ == 0 ? ' active' : '').'">
       <img src="' . urldecode(substr($movie->thumbnail, 8, -1)) . '" alt="" style="height:400px; width: 280px;">
       <div class="carousel-caption">
-        <h4>' . $movie->label . '</h4>
+        <h4>' . $movie->label . ' (' . $movie->year . ')</h4>
       </div>
     </div>';
     }
@@ -54,12 +58,12 @@
 <div id='showCarousel' class='carousel slide' style='padding: 20px; width: 450px;'>
 <div class='carousel-inner'>
     <?php
-    $data = json_decode(xbmc_getRecentlyAddedEpisodes());
-    foreach ($data->result->episodes as $index => $episode) {
+    
+    foreach ($tv->result->episodes as $index => $episode) {
     echo '<div class="item'.($index == 0 ? ' active' : '').'">
       <img src="' . urldecode(substr($episode->thumbnail, 8, -1)) . '" alt="" style="height:400px; width: 450px;">
       <div class="carousel-caption">
-        <h4>' . $episode->showtitle . ' [' . $episode->season . 'x' . $episode->episode . ']</h4>
+        <h4>' . $episode->showtitle . ' [' . $episode->season . 'x' . $episode->episode . '] '.$episode->title.'</h4>
       </div>
     </div>';
     }
@@ -71,7 +75,15 @@
         </td>
     </tr>
 </table>
+<?php
+}
 
+foreach (sab_getHistory() as $slot)
+{
+    echo '['.$slot->status.'] '.$slot->name.(empty($slot->completed) ? '' : ' <small><em>'.date('d-m-Y H:i', $slot->completed).'</em></small>').'<br />';
+}
+
+?>
 
 
 <?php get_footer(); ?>
