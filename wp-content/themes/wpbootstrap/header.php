@@ -156,6 +156,11 @@
 	            },  
 	            error: function(MLHttpRequest, textStatus, errorThrown) {
 	            	if ($('.currentPlayingBox').css('display') != 'none') {
+	            		$('#xbmc_menu_box').slideUp(500, function() {
+	            			$('.currentPlayingBox').fadeOut(500);
+	            		});
+	           			
+	            		writeCookie('xbmc', '0', 0);
 	            	}
 	           		clearInterval(timer);
             		timer = setInterval(currentPlaying, 5000);    
@@ -179,7 +184,7 @@
 		    height: 'toggle'
 		  }, 500, function() {
 		    	if ($('#xbmc_menu_box').is(':visible')) {
-					writeCookie('xbmc', '1', 1)
+					writeCookie('xbmc', '1', 1);
 				} else {
 					writeCookie('xbmc', '0', 0);
 				}
