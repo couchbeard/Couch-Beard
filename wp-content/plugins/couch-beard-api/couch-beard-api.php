@@ -932,6 +932,14 @@ function xbmc_getRecentlyAddedEpisodes()
     return $data;
 }
 
+
+function xbmc_getMovieDetails($movieid)
+{
+    $json = "{\"jsonrpc\": \"2.0\", \"method\": \"VideoLibrary.GetMovieDetails\", \"params\": { \"properties\": [\"title\", \"genre\", \"year\", \"rating\", \"plot\", \"runtime\", \"imdbnumber\", \"thumbnail\", \"art\"], \"movieid\": " . $movieid . " }, \"id\": \"VideoGetItem\"}";
+    $data = xbmc_API($json);
+    return $data;
+}
+
 /**
  * Converts IMDb ID to TVDB ID
  * @param  string $imdb_id IMDb ID
