@@ -1,0 +1,19 @@
+Front-page:
+===========
+ - Info on currently added
+ - Progress bar on downloads and downloads design
+
+Movie-page:
+===========
+ - Start movie
+ - Design movie info
+
+TV-page:
+========
+ - Start TV show
+ - Design TV show info
+
+XBMC-control-menu:
+==================
+ - Actions (play, pause, stop etc.)
+ - Design and more info
