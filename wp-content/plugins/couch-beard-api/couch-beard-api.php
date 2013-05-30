@@ -712,11 +712,11 @@ function sab_getCurrentDownloads()
     }
 }
 
-function sab_getHistory()
+function sab_getHistory($start = 0, $limit = 5)
 {
     try
     {
-        $url = sab_getURL() . 'history';
+        $url = sab_getURL() . 'history&start=' . $start . '&limit=' . $limit;
         $json = curl_download($url);
         $data = json_decode($json);
         return $data->history->slots;

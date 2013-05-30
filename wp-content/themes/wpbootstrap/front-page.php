@@ -34,34 +34,35 @@ if (!empty($mov) && !empty($tv))
     ?>
 <table>
     <tr>
-        <td>
-            <h3>Recently added movies</h3>
-<div id='movieCarousel' class='carousel slide' style='padding: 20px; width: 280px;'>
-<div class='carousel-inner'>
-    <?php
-    foreach ($mov->result->movies as $index => $movie) {
-    echo '<div class="item'.($index++ == 0 ? ' active' : '').'">
-      <img src="' . urldecode(substr($movie->thumbnail, 8, -1)) . '" alt="" style="height:400px; width: 280px;">
-      <div class="carousel-caption">
-        <h4>' . $movie->label . ' (' . $movie->year . ')</h4>
-      </div>
-    </div>';
-    }
-    ?>
-</div>
-<a class='left carousel-control' href='#movieCarousel' data-slide='prev'>&lsaquo;</a>
-<a class='right carousel-control' href='#movieCarousel' data-slide='next'>&rsaquo;</a>
+        <td>     
+<div id='movieCarousel' class='carousel slide movie'>
+    <h3><?php _e('Recently added movies', 'wpbootstrap'); ?></h3>
+    <div class='carousel-inner' id='movie-carousel'>
+        <?php
+        foreach ($mov->result->movies as $index => $movie) {
+        echo '<div class="item'.($index == 0 ? ' active' : '').'">
+          <img src="' . urldecode(substr($movie->thumbnail, 8, -1)) . '" alt="">
+          <div class="carousel-caption">
+            <h4>' . $movie->label . ' (' . $movie->year . ')</h4>
+          </div>
+        </div>';
+        }
+        ?>
+    </div>
+    <a class='left carousel-control' href='#movieCarousel' data-slide='prev'>&lsaquo;</a>
+    <a class='right carousel-control' href='#movieCarousel' data-slide='next'>&rsaquo;</a>
 </div>
         </td>
         <td>
-            <h3>Recently added TV show episodes</h3>
-<div id='showCarousel' class='carousel slide' style='padding: 20px; width: 450px;'>
+            
+<div id='showCarousel' class='carousel slide tv'>
+    <h3><?php _e('Recently added TV show episodes', 'wpbootstrap'); ?></h3>
 <div class='carousel-inner'>
     <?php
     
     foreach ($tv->result->episodes as $index => $episode) {
     echo '<div class="item'.($index == 0 ? ' active' : '').'">
-      <img src="' . urldecode(substr($episode->thumbnail, 8, -1)) . '" alt="" style="height:400px; width: 450px;">
+      <img src="' . urldecode(substr($episode->thumbnail, 8, -1)) . '" alt="">
       <div class="carousel-caption">
         <h4>' . $episode->showtitle . ' [' . $episode->season . 'x' . $episode->episode . '] '.$episode->title.'</h4>
       </div>
@@ -77,11 +78,13 @@ if (!empty($mov) && !empty($tv))
 </table>
 <?php
 }
-
+try
+{
 foreach (sab_getHistory() as $slot)
 {
     echo '['.$slot->status.'] '.$slot->name.(empty($slot->completed) ? '' : ' <small><em>'.date('d-m-Y H:i', $slot->completed).'</em></small>').'<br />';
 }
+} catch (Exception $e) {}
 
 ?>
 
@@ -93,8 +96,12 @@ $(function() {
         $("#notificationfield").focus();
     });
 
-    $('.carousel').carousel({
-        interval: 3000
+    $('#movieCarousel').carousel({
+        interval: Math.floor(Math.random() * 4000) + 2500
+    });
+
+    $('#showCarousel').carousel({
+        interval: Math.floor(Math.random() * 4000) + 2500
     });
 
     $('#notificationfield').on('keypress', function(e) {

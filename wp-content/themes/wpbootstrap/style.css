@@ -320,3 +320,17 @@ Current playing box
 	max-width: 200px;
 	max-height: 200px;
 }
+
+.tv img {
+	height:400px;
+	width: 450px;
+}
+
+.movie img {
+	height:400px;
+	width: 280px;
+}
+
+.carousel {
+	padding: 20px;
+}
