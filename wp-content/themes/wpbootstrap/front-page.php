@@ -1,22 +1,5 @@
 <?php get_header(); ?>
     <?php $ajax_nonce = wp_create_nonce("keyy"); ?>
-    <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
-			<h1><?php the_title(); ?></h1>
-			<?php the_content(); ?>
-	<?php endwhile; else: ?>
-		<p><?php _e('Sorry, no posts matched your criteria.'); ?></p>
-	<?php endif; ?>
-	<div class="row">
-        <div class="span4">
-          	<?php get_sidebar( 'front-footer-1' ); ?>
-        </div>
-        <div class="span4">
-          	<?php get_sidebar( 'front-footer-2' ); ?>
-       	</div>
-        <div class="span4">
-          	<?php get_sidebar( 'front-footer-3' ); ?>
-        </div>
-    </div>
 
 <?php
 $mov = json_decode(xbmc_getRecentlyAddedMovies());
@@ -24,50 +7,50 @@ $tv = json_decode(xbmc_getRecentlyAddedEpisodes());
 if (!empty($mov) && !empty($tv))
 {
     ?>
-<table>
-    <tr>
-        <td>     
-<div id='movieCarousel' class='carousel slide movie'>
-    <h3><?php _e('Recently added movies', 'wpbootstrap'); ?></h3>
-    <div class='carousel-inner' id='movie-carousel'>
-        <?php
-        foreach ($mov->result->movies as $index => $movie) {
-        echo '<div class="item'.($index == 0 ? ' active' : '').'">
-          <img src="' . urldecode(substr($movie->thumbnail, 8, -1)) . '" alt="">
-          <div class="carousel-caption">
-            <h4>' . $movie->label . ' (' . $movie->year . ')</h4>
-          </div>
-        </div>';
-        }
-        ?>
+<div class="row">
+    <div class="span3">
+        <div id='movieCarousel' class='carousel slide movie'>
+            <p class="lead"><?php _e('Recently added movies', 'wpbootstrap'); ?></p>
+                    <div class='carousel-inner' id='movie-carousel'>
+                        <?php
+                        foreach ($mov->result->movies as $index => $movie) { ?>
+                            <div class="item <?php echo ($index == 0 ? ' active' : ''); ?>">
+                                <img class="frontpagemoviecover minfullwidth" src="<?php echo urldecode(substr($movie->thumbnail, 8, -1)); ?>" alt="">
+                                <div class="carousel-caption">
+                                    <p><?php echo $movie->label . ' (' . $movie->year . ')'; ?></p><i class="icon-info-sign icon-white pull-right pointer"></i>
+
+                                </div>
+                            </div>
+                        <?php 
+                        }
+                        ?>
+                    </div>
+                    <a class='left carousel-control' href='#movieCarousel' data-slide='prev'>&lsaquo;</a>
+                    <a class='right carousel-control' href='#movieCarousel' data-slide='next'>&rsaquo;</a>
+                </div>
+            </div>
+    <div class="span5 pull-right">    
+        <div id='showCarousel' class='carousel slide tv'>
+            <p class="lead"><?php _e('Recently added TV show episodes', 'wpbootstrap'); ?></p>
+            <div class='carousel-inner'>
+                <?php
+                foreach ($tv->result->episodes as $index => $episode) { ?>
+                    <div class="item <?php echo ($index == 0 ? ' active' : ''); ?>">
+                        <img class="minfullwidth frontpagemoviecover" src="<?php echo urldecode(substr($episode->thumbnail, 8, -1)); ?>" alt="">
+                        <div class="carousel-caption">
+                            <p><?php echo $episode->showtitle . ' [' . $episode->season . 'x' . $episode->episode . '] '.$episode->title; ?></p><i class="icon-info-sign icon-white pull-right pointer"></i>
+                        </div>
+                    </div>
+                <?php
+                }
+                ?>
+        </div>
+        <a class='left carousel-control' href='#showCarousel' data-slide='prev'>&lsaquo;</a>
+        <a class='right carousel-control' href='#showCarousel' data-slide='next'>&rsaquo;</a>
+        </div>
     </div>
-    <a class='left carousel-control' href='#movieCarousel' data-slide='prev'>&lsaquo;</a>
-    <a class='right carousel-control' href='#movieCarousel' data-slide='next'>&rsaquo;</a>
 </div>
-        </td>
-        <td>
-            
-<div id='showCarousel' class='carousel slide tv'>
-    <h3><?php _e('Recently added TV show episodes', 'wpbootstrap'); ?></h3>
-<div class='carousel-inner'>
-    <?php
-    
-    foreach ($tv->result->episodes as $index => $episode) {
-    echo '<div class="item'.($index == 0 ? ' active' : '').'">
-      <img src="' . urldecode(substr($episode->thumbnail, 8, -1)) . '" alt="">
-      <div class="carousel-caption">
-        <h4>' . $episode->showtitle . ' [' . $episode->season . 'x' . $episode->episode . '] '.$episode->title.'</h4>
-      </div>
-    </div>';
-    }
-    ?>
-</div>
-<a class='left carousel-control' href='#showCarousel' data-slide='prev'>&lsaquo;</a>
-<a class='right carousel-control' href='#showCarousel' data-slide='next'>&rsaquo;</a>
-</div>
-        </td>
-    </tr>
-</table>
+
 <?php
 }
 try

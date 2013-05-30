@@ -124,6 +124,7 @@ p, h1, h2, h3, h4, body, legend {
 	border-color: #000;
 	margin: 0px auto 0px auto;
 	padding: 5px;
+	display: none;
 }
 
 #searchInput {
@@ -337,6 +338,18 @@ Wanted movies
 	display: inline;
 }
 
+.minfullwidth {
+	min-width: 100%;
+}
+
+.frontpagemoviecover {
+	height: 400px;
+}
+
+.pointer {
+	cursor: pointer;
+}
+
 
 
 /*
@@ -346,18 +359,4 @@ Current playing box
 #playingCover {
 	max-width: 200px;
 	max-height: 200px;
-}
-
-.tv img {
-	height:400px;
-	width: 450px;
-}
-
-.movie img {
-	height:400px;
-	width: 280px;
-}
-
-.carousel {
-	padding: 20px;
 }

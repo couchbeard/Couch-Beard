@@ -84,9 +84,9 @@
 						  	<button class="btn" type="button"><i class="icon-comment"></i></button>
 						</div>
 						<div class="span2 pull-right">
-						<span class="label label-success displaynone" ><i class="icon-ok icon-white"></i> Success</span>  
-                    	<span class="label label-important displaynone"><i class="icon-remove icon-white"></i> Failed</span>
-				    </div>
+							<span class="label label-success displaynone" ><i class="icon-ok icon-white"></i> Success</span>  
+	                    	<span class="label label-important displaynone"><i class="icon-remove icon-white"></i> Failed</span>
+				    	</div>
 				    </div>
 				</div>
 				<div class="span1 pull-right">
