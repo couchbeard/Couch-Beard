@@ -156,7 +156,6 @@
 	            },  
 	            error: function(MLHttpRequest, textStatus, errorThrown) {
 	            	if ($('.currentPlayingBox').css('display') != 'none') {
-	            		$('.currentPlayingBox').slideUp(200);
 	            	}
 	           		clearInterval(timer);
             		timer = setInterval(currentPlaying, 5000);    

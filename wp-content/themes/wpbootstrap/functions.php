@@ -104,7 +104,7 @@ function myprefix_autocomplete_search_form(){
 }
 
 function resizePoster($filename) {
-    $path = "./cache/".base64_encode($filename).".png";
+    $path = "./cache/".md5($filename).".png";
     if (file_exists($path))
         return $path;
 
@@ -563,7 +563,7 @@ class Cache {
             if ( ! $this->override() )
             {
                 // File setup
-                $this->cacheFileName = base64_encode( $_SERVER['REQUEST_URI'] );
+                $this->cacheFileName = md5( $_SERVER['REQUEST_URI'] );
                 $this->cacheFile = $this->cacheDir.'/'.$this->cacheFileName;
                 $request = array_slice ( explode('/',$_SERVER['REQUEST_URI']), 2 );
  
