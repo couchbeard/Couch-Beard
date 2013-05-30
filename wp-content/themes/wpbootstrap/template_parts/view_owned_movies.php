@@ -142,10 +142,10 @@
             dataType:'json',
             success: function(data, textStatus, XMLHttpRequest) {
             	$("#myMovie #title").text( data.label );
-            	$("#myMovie #rating").text( data.rating );
+            	$("#myMovie #rating").text( data.rating.toFixed(1) );
 				$("#myMovie #genres").text( data.genre );
             	$("#myMovie #year").text( data.year );            	
-				$("#myMovie #runtime").text( data.runtime );
+				$("#myMovie #runtime").text( formatSeconds(data.runtime) );
             	$("#myMovie #plot").text( data.plot );            	
             	$("#myMovie #poster").attr("src", decodeURIComponent(data.thumbnail.replace('image://', '').replace('.jpg/', '.jpg')));
             },  
@@ -154,6 +154,14 @@
             }  
         });
 	});
+
+	function formatSeconds(sec) {
+	    var hour = Math.floor(sec / 3600);
+	    sec -= hour * 3600;
+	    var min = Math.floor(sec / 60);
+	    sec -= min * 60;
+	    return hour + ":" + (min < 10 ? '0' + min : min) + ":" + (sec < 10 ? '0' + sec : sec);
+	}
 
 	$(function() {
 		$("img.lazy").lazyload({
