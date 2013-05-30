@@ -936,8 +936,8 @@ function xbmc_getRecentlyAddedEpisodes()
 function xbmc_getMovieDetails($movieid)
 {
     $json = "{\"jsonrpc\": \"2.0\", \"method\": \"VideoLibrary.GetMovieDetails\", \"params\": { \"properties\": [\"title\", \"genre\", \"year\", \"rating\", \"plot\", \"runtime\", \"imdbnumber\", \"thumbnail\", \"art\"], \"movieid\": " . $movieid . " }, \"id\": \"VideoGetItem\"}";
-    $data = xbmc_API($json);
-    return $data;
+    $data = json_decode(xbmc_API($json))->result->moviedetails;
+    return json_encode($data);
 }
 
 /**
