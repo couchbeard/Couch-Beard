@@ -806,9 +806,9 @@ function xbmc_getMovies($start = '', $end = '')
     {
 
         if (empty($start) && empty($end))
-            $json = "{\"jsonrpc\": \"2.0\", \"method\": \"VideoLibrary.GetMovies\", \"params\": { \"properties\" : [\"art\", \"thumbnail\", \"rating\", \"playcount\", \"year\", \"imdbnumber\"], \"sort\": { \"order\": \"ascending\", \"method\": \"label\", \"ignorearticle\": true } }, \"id\": \"libMovies\"}";
+            $json = "{\"jsonrpc\": \"2.0\", \"method\": \"VideoLibrary.GetMovies\", \"params\": { \"properties\" : [\"art\", \"thumbnail\", \"rating\", \"playcount\", \"year\", \"imdbnumber\"], \"sort\": { \"order\": \"ascending\", \"method\": \"sorttitle\", \"ignorearticle\": true } }, \"id\": \"libMovies\"}";
         else
-            $json = "{\"jsonrpc\": \"2.0\", \"method\": \"VideoLibrary.GetMovies\", \"params\": { \"limits\": { \"start\" : " . intval($start) . ", \"end\" : " . intval($start + $end) . " }, \"properties\" : [\"art\", \"thumbnail\", \"rating\", \"playcount\", \"year\", \"imdbnumber\"], \"sort\": { \"order\": \"ascending\", \"method\": \"label\", \"ignorearticle\": true} }, \"id\": \"libMovies\"}";
+            $json = "{\"jsonrpc\": \"2.0\", \"method\": \"VideoLibrary.GetMovies\", \"params\": { \"limits\": { \"start\" : " . intval($start) . ", \"end\" : " . intval($start + $end) . " }, \"properties\" : [\"art\", \"thumbnail\", \"rating\", \"playcount\", \"year\", \"imdbnumber\"], \"sort\": { \"order\": \"ascending\", \"method\": \"sorttitle\", \"ignorearticle\": true} }, \"id\": \"libMovies\"}";
 
         $data = json_decode(xbmc_API($json));
 
