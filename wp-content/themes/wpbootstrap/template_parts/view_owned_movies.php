@@ -111,7 +111,7 @@
 			</div>
 		</div>
 		<div class="modal-footer">
-			<a href="#" class="btn btn-primary"><?php _e('Play', 'wpbootstrap'); ?></a>
+			<a href="#" class="btn btn-primary" id="play" data-id=""><?php _e('Play', 'wpbootstrap'); ?></a>
 		    <a href="#" class="btn" data-dismiss="modal" aria-hidden="true"><?php _e('Close', 'wpbootstrap'); ?></a>
 		</div>
 	</div>
@@ -129,7 +129,8 @@
             	$("#myMovie #actors").text( '' );            	
 				$("#myMovie #writers").text( '' );
             	$("#myMovie #plot").text( '' );            	
-            	$("#myMovie #poster").attr("src", '');	    
+            	$("#myMovie #poster").attr("src", '');	
+            	$("#myMovie #play").data("id", '');    
 		jQuery.ajax({ 
             type: 'POST',
             cache: false,  
@@ -148,6 +149,7 @@
 				$("#myMovie #runtime").text( formatSeconds(data.runtime) );
             	$("#myMovie #plot").text( data.plot );            	
             	$("#myMovie #poster").attr("src", decodeURIComponent(data.thumbnail.replace('image://', '').replace('.jpg/', '.jpg')));
+            	$("#myMovie #play").data("id", data.movieid);
             },  
             error: function(MLHttpRequest, textStatus, errorThrown) {
                	$("#myMovie #title").text("<?php _e('Couldn\'t find the movie', 'wpbootstrap'); ?>");  
@@ -162,6 +164,27 @@
 	    sec -= min * 60;
 	    return hour + ":" + (min < 10 ? '0' + min : min) + ":" + (sec < 10 ? '0' + sec : sec);
 	}
+
+		$(document).on("click", "#play", function () {
+	    var id = $(this).data('id');  
+		jQuery.ajax({ 
+            type: 'POST',
+            cache: false,  
+            url: "<?php echo home_url() . '/wp-admin/admin-ajax.php'; ?>",  
+            data: {  
+                action: 'xbmcPlayMovie',
+                security: '<?php echo $ajax_nonce; ?>',
+                movieid: id
+            },
+            dataType:'json',
+            success: function(data, textStatus, XMLHttpRequest) {
+            	//TODO
+            },  
+            error: function(MLHttpRequest, textStatus, errorThrown) {
+            	//TODO
+            }  
+        });
+	});
 
 	$(function() {
 		$("img.lazy").lazyload({
