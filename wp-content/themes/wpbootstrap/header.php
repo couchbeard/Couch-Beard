@@ -100,9 +100,8 @@
 				<div class="span3 pull-right" id="playButtons">
 					<a class="btn btn-mini btn-inverse"><i class="icon-step-backward icon-white"></i></a>
 					<a class="btn btn-mini btn-inverse"><i class="icon-fast-backward icon-white"></i></a>
+					<a class="btn btn-mini btn-inverse" id="playpause"><i class="icon-<?php echo (xbmc_getCurrentPlaying() ? "pause" : "play"); ?> icon-white"></i></a>
 					<a class="btn btn-mini btn-inverse"><i class="icon-stop icon-white"></i></a>
-			      	<a class="btn btn-mini btn-inverse"><i class="icon-play icon-white"></i></a>
-					<a class="btn btn-mini btn-inverse"><i class="icon-pause icon-white"></i></a>
 					<a class="btn btn-mini btn-inverse"><i class="icon-fast-forward icon-white"></i></a>
 					<a class="btn btn-mini btn-inverse"><i class="icon-step-forward icon-white"></i></a>
 				</div>
@@ -311,6 +310,32 @@
 	    }
 	    return '';
 	}
+
+
+		$(document).on("click", "#playpause", function () {
+		jQuery.ajax({ 
+            type: 'POST',
+            cache: false,  
+            url: "<?php echo home_url() . '/wp-admin/admin-ajax.php'; ?>",  
+            data: {  
+                action: 'xbmcPlayPauseVideo',
+                security: '<?php echo $ajax_nonce; ?>'
+            },
+            dataType:'json',
+            success: function(data, textStatus, XMLHttpRequest) {
+            	if (data.result.speed)
+            	{
+            		$("#playpause").html('<i class="icon-pause icon-white"></i>');
+            	}
+            	else
+            	{
+            		$("#playpause").html('<i class="icon-play icon-white"></i>');
+            	}
+            }
+        });
+	});
+
+
 	</script>
 <noscript>
 	

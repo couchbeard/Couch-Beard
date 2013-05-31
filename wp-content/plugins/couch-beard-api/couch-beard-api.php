@@ -962,6 +962,13 @@ function xbmc_play($libraryid)
     return $data;
 }
 
+function xbmc_playPauseVideo()
+{
+    $json = "{\"jsonrpc\": \"2.0\", \"method\": \"Player.PlayPause\", \"params\": { \"playerid\": 1 }, \"id\": \"VideoPlayPause\"}";
+    $data = xbmc_API($json);
+    return $data;
+}
+
 /**
  * Converts IMDb ID to TVDB ID
  * @param  string $imdb_id IMDb ID

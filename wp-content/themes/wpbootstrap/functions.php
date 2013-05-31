@@ -48,6 +48,14 @@ function xbmcPlayMovieFunction()
 }
 add_action('wp_ajax_xbmcPlayMovie', 'xbmcPlayMovieFunction');  // Only logged in users
 
+function xbmcPlayPauseVideoFunction()
+{
+    check_ajax_referer( 'keyy', 'security' );
+    echo xbmc_playPauseVideo();
+    exit();
+}
+add_action('wp_ajax_xbmcPlayPauseVideo', 'xbmcPlayPauseVideoFunction');  // Only logged in users
+
 function currentPlayingFunction() 
 {
     check_ajax_referer( 'keyy', 'security' );
