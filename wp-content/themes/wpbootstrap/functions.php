@@ -43,7 +43,7 @@ add_action('wp_ajax_movieXbmcInfo', 'movieXbmcInfoFunction');  // Only logged in
 function xbmcPlayMovieFunction()
 {
     check_ajax_referer( 'keyy', 'security' );
-    echo xbmc_play($_POST['movieid']);
+    echo json_encode(xbmc_play($_POST['movieid']));
     exit();
 }
 add_action('wp_ajax_xbmcPlayMovie', 'xbmcPlayMovieFunction');  // Only logged in users

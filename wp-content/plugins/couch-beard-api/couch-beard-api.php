@@ -959,7 +959,7 @@ function xbmc_play($libraryid)
 {
     $json = "{\"jsonrpc\": \"2.0\", \"method\": \"Player.Open\", \"params\": { \"item\": { \"movieid\": ".$libraryid." } }, \"id\": 1}";
     $data = json_decode(xbmc_API($json));
-    return ($data->result == "OK");
+    return $data;
 }
 
 /**

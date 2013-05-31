@@ -178,11 +178,14 @@
                 security: '<?php echo $ajax_nonce; ?>',
                 movieid: id
             },
-            dataType:'html',
+            dataType:'json',
             success: function(data, textStatus, XMLHttpRequest) {
-            	$("#play").button('loading');
-            	$("#play").attr("disabled", "disabled");
-            } 
+            	if (data.result == 'OK')
+            	{
+	            	$("#play").button('loading');
+	            	$("#play").attr("disabled", "disabled");
+            	}
+            }
         });
 	});
 
