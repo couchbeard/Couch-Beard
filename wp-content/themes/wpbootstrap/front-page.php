@@ -4,11 +4,13 @@
 <?php
 $mov = json_decode(xbmc_getRecentlyAddedMovies());
 $tv = json_decode(xbmc_getRecentlyAddedEpisodes());
-if (!empty($mov) && !empty($tv))
-{
 ?>
 <div class="row">
     <div class="span3">
+        <?php 
+        if (!empty($mov))
+        {
+        ?>
         <p class="lead"><?php _e('Recently added movies', 'wpbootstrap'); ?></p>
         <div class="row">
             <div class="span3">
@@ -32,6 +34,9 @@ if (!empty($mov) && !empty($tv))
                 </div>
             </div>
         </div>
+        <?php
+        }
+        ?>
     </div>
     <div class="span4">
         <p class="lead"><?php _e('Downloads', 'wpbootstrap'); ?></p>
@@ -44,6 +49,10 @@ if (!empty($mov) && !empty($tv))
         </div>
     </div>
     <div class="span5 pull-right">
+        <?php 
+        if (!empty($tv))
+        {
+        ?>
         <p class="lead"><?php _e('Recently added TV show episodes', 'wpbootstrap'); ?></p>
         <div class="row">
             <div class="span5">
@@ -66,13 +75,11 @@ if (!empty($mov) && !empty($tv))
                 </div>
             </div>
         </div>
+        <?php
+        }
+        ?>
     </div>
 </div>
-
-<?php
-}
-?>
-
 
 <?php get_footer(); ?>
 <script>
