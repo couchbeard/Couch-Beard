@@ -111,7 +111,7 @@
 			</div>
 		</div>
 		<div class="modal-footer">
-			<a href="#" class="btn btn-primary" id="play" data-id=""><?php _e('Play', 'wpbootstrap'); ?></a>
+			<button class="btn btn-primary" id="play" data-loading-text="Playing" data-id=""><?php _e('Play', 'wpbootstrap'); ?></button>
 		    <a href="#" class="btn" data-dismiss="modal" aria-hidden="true"><?php _e('Close', 'wpbootstrap'); ?></a>
 		</div>
 	</div>
@@ -131,6 +131,8 @@
             	$("#myMovie #plot").text( '' );            	
             	$("#myMovie #poster").attr("src", '');	
             	$("#myMovie #play").data("id", '');    
+            	$("#play").button('reset');
+            	$("#play").removeAttr("disabled");
 		jQuery.ajax({ 
             type: 'POST',
             cache: false,  
@@ -176,13 +178,11 @@
                 security: '<?php echo $ajax_nonce; ?>',
                 movieid: id
             },
-            dataType:'json',
+            dataType:'html',
             success: function(data, textStatus, XMLHttpRequest) {
-            	//TODO
-            },  
-            error: function(MLHttpRequest, textStatus, errorThrown) {
-            	//TODO
-            }  
+            	$("#play").button('loading');
+            	$("#play").attr("disabled", "disabled");
+            } 
         });
 	});
 
