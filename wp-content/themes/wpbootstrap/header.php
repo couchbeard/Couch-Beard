@@ -220,14 +220,26 @@
 		            	if (!running && $('#xbmc_menu_box_mini').css('display') == 'none')
 		            		$('#xbmc_menu_box_mini').slideDown(500);
 	            		running = true;
+	            	} else {
+	            		if (running) {
+		            		running = false;
+		            		$('#xbmc_menu_box').slideUp(500);
+		            		$('#xbmc_menu_box_mini').slideUp(500);
+		            		$('#playingProgress').hide();
+			            	clearInterval(timer);
+	            			timer = setInterval(currentPlaying, 5000);   
+			            }
+			            if ($('#playingTitle').text() == "" || $('#playingTitle').text() == null) {
+			            	$('#xbmc_menu_box').slideUp(500);
+			            } 
 	            	}
 	            },  
 	            error: function(MLHttpRequest, textStatus, errorThrown) {
 	            	if (running) {
+	            		running = false;
 	            		$('#xbmc_menu_box').slideUp(500);
 	            		$('#xbmc_menu_box_mini').slideUp(500);
 	            		$('#playingProgress').hide();
-		            	running = false;
 		            	clearInterval(timer);
             			timer = setInterval(currentPlaying, 5000);   
 		            }
