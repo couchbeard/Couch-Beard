@@ -3,6 +3,7 @@
 	<?php
 	$page = isset($_GET['page']) ? absint($_GET['page']) : 1;
 	$limit = 21;
+	$pages = ceil(sizeof(xbmc_getMovies())/$limit);
 	$offset = ($page - 1) * $limit;
 	$movies = xbmc_getMovies($offset, $limit);
 	if (empty($movies)) {
@@ -38,12 +39,17 @@
 	<div class="row">
 		<div class="span12">
 			<ul class="pager">
-				<li class="previous <?php echo ($page > 1) ? '' : 'disabled'; ?>">
-			    	<a onClick="<?php echo ($page > 1) ? '' : 'return false'; ?>" href="<?php echo get_permalink() . '&page=' . (($page > 1) ? $page - 1 : 1); ?>">Previous</a>
+				<?php if ($page > 1) { ?>
+				<li class="previous">
+			    	<a onClick="<?php echo ($page > 1) ? '' : 'return false'; ?>" href="<?php echo get_permalink() . '&page=' . ($page - 1); ?>">Previous</a>
 		  		</li>
+		  		<?php
+		  		}
+		  		if ($page < $pages) { ?>
 			  	<li class="next">
 			    	<a href="<?php echo get_permalink() . '&page=' . ($page + 1); ?>">Next</a>
 			  	</li>
+			  	<?php } ?>
 			</ul>
 		</div>
 	</div>
