@@ -917,6 +917,10 @@ function xbmc_getCurrentPlaying() {
     return false;
 }
 
+function xbmc_isPlaying() {
+    return (xbmc_getCurrentPlaying() != false);
+}
+
 
 function xbmc_getCurrentMoviePlaying()
 {
