@@ -20,7 +20,10 @@
 				</div>
 			</div>
 		</footer>
-
+			<div id="statusConnection">
+				<p class="pull-right">Connection status</p>
+				<p class="pull-left"><span class="badge badge-success"><i class="icon-ok icon-white"></i></span></p>
+			</div>
 		</div> <!-- /container -->
 		<?php wp_footer(); ?>
 	</body>

@@ -271,7 +271,6 @@ function getLogin($name)
  */
 function curl_download($Url, $headers = null)
 {
-
     // is cURL installed yet?
     if (!function_exists('curl_init'))
     {
@@ -314,6 +313,41 @@ function curl_download($Url, $headers = null)
 ////////////////////////////////////////////////////////////////////////////////////
 // Public call functions 																  
 ////////////////////////////////////////////////////////////////////////////////////
+
+function isHostAlive($application) {
+    switch(strtolower($application))
+    {
+        case 'couchpotato':
+        case 'cp':
+            $url = cp_getURL() . '/app.version';
+            break;
+        case 'sickbeard':
+        case 'sb':
+            $url = sb_getURL();
+            break;
+        case 'sabnzbd':
+        case 'sab':
+            $url = sab_getURL();
+            break;
+        case 'xbmc':
+            $url = xbmc_getURL();
+            break;
+        default:
+            return false;
+    }
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_URL, $url);
+
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    if($httpCode == 404) {
+        return false;
+    }
+
+    return true;
+}
+
+
 ///////////////
 // Couchpotato
 ///////////////
@@ -961,7 +995,7 @@ function xbmc_getMovieDetails($movieid)
 
 function xbmc_playTime()
 {
-    $json = "{\"jsonrpc\": \"2.0\", \"method\": \"Player.Position.Time\", \"params\": { \"item\": { \"movieid\": ".$libraryid." } }, \"id\": 1}";
+    $json = "{\"jsonrpc\": \"2.0\", \"type\": \"Player.Position.Time\", \"params\": { \"properties\": [ \"hours\", \"minutes\", \"seconds\" ], \"playerid\": 1 }, \"id\": \"PlayTime\"}";
     $data = xbmc_API($json);
     return $data;
 }
@@ -982,7 +1016,7 @@ function xbmc_playPauseVideo()
 
 function xbmc_stopVideo()
 {
-    $json = "{\"jsonrpc\": \"2.0\", \"method\": \"Player.Stop\", \"params\": { \"playerid\": 1 }, \"id\": \"VideoPlayPause\"}";
+    $json = "{\"jsonrpc\": \"2.0\", \"method\": \"Player.Stop\", \"params\": { \"playerid\": 1 }, \"id\": \"VideoStop\"}";
     $data = xbmc_API($json);
     return $data;
 }

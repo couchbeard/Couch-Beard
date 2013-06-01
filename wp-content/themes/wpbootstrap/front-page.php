@@ -89,6 +89,15 @@ $(function() {
     $('#showCarousel').carousel({
         interval: Math.floor(Math.random() * 4000) + 2500
     });
+
+    $('#movieCarousel').on('slide', function (e) {
+        var idx = $('#movieCarousel .item.active').index();
+
+        if (idx == 24) {
+            
+        }
+    });
+
     $("img.lazy").lazyload({
     });
     var running;
