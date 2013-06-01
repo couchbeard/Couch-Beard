@@ -101,7 +101,7 @@
 					<a class="btn btn-mini btn-inverse"><i class="icon-step-backward icon-white"></i></a>
 					<a class="btn btn-mini btn-inverse"><i class="icon-fast-backward icon-white"></i></a>
 					<a class="btn btn-mini btn-inverse" id="playpause"><i class="icon-<?php echo (xbmc_getCurrentPlaying() ? "pause" : "play"); ?> icon-white"></i></a>
-					<a class="btn btn-mini btn-inverse"><i class="icon-stop icon-white"></i></a>
+					<a class="btn btn-mini btn-inverse" id="stop"><i class="icon-stop icon-white"></i></a>
 					<a class="btn btn-mini btn-inverse"><i class="icon-fast-forward icon-white"></i></a>
 					<a class="btn btn-mini btn-inverse"><i class="icon-step-forward icon-white"></i></a>
 				</div>
@@ -189,6 +189,22 @@
 	            });
 	        }         
 	    });
+
+		function currentPlayingTimer() {
+			/*jQuery.ajax({  
+	            type: 'POST',
+	            cache: false,  
+	            url: "<?php echo home_url() . '/wp-admin/admin-ajax.php'; ?>",
+	            dataType:'json',  
+	            data: {  
+	                action: 'xbmcPlayTime',
+	                security: '<?php echo $ajax_nonce; ?>'
+	            },
+	            success: function(data, textStatus, XMLHttpRequest) {
+	            	console.log(data);
+	            }
+	        });*/
+		}
 		
 		function currentPlaying() {
 			jQuery.ajax({  
@@ -216,12 +232,16 @@
 		            		clearInterval(timer);
 		            		timer = setInterval(currentPlaying, 1000);
 		            	}
-		            	if (!running && $('#xbmc_menu_box_mini').css('display') == 'none')
+		            	if (!running && $('#xbmc_menu_box_mini').css('display') == 'none') {
+							running = true;
+		            		$("#playpause").html('<i class="icon-pause icon-white"></i>');
 		            		$('#xbmc_menu_box_mini').slideDown(500);
-	            		running = true;
+		            	}
+		            	currentPlayingTimer();	            		
 	            	} else {
 	            		if (running) {
 		            		running = false;
+		            		$("#playpause").html('<i class="icon-play icon-white"></i>');
 		            		$('#xbmc_menu_box').slideUp(500);
 		            		$('#xbmc_menu_box_mini').slideUp(500);
 		            		$('#playingProgress').hide();
@@ -236,6 +256,7 @@
 	            error: function(MLHttpRequest, textStatus, errorThrown) {
 	            	if (running) {
 	            		running = false;
+	            		$("#playpause").html('<i class="icon-play icon-white"></i>');
 	            		$('#xbmc_menu_box').slideUp(500);
 	            		$('#xbmc_menu_box_mini').slideUp(500);
 	            		$('#playingProgress').hide();
@@ -259,23 +280,23 @@
 		$(this).toggleClass('icon-play icon-white');
 	});
 
-		$('#xbmc_menu_button').click(function() {
-			if (running == true) {
-				$('#xbmc_menu_box').animate({
-				    bottom: '+=10',
-				    height: 'toggle'
-				  }, 500, function() {
+	$('#xbmc_menu_button').click(function() {
+		if (running == true) {
+			$('#xbmc_menu_box').animate({
+			    bottom: '+=10',
+			    height: 'toggle'
+			  }, 500, function() {
 
-				  });
-			} else {
-				$('#xbmc_menu_box_mini').animate({
-				    bottom: '+=10',
-				    height: 'toggle'
-				  }, 500, function() {
+			  });
+		} else {
+			$('#xbmc_menu_box_mini').animate({
+			    bottom: '+=10',
+			    height: 'toggle'
+			  }, 500, function() {
 
-				  });
-			}
-		});
+			  });
+		}
+	});
 
 	$(document).keydown(function(e) {
 	    if(e.which == 83 && e.altKey) {
@@ -312,7 +333,7 @@
 	}
 
 
-		$(document).on("click", "#playpause", function () {
+	$('#playpause').on("click", function () {
 		jQuery.ajax({ 
             type: 'POST',
             cache: false,  
@@ -331,9 +352,33 @@
             	{
             		$("#playpause").html('<i class="icon-play icon-white"></i>');
             	}
+            },
+            error: function(MLHttpRequest, textStatus, errorThrown) {
+            	console.log("error");
+            }
+        });
+    });	
+		
+	$('#stop').on("click", function () {
+		jQuery.ajax({ 
+            type: 'POST',
+            cache: false,  
+            url: "<?php echo home_url() . '/wp-admin/admin-ajax.php'; ?>",  
+            data: {  
+                action: 'xbmcStopVideo',
+                security: '<?php echo $ajax_nonce; ?>'
+            },
+            dataType: 'json',
+            success: function(data, textStatus, XMLHttpRequest) {
+            	$("#playpause").html('<i class="icon-play icon-white"></i>');
+            },
+            error: function(MLHttpRequest, textStatus, errorThrown) {
+            	console.log("error");
             }
         });
 	});
+
+
 
 
 	</script>

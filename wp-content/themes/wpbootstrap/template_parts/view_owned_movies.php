@@ -124,7 +124,7 @@
 </div>
 
 <script>
-	$(document).on("click", "#movieopen", function () {
+	$('#movieopen').on("click", function () {
 	    var id = $(this).data('id');
 				$("#myMovie #title").text( '' );
             	$("#myMovie #rating").text( '' );
@@ -173,7 +173,7 @@
 	    return hour + ":" + (min < 10 ? '0' + min : min) + ":" + (sec < 10 ? '0' + sec : sec);
 	}
 
-		$(document).on("click", "#play", function () {
+		$('#play').on("click", function () {
 	    var id = $(this).data('id');  
 		jQuery.ajax({ 
             type: 'POST',

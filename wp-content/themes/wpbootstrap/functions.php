@@ -43,10 +43,18 @@ add_action('wp_ajax_movieXbmcInfo', 'movieXbmcInfoFunction');  // Only logged in
 function xbmcPlayMovieFunction()
 {
     check_ajax_referer( 'keyy', 'security' );
-    echo json_encode(xbmc_play($_POST['movieid']));
+    echo xbmc_play($_POST['movieid']);
     exit();
 }
 add_action('wp_ajax_xbmcPlayMovie', 'xbmcPlayMovieFunction');  // Only logged in users
+
+function xbmcPlayTimeFunction()
+{
+    check_ajax_referer( 'keyy', 'security' );
+    echo xbmc_playTime();
+    exit();
+}
+add_action('wp_ajax_xbmcPlayTime', 'xbmcPlayTimeFunction');  // Only logged in users
 
 function xbmcPlayPauseVideoFunction()
 {
@@ -55,6 +63,14 @@ function xbmcPlayPauseVideoFunction()
     exit();
 }
 add_action('wp_ajax_xbmcPlayPauseVideo', 'xbmcPlayPauseVideoFunction');  // Only logged in users
+
+function xbmcStopVideoFunction()
+{
+    check_ajax_referer( 'keyy', 'security' );
+    echo xbmc_stopVideo();
+    exit();
+}
+add_action('wp_ajax_xbmcStopVideo', 'xbmcStopVideoFunction');  // Only logged in users
 
 function currentPlayingFunction() 
 {

@@ -7,17 +7,16 @@ $tv = json_decode(xbmc_getRecentlyAddedEpisodes());
 ?>
 <div class="row">
     <div class="span3">
-        <?php 
-        if (!empty($mov))
-        {
-        ?>
         <p class="lead"><?php _e('Recently added movies', 'wpbootstrap'); ?></p>
+        <?php 
+        if (!empty($mov)): 
+        ?>
         <div class="row">
             <div class="span3">
                 <div id='movieCarousel' class='carousel slide movie'>
                     <div class='carousel-inner' id='movie-carousel'>
                         <?php
-                        foreach ($mov->result->movies as $index => $movie) { ?>
+                        foreach ($mov->result->movies as $index => $movie): ?>
                             <div class="item <?php echo ($index == 0 ? ' active' : ''); ?>">
                                 <img class="frontpagemoviecover minfullwidth" src="<?php echo urldecode(substr($movie->thumbnail, 8, -1)); ?>" alt="">
                                 <div class="carousel-caption">
@@ -26,7 +25,7 @@ $tv = json_decode(xbmc_getRecentlyAddedEpisodes());
                                 </div>
                             </div>
                         <?php 
-                        }
+                        endforeach;
                         ?>
                     </div>
                     <a class='left carousel-control' href='#movieCarousel' data-slide='prev'>&lsaquo;</a>
@@ -35,7 +34,7 @@ $tv = json_decode(xbmc_getRecentlyAddedEpisodes());
             </div>
         </div>
         <?php
-        }
+        endif;
         ?>
     </div>
     <div class="span4">
@@ -49,17 +48,16 @@ $tv = json_decode(xbmc_getRecentlyAddedEpisodes());
         </div>
     </div>
     <div class="span5 pull-right">
-        <?php 
-        if (!empty($tv))
-        {
-        ?>
         <p class="lead"><?php _e('Recently added TV show episodes', 'wpbootstrap'); ?></p>
+        <?php 
+        if (!empty($tv)): 
+        ?>
         <div class="row">
             <div class="span5">
                 <div id='showCarousel' class='carousel slide tv'>
                     <div class='carousel-inner'>
                         <?php
-                        foreach ($tv->result->episodes as $index => $episode) { ?>
+                        foreach ($tv->result->episodes as $index => $episode): ?>
                             <div class="item <?php echo ($index == 0 ? ' active' : ''); ?>">
                                 <img class="minfullwidth frontpagemoviecover" src="<?php echo urldecode(substr($episode->thumbnail, 8, -1)); ?>" alt="">
                                 <div class="carousel-caption">
@@ -67,7 +65,7 @@ $tv = json_decode(xbmc_getRecentlyAddedEpisodes());
                                 </div>
                             </div>
                         <?php
-                        }
+                        endforeach;
                         ?>
                     </div>
                     <a class='left carousel-control' href='#showCarousel' data-slide='prev'>&lsaquo;</a>
@@ -76,7 +74,7 @@ $tv = json_decode(xbmc_getRecentlyAddedEpisodes());
             </div>
         </div>
         <?php
-        }
+        endif;
         ?>
     </div>
 </div>
@@ -107,9 +105,9 @@ $(function() {
             success: function(data, textStatus, XMLHttpRequest) {
                 if (data != "" && data != null) {
                     if (!running) {
+                        running = true;
                         clearInterval(timer);
                         timer = setInterval(currentDownloading, 2000);
-                        running = true;
                     }
                     var length = data.length - 1;
                     $('#downloads').html('');
@@ -118,8 +116,11 @@ $(function() {
                         listItem.innerHTML = data[i].filename;
                         $('#downloads').append(listItem);
                     }
-                } else {
+                } else if (!running) {
+                    running = false;
                     $('#downloads').html("Couldn't find any downloads");
+                    clearInterval(timer);
+                    timer = setInterval(currentDownloading, 5000);
                 }
             },  
             error: function(MLHttpRequest, textStatus, errorThrown) {
@@ -136,6 +137,6 @@ $(function() {
     
 
     currentDownloading();
-    var timer = setInterval(currentDownloading, 1000);
+    var timer = setInterval(currentDownloading, 5000);
 });
 </script>

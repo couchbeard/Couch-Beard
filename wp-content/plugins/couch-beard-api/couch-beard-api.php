@@ -959,16 +959,30 @@ function xbmc_getMovieDetails($movieid)
     return $data;
 }
 
+function xbmc_playTime()
+{
+    $json = "{\"jsonrpc\": \"2.0\", \"method\": \"Player.Position.Time\", \"params\": { \"item\": { \"movieid\": ".$libraryid." } }, \"id\": 1}";
+    $data = xbmc_API($json);
+    return $data;
+}
+
 function xbmc_play($libraryid)
 {
     $json = "{\"jsonrpc\": \"2.0\", \"method\": \"Player.Open\", \"params\": { \"item\": { \"movieid\": ".$libraryid." } }, \"id\": 1}";
-    $data = json_decode(xbmc_API($json));
+    $data = xbmc_API($json);
     return $data;
 }
 
 function xbmc_playPauseVideo()
 {
     $json = "{\"jsonrpc\": \"2.0\", \"method\": \"Player.PlayPause\", \"params\": { \"playerid\": 1 }, \"id\": \"VideoPlayPause\"}";
+    $data = xbmc_API($json);
+    return $data;
+}
+
+function xbmc_stopVideo()
+{
+    $json = "{\"jsonrpc\": \"2.0\", \"method\": \"Player.Stop\", \"params\": { \"playerid\": 1 }, \"id\": \"VideoPlayPause\"}";
     $data = xbmc_API($json);
     return $data;
 }
