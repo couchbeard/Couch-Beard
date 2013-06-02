@@ -124,7 +124,7 @@
 </div>
 
 <script>
-	$('#movieopen').on("click", function () {
+	$(document).on("click", "#movieopen", function () {
 	    var id = $(this).data('id');
 				$("#myMovie #title").text( '' );
             	$("#myMovie #rating").text( '' );
@@ -150,6 +150,7 @@
             },
             dataType:'json',
             success: function(data, textStatus, XMLHttpRequest) {
+            	console.log(data);
             	$("#myMovie #title").text( data.label );
             	$("#myMovie #rating").text( data.rating.toFixed(1) );
 				$("#myMovie #genres").text( data.genre );
