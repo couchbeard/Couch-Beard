@@ -14,7 +14,7 @@ Template Name: Wanted Movies
 
 <?php get_header(); ?>
 <?php
-	$genres = xbmc_getGenres();
+	$genres = xbmc_getGenres('movie');
 ?>
 <legend>
 	<?php the_title(); ?>
