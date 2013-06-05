@@ -1021,6 +1021,18 @@ function xbmc_stopVideo()
     return $data;
 }
 
+function xbmc_getGenres()
+{
+    $genres = array();
+    $json = "{\"jsonrpc\": \"2.0\", \"method\": \"VideoLibrary.GetGenres\", \"params\": {\"type\" : \"movie\", \"sort\": { \"order\": \"ascending\", \"method\": \"label\" } }, \"id\": \"1\"}";
+    $data = xbmc_API($json);
+    foreach (json_decode($data)->result->genres as $g)
+    {
+        $genres[] = $g->label;
+    }
+    return $genres;
+}
+
 /**
  * Converts IMDb ID to TVDB ID
  * @param  string $imdb_id IMDb ID
