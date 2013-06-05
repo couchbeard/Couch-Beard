@@ -39,7 +39,7 @@ Template Name: Wanted Movies
 				<div class="row">
 					<div class="center" data-toggle="buttons-checkbox">
 						<?php foreach ($genres as $g) { ?>
-					  		<button type="button" class="btn btn-inverse span2" id="genreButtons" value="<?php echo $g; ?>"><?php echo $g; ?></button>
+					  		<button type="button" class="btn btn-inverse span2" id="genreButtons" value="<?php echo $g->genreid; ?>"><?php echo $g->label; ?></button>
 					  	<?php } ?>
 					</div>
 				</div>

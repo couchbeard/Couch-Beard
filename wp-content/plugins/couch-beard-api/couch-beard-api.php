@@ -1023,14 +1023,9 @@ function xbmc_stopVideo()
 
 function xbmc_getGenres($type) //type = movie || tvshow || musicvideo
 {
-    $genres = array();
     $json = "{\"jsonrpc\": \"2.0\", \"method\": \"VideoLibrary.GetGenres\", \"params\": {\"type\" : \"".$type."\", \"sort\": { \"order\": \"ascending\", \"method\": \"label\" } }, \"id\": \"1\"}";
     $data = xbmc_API($json);
-    foreach (json_decode($data)->result->genres as $g)
-    {
-        $genres[] = $g->label;
-    }
-    return $genres;
+    return json_decode($data)->result->genres;
 }
 
 /**
