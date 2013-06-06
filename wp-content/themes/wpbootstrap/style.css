@@ -101,12 +101,13 @@ p, h1, h2, h3, h4, body, legend {
 #statusConnection {
 	position:fixed; 
 	bottom:0; 
-	right:-30px; 
+	right:-40px; 
 	width: 200px;
 	opacity: 0.8;
 	border-radius: 2px;
 	display: inline;
 	cursor: help;
+	display: none;
 }
 
 #statusConnection p {
