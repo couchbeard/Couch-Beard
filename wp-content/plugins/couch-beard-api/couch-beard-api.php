@@ -304,6 +304,15 @@ function curl_download($Url, $headers = null)
     // Download the given URL, and return output
     $output = curl_exec($ch);
 
+    $retcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+    curl_setopt($ch, CURLOPT_NOBODY, true);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+    
+    if ($retcode >= 400) {
+        return false;
+    }
+
     // Close the cURL resource, and free system resources
     curl_close($ch);
 
@@ -315,11 +324,12 @@ function curl_download($Url, $headers = null)
 ////////////////////////////////////////////////////////////////////////////////////
 
 function isHostAlive($application) {
+    $header = '';
     switch(strtolower($application))
     {
         case 'couchpotato':
         case 'cp':
-            $url = cp_getURL() . '/app.version';
+            $url = cp_getURL();
             break;
         case 'sickbeard':
         case 'sb':
@@ -331,20 +341,38 @@ function isHostAlive($application) {
             break;
         case 'xbmc':
             $url = xbmc_getURL();
+            $xbmc = getLogin('XBMC');
+            $header = array(
+                "Content-Type: application/json",
+                "Authorization: Basic " . base64_encode($xbmc->username . ":" . $xbmc->password)
+            );
             break;
         default:
             return false;
     }
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_URL, $url);
-
-    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    if($httpCode == 404) {
+    
+    if (!curl_download($url, $header)) {
         return false;
     }
 
     return true;
+}
+
+function isAnyHostAlive() {
+    global $wpdb;
+    global $table_name;
+    $app = $wpdb->get_col($wpdb->prepare(
+        "
+        SELECT name
+        FROM $table_name
+        "
+    ));
+    $notAlive = array();
+    foreach ($app as $a) {
+        if (!isHostAlive($a))
+            array_push($notAlive, $a);
+    }
+    return $notAlive;
 }
 
 
@@ -383,6 +411,8 @@ function cp_version()
     {
         $url = cp_getURL() . '/app.version';
         $json = curl_download($url);
+        if (!$json)
+            return false;
 
         $data = json_decode($json);
         return $data->version;
@@ -403,6 +433,8 @@ function cp_available()
     {
         $url = cp_getURL() . '/app.available';
         $json = curl_download($url);
+        if (!$json)
+            return false;
 
         $data = json_decode($json);
         return $data->success;
@@ -424,6 +456,8 @@ function cp_addMovie($id)
     {
         $url = cp_getURL() . '/movie.add/?identifier=' . $id;
         $json = curl_download($url);
+        if (!$json)
+            return false;
 
         $data = json_decode($json);
         return $data->added;
@@ -445,6 +479,8 @@ function cp_removeMovie($id)
     {
         $url = cp_getURL() . '/movie.delete/?id=' . $id . '&delete_from=wanted';
         $json = curl_download($url);
+        if (!$json)
+            return false;
 
         $data = json_decode($json);
         return $data->success;
@@ -465,6 +501,8 @@ function cp_getMovies()
     {
         $url = cp_getURL() . '/movie.list/?status=active';
         $json = curl_download($url);
+        if (!$json)
+            return false;
 
         $data = json_decode($json);
         return $data->movies;
@@ -486,6 +524,8 @@ function cp_refreshMovie($id)
     {
         $url = cp_getURL() . '/movie.list/?id=' . $id;
         $json = curl_download($url);
+        if (!$json)
+            return false;
 
         $data = json_decode($json);
         return $data->success;
@@ -506,6 +546,8 @@ function cp_update()
     {
         $url = cp_getURL() . '/updater.check';
         $json = curl_download($url);
+        if (!$json)
+            return false;
 
         $data = json_decode($json);
         return $data->update_available;
@@ -527,6 +569,8 @@ function cp_movieWanted($imdb_id)
     {
         $url = cp_getURL() . '/movie.get/?id=' . $imdb_id;
         $json = curl_download($url);
+        if (!$json)
+            return false;
 
         $res = json_decode($json);
         if ($res->success)
@@ -559,6 +603,8 @@ function sb_version()
     {
         $url = sb_getURL() . '/?cmd=sb';
         $json = curl_download($url);
+        if (!$json)
+            return false;
 
         $data = json_decode($json);
         return $data->data->sb_version;
@@ -602,6 +648,8 @@ function sb_addShow($id)
     {
         $url = sb_getURL() . '/?cmd=show.addnew&tvdbid=' . imdb_to_tvdb($id);
         $json = curl_download($url);
+        if (!$json)
+            return false;
 
         $data = json_decode($json);
         return ($data->result != 'failure');
@@ -622,6 +670,8 @@ function sb_getShows()
     {
         $url = sb_getURL() . '/?cmd=shows';
         $json = curl_download($url);
+        if (!$json)
+            return false;
 
         $data = json_decode($json);
         return $data->data;
@@ -643,6 +693,8 @@ function sb_getShow($id)
     {
         $url = sb_getURL() . '/?cmd=show&tvdbid=' . imdb_to_tvdb($id);
         $json = curl_download($url);
+        if (!$json)
+            return false;
 
         $data = json_decode($json);
         return $data->data;
@@ -670,6 +722,8 @@ function sb_getFuture()
     {
         $url = sb_getURL() . '/?cmd=future&sort=date';
         $json = curl_download($url);
+        if (!$json)
+            return false;
 
         $data = json_decode($json);
         return $data->data;
@@ -694,6 +748,8 @@ function sab_version()
     {
         $url = sab_getURL() . 'version';
         $json = curl_download($url);
+        if (!$json)
+            return false;
 
         $data = json_decode($json);
         return $data->version;
@@ -736,6 +792,8 @@ function sab_getCurrentDownloads()
     {
         $url = sab_getURL() . "qstatus";
         $json = curl_download($url);
+        if (!$json)
+            return false;
 
         $data = json_decode($json);
         return $data->jobs;
@@ -752,6 +810,9 @@ function sab_getHistory($start = 0, $limit = 5)
     {
         $url = sab_getURL() . 'history&start=' . $start . '&limit=' . $limit;
         $json = curl_download($url);
+        if (!$json)
+            return false;
+
         $data = json_decode($json);
         return $data->history->slots;
     }
@@ -767,6 +828,9 @@ function sab_getQueue()
     {
         $url = sab_getURL() . 'qstatus';
         $json = curl_download($url);
+        if (!$json)
+            return false;
+
         $data = json_decode($json);
         return $data->jobs;
     }

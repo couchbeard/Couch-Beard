@@ -88,6 +88,13 @@ function currentDownloadingFunction()
 }
 add_action('wp_ajax_currentDownloading', 'currentDownloadingFunction');  // Only logged in users
 
+function connectionStatusFunction()
+{
+    check_ajax_referer( 'keyy', 'security' );
+    echo json_encode(isAnyHostAlive());
+    exit();
+}
+add_action('wp_ajax_connectionStatus', 'connectionStatusFunction'); // Only logged in users
 
 // 
 

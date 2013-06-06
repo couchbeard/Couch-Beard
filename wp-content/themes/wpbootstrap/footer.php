@@ -20,11 +20,56 @@
 				</div>
 			</div>
 		</footer>
-			<div id="statusConnection">
-				<p class="pull-right">Connection status</p>
-				<p class="pull-left"><span class="badge badge-success"><i class="icon-ok icon-white"></i></span></p>
-			</div>
+		<div id="statusConnection" data-toggle="tooltip"></div>
 		</div> <!-- /container -->
+		<?php $ajax_nonce = wp_create_nonce("keyy"); ?>
+		<script>
+		$(function() {
+			$('#statusConnection').on('click', function() {
+				$(this).fadeOut(500);
+				clearInterval(timer);
+			});
+
+			function getConnections() {
+				jQuery.ajax({  
+		            type: 'POST',
+		            cache: false,  
+		            url: "<?php echo home_url() . '/wp-admin/admin-ajax.php'; ?>",
+		            dataType:'json',  
+		            data: {  
+		                action: 'connectionStatus',
+		                security: '<?php echo $ajax_nonce; ?>'
+		            },
+		            success: function(data, textStatus, XMLHttpRequest) {
+		            	if (data.length > 0)
+		            	{
+		            		if ($('#statusConnection').css('visibility') == 'hidden')
+		            			$('#statusConnection').fadeIn(500);
+
+		            		$('#statusConnection').html('<span class="badge badge-warning"><p class="pull-right">Connection status</p>' + 
+								'<p class="pull-left"><i class="icon-minus-sign icon-white"></i></p></span>'
+							);
+							$('#statusConnection').attr('title', 'Connection failed to ' + data);
+							$('#statusConnection').tooltip({
+								placement: 'left'
+							});
+		            	} 
+		            	else 
+		            	{	
+		            		if ($('#statusConnection').css('visibility') != 'hidden')
+		            			$('#statusConnection').fadeOut(500);
+		            	}
+		            },
+		            error: function(MLHttpRequest, textStatus, errorThrown) {
+		            	console.log("error");
+		            }
+	        	});
+			}
+			getConnections();
+	    	var timer = setInterval(getConnections, 10000);
+	    });
+		</script>
+
 		<?php wp_footer(); ?>
 	</body>
 </html>
