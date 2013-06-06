@@ -20,7 +20,12 @@
 				</div>
 			</div>
 		</footer>
-		<div id="statusConnection" data-toggle="tooltip"></div>
+		<div id="statusConnection" data-toggle="tooltip">
+			<span class="label label-warning">
+				<p class="pull-right">Connection status</p>
+				<p class="pull-left"><i class="icon-minus-sign icon-white"></i></p>
+			</span>
+		</div>
 		</div> <!-- /container -->
 		<?php $ajax_nonce = wp_create_nonce("keyy"); ?>
 		<script>
@@ -43,21 +48,27 @@
 		            success: function(data, textStatus, XMLHttpRequest) {
 		            	if (data.length > 0)
 		            	{
-		            		if ($('#statusConnection').css('visibility') == 'hidden')
-		            			$('#statusConnection').fadeIn(500);
+		            		if ($('#statusConnection').css('display') == 'none') {
+		            			$('#statusConnection').fadeIn(500, function() {
+		            				$('#statusConnection').show();
+		            			});
+		            		}
 
-		            		$('#statusConnection').html('<span class="badge badge-warning"><p class="pull-right">Connection status</p>' + 
-								'<p class="pull-left"><i class="icon-minus-sign icon-white"></i></p></span>'
-							);
 							$('#statusConnection').attr('title', 'Connection failed to ' + data);
 							$('#statusConnection').tooltip({
 								placement: 'left'
 							});
+
+							$('#statusConnection').tooltip('hide').tooltip('fixTitle');
 		            	} 
 		            	else 
 		            	{	
-		            		if ($('#statusConnection').css('visibility') != 'hidden')
-		            			$('#statusConnection').fadeOut(500);
+		            		if ($('#statusConnection').css('display') != 'none') {
+		            			$('#statusConnection').fadeOut(500, function() {
+		            				$('#statusConnection').hide();
+		            			});
+		            		}
+
 		            	}
 		            },
 		            error: function(MLHttpRequest, textStatus, errorThrown) {
