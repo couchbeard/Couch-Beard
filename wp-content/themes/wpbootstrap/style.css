@@ -39,6 +39,10 @@ input:focus:-moz-placeholder { opacity: 0; }
 	color: #222;
 }
 
+#xbmcConnection {
+	visibility: hidden;
+}
+
 .currentPlayingBox {
 	margin: 0;
 	padding: 0;

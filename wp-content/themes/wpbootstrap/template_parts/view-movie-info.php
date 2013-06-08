@@ -2,6 +2,7 @@
 $data = getMovieData($_GET['id']);
 	if (!isset($data->Error)) {
 ?>
+<?php $ajax_nonce = wp_create_nonce("keyy"); ?>
 	<legend><?php echo $data->Title; ?></legend>
 	<div class="row">
 		<div class="span3">

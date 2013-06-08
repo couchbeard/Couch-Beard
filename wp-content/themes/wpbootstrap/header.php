@@ -151,7 +151,7 @@
 //       }
 //   });
 // });
-	var running;
+	var running = false;
 	$(function() {
 
 		$('#notificationfield').on('keypress', function(e) {
@@ -241,12 +241,12 @@
 	            	} else {
 	            		if (running) {
 		            		running = false;
-		            		$("#playpause").html('<i class="icon-play icon-white"></i>');
+		            		$('#playpause').html('<i class="icon-play icon-white"></i>');
 		            		$('#xbmc_menu_box').slideUp(500);
 		            		$('#xbmc_menu_box_mini').slideUp(500);
 		            		$('#playingProgress').hide();
 			            	clearInterval(timer);
-	            			timer = setInterval(currentPlaying, 5000);   
+            				timer = setInterval(currentPlaying, 5000);
 			            }
 			            if ($('#playingTitle').text() == "" || $('#playingTitle').text() == null) {
 			            	$('#xbmc_menu_box').slideUp(500);
@@ -263,6 +263,7 @@
 		            	clearInterval(timer);
             			timer = setInterval(currentPlaying, 5000);   
 		            }
+		            $('#xbmcConnection').fadeIn(500);
 		            if ($('#playingTitle').text() == "" || $('#playingTitle').text() == null) {
 		            	$('#xbmc_menu_box').slideUp(500);
 		            } 
@@ -270,7 +271,7 @@
 	        }); 
 		}
 		currentPlaying();
-		var timer = setInterval(currentPlaying, 1000);
+		var timer = setInterval(currentPlaying, 5000);
 
 		$("img.lazy").lazyload({
 		});
