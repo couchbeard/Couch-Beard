@@ -54,9 +54,7 @@
 		</div>
 	</div>
 <?php } ?>
-</div>
-
-<div id="myMovie" class="modal hide fade inverseback" tabindex="-1" role="dialog" aria-labelledby="myMovieLabel" aria-hidden="true">
+	<div id="myMovie" class="modal hide fade inverseback" tabindex="-1" role="dialog" aria-labelledby="myMovieLabel" aria-hidden="true">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 			<h3 id="title"></h3>
