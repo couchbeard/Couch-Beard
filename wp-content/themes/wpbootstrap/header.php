@@ -81,7 +81,7 @@
 					<div class="span8">
 						<div class="input-append">
 							<input id="notificationfield" type="text" placeholder="<?php _e('Send notification', 'wpbootstrap'); ?>">
-						  	<button class="btn" type="button"><i class="icon-comment"></i></button>
+						  	<button class="btn" id="notificationbutton" type="button"><i class="icon-comment"></i></button>
 						</div>
 						<div class="span2 pull-right">
 							<span class="label label-success displaynone" ><i class="icon-ok icon-white"></i> Success</span>  
@@ -90,7 +90,7 @@
 				    </div>
 				</div>
 				<div class="span1 pull-right">
-					<p class="lead" id="playingRuntime">12:01</p>
+					<p class="lead" id="playingRuntime"></p>
 				</div>
 				<div class="span3 pull-right">
 					<div class="progressbar playingProgress" id="playingProgress">
@@ -153,6 +153,12 @@
 // });
 	var running = false;
 	$(function() {
+
+		$('#notificationbutton').click(function () {
+			var e = jQuery.Event("keypress");
+			e.which = 13;
+			$('#notificationfield').trigger(e);
+		});
 
 		$('#notificationfield').on('keypress', function(e) {
 	        if(e.which == 13) {
