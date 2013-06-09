@@ -191,19 +191,32 @@
 	    });
 
 		function currentPlayingTimer() {
-			/*jQuery.ajax({  
+			jQuery.ajax({  
 	            type: 'POST',
 	            cache: false,  
 	            url: "<?php echo home_url() . '/wp-admin/admin-ajax.php'; ?>",
 	            dataType:'json',  
 	            data: {  
-	                action: 'xbmcPlayTime',
+	                action: 'xbmcPlayerProps',
 	                security: '<?php echo $ajax_nonce; ?>'
 	            },
 	            success: function(data, textStatus, XMLHttpRequest) {
-	            	console.log(data);
+	            	var now = data.result.time.milliseconds + (data.result.time.seconds * 1000) + (data.result.time.minutes * 60 * 1000) + (data.result.time.hours * 60 * 60 * 1000);
+	            	var total = data.result.totaltime.milliseconds + (data.result.totaltime.seconds * 1000) + (data.result.totaltime.minutes * 60 * 1000) + (data.result.totaltime.hours * 60 * 60 * 1000);
+	            	var left = total - now;
+	            	$("#playingRuntime").text('-' + msToTime(left));
 	            }
-	        });*/
+	        });
+		}
+
+		function msToTime(s) {
+  			var ms = s % 1000;
+			s = (s - ms) / 1000;
+			var secs = s % 60;
+			s = (s - secs) / 60;
+			var mins = s % 60;
+			var hrs = (s - mins) / 60;
+			return hrs + ':' + (mins < 10 ? '0' : '') + mins + ':' + (secs < 10 ? '0' : '') + Math.round(secs);
 		}
 		
 		function currentPlaying() {

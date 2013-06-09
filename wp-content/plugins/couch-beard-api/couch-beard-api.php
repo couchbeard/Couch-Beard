@@ -1108,6 +1108,14 @@ function xbmc_getGenres($type) //type = movie || tvshow || musicvideo
     return json_decode($data)->result->genres;
 }
 
+function xbmc_getPlayerProperties($type) //type = movie || tvshow || musicvideo
+{
+    $json = "{\"jsonrpc\": \"2.0\", \"method\": \"Player.GetProperties\", \"params\": { \"properties\": [ \"time\", \"percentage\", \"totaltime\" ], \"playerid\": 1 }, \"id\": \"PlayerProperties\"}";
+    $data = xbmc_API($json);
+    return $data;
+}
+
+
 /**
  * Converts IMDb ID to TVDB ID
  * @param  string $imdb_id IMDb ID

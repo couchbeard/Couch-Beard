@@ -80,6 +80,14 @@ function currentPlayingFunction()
 }
 add_action('wp_ajax_currentPlaying', 'currentPlayingFunction');  // Only logged in users
 
+function xbmcPlayerPropsFunction() 
+{
+    check_ajax_referer( 'keyy', 'security' );
+    echo xbmc_getPlayerProperties();
+    exit();
+}
+add_action('wp_ajax_xbmcPlayerProps', 'xbmcPlayerPropsFunction');  // Only logged in users
+
 function currentDownloadingFunction() 
 {
     check_ajax_referer( 'keyy', 'security' );
