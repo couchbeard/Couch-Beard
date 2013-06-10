@@ -98,12 +98,12 @@
 					</div>
 				</div>
 				<div class="span3 pull-right" id="playButtons">
-					<a class="btn btn-mini btn-inverse"><i class="icon-step-backward icon-white"></i></a>
-					<a class="btn btn-mini btn-inverse"><i class="icon-fast-backward icon-white"></i></a>
+					<a class="btn btn-mini btn-inverse action" data-action="bigstepback"><i class="icon-step-backward icon-white"></i></a>
+					<a class="btn btn-mini btn-inverse action" data-action="stepback"><i class="icon-fast-backward icon-white"></i></a>
 					<a class="btn btn-mini btn-inverse" id="playpause"><i class="icon-<?php echo (xbmc_getCurrentPlaying() ? "pause" : "play"); ?> icon-white"></i></a>
 					<a class="btn btn-mini btn-inverse" id="stop"><i class="icon-stop icon-white"></i></a>
-					<a class="btn btn-mini btn-inverse"><i class="icon-fast-forward icon-white"></i></a>
-					<a class="btn btn-mini btn-inverse"><i class="icon-step-forward icon-white"></i></a>
+					<a class="btn btn-mini btn-inverse action" data-action="stepforward"><i class="icon-fast-forward icon-white"></i></a>
+					<a class="btn btn-mini btn-inverse action" data-action="bigstepforward"><i class="icon-step-forward icon-white"></i></a>
 				</div>
 				<div class="span3 pull-right">
 					<a class="btn btn-mini btn-inverse action" data-action="left"><i class="icon-chevron-left icon-white"></i></a>
