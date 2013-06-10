@@ -93,8 +93,8 @@
 					<p class="lead" id="playingRuntime"></p>
 				</div>
 				<div class="span3 pull-right">
-					<div class="progressbar playingProgress" id="playingProgress">
-						<div class="bar" style="width: 50%;"></div>
+					<div class="progress">
+						<div class="bar" id="playingProgress" style="width: 0%;"></div>
 					</div>
 				</div>
 				<div class="span3 pull-right" id="playButtons">
@@ -104,6 +104,14 @@
 					<a class="btn btn-mini btn-inverse" id="stop"><i class="icon-stop icon-white"></i></a>
 					<a class="btn btn-mini btn-inverse"><i class="icon-fast-forward icon-white"></i></a>
 					<a class="btn btn-mini btn-inverse"><i class="icon-step-forward icon-white"></i></a>
+				</div>
+				<div class="span3 pull-right">
+					<a class="btn btn-mini btn-inverse action" data-action="left"><i class="icon-chevron-left icon-white"></i></a>
+					<a class="btn btn-mini btn-inverse action" data-action="right"><i class="icon-chevron-right icon-white"></i></a>
+					<a class="btn btn-mini btn-inverse action" data-action="up"><i class="icon-chevron-up icon-white"></i></a>
+					<a class="btn btn-mini btn-inverse action" data-action="down"><i class="icon-chevron-down icon-white"></i></a>
+					<a class="btn btn-mini btn-inverse action" data-action="select"><i class="icon-ok icon-white"></i></a>
+					<a class="btn btn-mini btn-inverse action" data-action="back"><i class="icon-arrow-left icon-white"></i></a>
 				</div>
 			</div>
 		</div>
@@ -116,6 +124,21 @@
     </div>
 
 	<script>
+
+	$('.action').on("click", function () {
+	    jQuery.ajax({ 
+	        type: 'POST',
+	        cache: false,  
+	        url: "<?php echo home_url() . '/wp-admin/admin-ajax.php'; ?>",  
+	        data: {  
+	            action: 'xbmcInputAction',
+	            security: '<?php echo $ajax_nonce; ?>',
+	            input: $(this).data('action')
+	        },
+	        dataType:'json'
+	    });
+	});
+
 // 	jQuery(document).ready(function ($) {
 //     // use this hash to cache search results
 //   window.query_cache = {};
@@ -210,7 +233,8 @@
 	            	var now = data.result.time.milliseconds + (data.result.time.seconds * 1000) + (data.result.time.minutes * 60 * 1000) + (data.result.time.hours * 60 * 60 * 1000);
 	            	var total = data.result.totaltime.milliseconds + (data.result.totaltime.seconds * 1000) + (data.result.totaltime.minutes * 60 * 1000) + (data.result.totaltime.hours * 60 * 60 * 1000);
 	            	var left = total - now;
-	            	$("#playingRuntime").text('-' + msToTime(left));
+	            	$('#playingRuntime').text('-' + msToTime(left));
+	            	$('#playingProgress').css('width', Math.round(data.result.percentage) + '%');
 	            }
 	        });
 		}

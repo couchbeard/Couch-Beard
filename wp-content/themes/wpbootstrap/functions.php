@@ -96,6 +96,14 @@ function connectionStatusFunction()
 }
 add_action('wp_ajax_connectionStatus', 'connectionStatusFunction'); // Only logged in users
 
+function xbmcInputActionFunction()
+{
+    check_ajax_referer( 'keyy', 'security' );
+    echo xbmc_inputAction($_POST['input']);
+    exit();
+}
+add_action('wp_ajax_xbmcInputAction', 'xbmcInputActionFunction'); // Only logged in users
+
 // 
 
 function timezone() {

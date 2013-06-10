@@ -1109,6 +1109,14 @@ function xbmc_getPlayerProperties($type) //type = movie || tvshow || musicvideo
 }
 
 
+function xbmc_inputAction($action)
+{
+    $json = "{\"jsonrpc\": \"2.0\", \"method\": \"Input.ExecuteAction\", \"params\" : {\"action\" : \"".$action."\"}, \"id\": 1}";
+    $data = xbmc_API($json);
+    return $data;
+}
+
+
 /**
  * Converts IMDb ID to TVDB ID
  * @param  string $imdb_id IMDb ID
