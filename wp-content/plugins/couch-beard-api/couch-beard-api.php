@@ -1073,13 +1073,6 @@ function xbmc_getMovieDetails($movieid)
     return $data;
 }
 
-function xbmc_playTime()
-{
-    $json = "{\"jsonrpc\": \"2.0\", \"type\": \"Player.Position.Time\", \"params\": { \"properties\": [ \"hours\", \"minutes\", \"seconds\" ], \"playerid\": 1 }, \"id\": \"PlayTime\"}";
-    $data = xbmc_API($json);
-    return $data;
-}
-
 function xbmc_play($libraryid)
 {
     $json = "{\"jsonrpc\": \"2.0\", \"method\": \"Player.Open\", \"params\": { \"item\": { \"movieid\": ".$libraryid." } }, \"id\": 1}";
