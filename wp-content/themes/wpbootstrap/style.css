@@ -340,6 +340,7 @@ Wanted movies
 	background: #000;
     float:left;
     margin: 5px;
+    position: relative;
 }
 
 #wantedCoverOverlay {
@@ -356,6 +357,7 @@ Wanted movies
 #wantedSearchpageCover {
 	width: 150px;
 	height: 200px;
+	position: relative; z-index: 1;
 }
 
 #wantedSearchCover:hover #wantedSearchpageCover {
@@ -387,4 +389,14 @@ Current playing box
 #playingCover {
 	max-width: 200px;
 	max-height: 200px;
+}
+
+.sb {
+	height: 10px;
+	width: 25px;
+	position: absolute;
+	left:120px;
+	top: 185px;
+	z-index: 10;
+	opacity:.8;
 }

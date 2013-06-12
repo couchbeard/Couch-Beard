@@ -700,14 +700,14 @@ function sb_getShows()
 
 /**
  * Get a specific show info
- * @param  string $id IMDB id
+ * @param  string $id TVDB id
  * @return array     TV show data
  */
 function sb_getShow($id)
 {
     try
     {
-        $url = sb_getURL() . '/?cmd=show&tvdbid=' . imdb_to_tvdb($id);
+        $url = sb_getURL() . '/?cmd=show&tvdbid=' . $id;
         $json = curl_download($url);
         if (!$json)
             return false;
@@ -723,13 +723,13 @@ function sb_getShow($id)
 
 /**
  * Check if series is in Sick Beard
- * @param  string $id IMDb id
+ * @param  string $id TVDB id
  * @return bool     Success
  */
 function sb_showAdded($id)
 {
     $res = (array) sb_getShows();
-    return (in_array(imdb_to_tvdb($id), array_keys($res)) ? sb_getShow($id) : false);
+    return (in_array($id, array_keys($res)) ? sb_getShow($id) : false);
 }
 
 function sb_getFuture()
@@ -978,7 +978,7 @@ function xbmc_showOwned($id)
     $shows = xbmc_getShows();
     if (empty($shows))
         return false;
-    $showID = imdb_to_tvdb($id);
+    $showID = $id;
     foreach ($shows as $show)
     {
         if ($show->imdbnumber == $showID)
@@ -1003,15 +1003,14 @@ function xbmc_sendNotification($title, $message)
 }
 
 /**
- * Check if movie is in XBMC and not in Sick Beard
- * @param  string $imdb_id IMDb movie ID
+ * Check if tv show is in XBMC and not in Sick Beard
+ * @param  string $imdb_id TVDB movie ID
  * @return bool     Success
  */
-function xbmc_not_sb($imdb_id)
+function xbmc_not_sb($tvdb_id)
 {
-    return (xbmc_movieOwned($imdb_id) && !sb_showAdded($imdb_id));
+    return (xbmc_showOwned($tvdb_id) && !sb_showAdded($tvdb_id));
 }
-
 
 function xbmc_getCurrentPlaying() {
     $json = '{"jsonrpc": "2.0", "method": "Player.GetActivePlayers", "id": 1}';

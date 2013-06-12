@@ -4,6 +4,7 @@
 	$limit = 14;
 	$offset = ($page - 1) * $limit;
 	$shows = xbmc_getShows($offset, $limit);
+	$sb_shows = sb_getShows();
 	if (empty($shows)) {
 		_e('No TV shows owned', 'wpbootstrap');
 	} else {
@@ -14,6 +15,12 @@
 						<p class="nolink"><?php echo $show->label . ' (' . $show->year . ')'; ?></p>
 					</div>
 					<img class="lazy" id="wantedSearchpageCover" src="<?php print IMAGES; ?>/no_cover.png" data-original="<?php echo urldecode(substr($show->thumbnail, 8, -1)); ?>"/>
+					<?php
+					if (in_array($show->imdbnumber, array_keys((array) $sb_shows)))
+					{
+						echo '<img class="sb" src="' . IMAGES . '/SB_Logo.png">';
+					}
+					?>
 				</a>
 			</div>	
 		<?php } ?>
@@ -32,6 +39,7 @@
 		</ul>
 <?php } ?>
 </div>
+<?php comb_sb_xbmc($sb_shows, $shows); ?>
 <script>
 	$(function() {
 		$("img.lazy").lazyload({
@@ -42,3 +50,23 @@
 	    var timeout = setTimeout(function() {$("img.lazy").trigger("sporty")}, 500);
 	}); 
 </script>
+<?php
+function comb_sb_xbmc($sb, $xbmc)
+{
+	$comb = $xbmc;
+	foreach ($sb as $id => $show)
+	{
+		if (sb_not_xbmc($id))
+		{
+			echo $show->show_name."<br />";
+			$new_show = new stdClass();
+			$new_show->art = new stdClass();
+
+			$new_show->imdbnumber = $id;
+			$new_show->label = $show->show_name;
+
+			$comb->append($new_show);
+		}
+	}
+	print_r($comb);
+}
