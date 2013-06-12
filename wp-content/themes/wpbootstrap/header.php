@@ -106,12 +106,9 @@
 					<a class="btn btn-mini btn-inverse action" data-action="bigstepforward"><i class="icon-step-forward icon-white"></i></a>
 				</div>
 				<div class="span3 pull-right">
-					<a class="btn btn-mini btn-inverse action" data-action="left"><i class="icon-chevron-left icon-white"></i></a>
-					<a class="btn btn-mini btn-inverse action" data-action="right"><i class="icon-chevron-right icon-white"></i></a>
-					<a class="btn btn-mini btn-inverse action" data-action="up"><i class="icon-chevron-up icon-white"></i></a>
-					<a class="btn btn-mini btn-inverse action" data-action="down"><i class="icon-chevron-down icon-white"></i></a>
-					<a class="btn btn-mini btn-inverse action" data-action="select"><i class="icon-ok icon-white"></i></a>
-					<a class="btn btn-mini btn-inverse action" data-action="back"><i class="icon-arrow-left icon-white"></i></a>
+					<label class="checkbox">
+     					<input type="checkbox" id="ctrl"> <abbr title="<?php _e('Use arrow keys, backspace and enter buttons to control XBMC', 'wpbootstrap'); ?>"><?php _e('Control XBMC?' , 'wpbootstrap'); ?></abbr>
+    				</label>
 				</div>
 			</div>
 		</div>
@@ -125,18 +122,13 @@
 
 	<script>
 
-	$('.action').on("click", function () {
-	    jQuery.ajax({ 
-	        type: 'POST',
-	        cache: false,  
-	        url: "<?php echo home_url() . '/wp-admin/admin-ajax.php'; ?>",  
-	        data: {  
-	            action: 'xbmcInputAction',
-	            security: '<?php echo $ajax_nonce; ?>',
-	            input: $(this).data('action')
-	        },
-	        dataType:'json'
-	    });
+	$('.action').on('click', function () {
+		$.post('<?php echo home_url() . '/wp-admin/admin-ajax.php'; ?>',
+		{
+			action: 'xbmcInputAction',
+			security: '<?php echo $ajax_nonce; ?>',
+			input: $(this).data('action')
+		});
 	});
 
 // 	jQuery(document).ready(function ($) {
@@ -176,6 +168,43 @@
 // });
 	var running = false;
 	$(function() {
+
+		$(document).on('keydown', function(e) {
+			if ($('#ctrl').prop('checked'))
+			{
+				var cmd;
+				switch(e.keyCode)
+				{
+					case 37:
+					cmd = 'left';
+					break;
+					case 38:
+					cmd = 'up';
+					break;
+					case 39:
+					cmd = 'right';
+					break;
+					case 40:
+					cmd = 'down';
+					break;
+					case 13:
+					cmd = 'select';
+					break;
+					case 8:
+					cmd = 'back';
+					break;
+					default:
+					return;
+				}
+				e.preventDefault();
+				$.post('<?php echo home_url() . '/wp-admin/admin-ajax.php'; ?>',
+				{
+					action: 'xbmcInputAction',
+					security: '<?php echo $ajax_nonce; ?>',
+					input: cmd
+				});
+			}
+		});
 
 		$('#notificationbutton').click(function () {
 			var e = jQuery.Event("keypress");

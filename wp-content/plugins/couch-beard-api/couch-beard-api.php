@@ -897,7 +897,7 @@ function xbmc_API($json)
 
         $header = array(
             "Content-Type: application/json",
-            "Authorization: Basic " . base64_encode($xbmc->username . ":" . $xbmc->password)
+            "Authorization: Basic " . base64_encode(($xbmc->password ? $xbmc->username. ":" . $xbmc->password : $xbmc->username))
         );
 
         $result = curl_download($url, $header);
