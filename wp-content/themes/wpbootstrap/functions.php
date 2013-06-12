@@ -48,21 +48,13 @@ function xbmcPlayMovieFunction()
 }
 add_action('wp_ajax_xbmcPlayMovie', 'xbmcPlayMovieFunction');  // Only logged in users
 
-function xbmcPlayPauseVideoFunction()
+function xbmcPlayPauseFunction()
 {
     check_ajax_referer( 'keyy', 'security' );
-    echo xbmc_playPauseVideo();
+    echo xbmc_playPause($_POST['player']);
     exit();
 }
-add_action('wp_ajax_xbmcPlayPauseVideo', 'xbmcPlayPauseVideoFunction');  // Only logged in users
-
-function xbmcStopVideoFunction()
-{
-    check_ajax_referer( 'keyy', 'security' );
-    echo xbmc_stopVideo();
-    exit();
-}
-add_action('wp_ajax_xbmcStopVideo', 'xbmcStopVideoFunction');  // Only logged in users
+add_action('wp_ajax_xbmcPlayPause', 'xbmcPlayPauseFunction');  // Only logged in users
 
 function currentPlayingFunction() 
 {

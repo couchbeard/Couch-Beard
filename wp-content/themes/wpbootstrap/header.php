@@ -176,25 +176,25 @@
 				switch(e.keyCode)
 				{
 					case 37:
-					cmd = 'left';
-					break;
+						cmd = 'left';
+						break;
 					case 38:
-					cmd = 'up';
-					break;
+						cmd = 'up';
+						break;
 					case 39:
-					cmd = 'right';
-					break;
+						cmd = 'right';
+						break;
 					case 40:
-					cmd = 'down';
-					break;
+						cmd = 'down';
+						break;
 					case 13:
-					cmd = 'select';
-					break;
+						cmd = 'select';
+						break;
 					case 8:
-					cmd = 'back';
-					break;
+						cmd = 'back';
+						break;
 					default:
-					return;
+						return;
 				}
 				e.preventDefault();
 				$.post('<?php echo home_url() . '/wp-admin/admin-ajax.php'; ?>',
@@ -214,42 +214,53 @@
 
 		$('#notificationfield').on('keypress', function(e) {
 	        if(e.which == 13 && $(this).val()) {
-	            jQuery.ajax({  
-	                type: 'POST',
-	                cache: false,  
-	                url: "<?php echo home_url() . '/wp-admin/admin-ajax.php'; ?>",  
-	                data: {  
-	                    action: 'xbmcSendNotification',
-	                    security: '<?php echo $ajax_nonce; ?>',
-	                    message: $('#notificationfield').val()
-	                },
-	                success: function(data, textStatus, XMLHttpRequest) {
-	                    if (data == 1) {
-	                        $('.label-success').show();
-	                        setTimeout(function() {
-	                            $("#message").collapse('hide');
-	                            $('#notificationfield').val('');
-	                            $('.label-success').fadeOut(500);
-	                        }, 2000);
+	            $.post('<?php echo home_url() . '/wp-admin/admin-ajax.php'; ?>',
+				{
+					action: 'xbmcSendNotification',
+					security: '<?php echo $ajax_nonce; ?>',
+					message: $('#notificationfield').val()
+				})
+				.done(function(data)
+				{
+					if (data == 1) {
+                        $('.label-success').show();
+                        setTimeout(function() {
+                            $("#message").collapse('hide');
+                            $('#notificationfield').val('');
+                            $('.label-success').fadeOut(500);
+                        }, 2000);
 
-	                        
-	                    } else {
-	                        $('.label-important').show();
-	                        setTimeout(function() {
-	                            $('.label-important').fadeOut(500);
-	                        }, 2000);
-	                        
-	                    }
-	                },  
-	                error: function(MLHttpRequest, textStatus, errorThrown) {
-	                    alert("<?php _e('There was an error adding the movie. The movie was not added.', 'wpbootstrap'); ?>");  
-	                }  
-	            });
+                    } else {
+
+                        $('.label-important').show();
+                        setTimeout(function() {
+                            $('.label-important').fadeOut(500);
+                        }, 2000);
+                    }
+				})
+				.fail(function(data)
+				{
+					alert("<?php _e('There was an error adding the movie. The movie was not added.', 'wpbootstrap'); ?>");
+				});
 	        }         
 	    });
 
 		function currentPlayingTimer() {
-			jQuery.ajax({  
+			$.post('<?php echo home_url() . '/wp-admin/admin-ajax.php'; ?>',
+			{
+				action: 'xbmcPlayerProps',
+				security: '<?php echo $ajax_nonce; ?>'
+			}, null, 'json')
+			.done(function(data)
+			{
+				var now = data.result.time.milliseconds + (data.result.time.seconds * 1000) + (data.result.time.minutes * 60 * 1000) + (data.result.time.hours * 60 * 60 * 1000);
+            	var total = data.result.totaltime.milliseconds + (data.result.totaltime.seconds * 1000) + (data.result.totaltime.minutes * 60 * 1000) + (data.result.totaltime.hours * 60 * 60 * 1000);
+            	var left = total - now;
+            	$('#playingRuntime').text('-' + msToTime(left));
+            	$('#playingProgress').css('width', Math.round(data.result.percentage) + '%');
+			});
+
+			/*jQuery.ajax({  
 	            type: 'POST',
 	            cache: false,  
 	            url: "<?php echo home_url() . '/wp-admin/admin-ajax.php'; ?>",
@@ -265,7 +276,7 @@
 	            	$('#playingRuntime').text('-' + msToTime(left));
 	            	$('#playingProgress').css('width', Math.round(data.result.percentage) + '%');
 	            }
-	        });
+	        });*/
 		}
 
 		function msToTime(s) {
@@ -279,17 +290,14 @@
 		}
 		
 		function currentPlaying() {
-			jQuery.ajax({  
-	            type: 'POST',
-	            cache: false,  
-	            url: "<?php echo home_url() . '/wp-admin/admin-ajax.php'; ?>",
-	            dataType:'json',  
-	            data: {  
-	                action: 'currentPlaying',
-	                security: '<?php echo $ajax_nonce; ?>'
-	            },
-	            success: function(data, textStatus, XMLHttpRequest) {
-	            	if (data != "" && data != null) {
+			$.post('<?php echo home_url() . '/wp-admin/admin-ajax.php'; ?>',
+			{
+				action: 'currentPlaying',
+				security: '<?php echo $ajax_nonce; ?>'
+			}, null, 'json')
+			.done(function(data)
+			{
+				if (data != "" && data != null) {
 	            		// Not needed to be updated
 	            		var title = data.label;
 	            		if (data.type == 'episode')
@@ -324,9 +332,10 @@
 			            	$('#xbmc_menu_box').slideUp(500);
 			            } 
 	            	}
-	            },  
-	            error: function(MLHttpRequest, textStatus, errorThrown) {
-	            	if (running) {
+			})
+			.fail(function(data)
+			{
+				if (running) {
 	            		running = false;
 	            		$("#playpause").html('<i class="icon-play icon-white"></i>');
 	            		$('#xbmc_menu_box').slideUp(500);
@@ -338,9 +347,8 @@
 		            $('#xbmcConnection').fadeIn(500);
 		            if ($('#playingTitle').text() == "" || $('#playingTitle').text() == null) {
 		            	$('#xbmc_menu_box').slideUp(500);
-		            } 
-	            }  
-	        }); 
+		            }
+			});
 		}
 		currentPlaying();
 		var timer = setInterval(currentPlaying, 5000);
@@ -407,48 +415,36 @@
 
 
 	$('#playpause').on("click", function () {
-		jQuery.ajax({ 
-            type: 'POST',
-            cache: false,  
-            url: "<?php echo home_url() . '/wp-admin/admin-ajax.php'; ?>",  
-            data: {  
-                action: 'xbmcPlayPauseVideo',
-                security: '<?php echo $ajax_nonce; ?>'
-            },
-            dataType:'json',
-            success: function(data, textStatus, XMLHttpRequest) {
-            	if (data.result.speed)
-            	{
-            		$("#playpause").html('<i class="icon-pause icon-white"></i>');
-            	}
-            	else
-            	{
-            		$("#playpause").html('<i class="icon-play icon-white"></i>');
-            	}
-            },
-            error: function(MLHttpRequest, textStatus, errorThrown) {
-            	console.log("error");
+		$.post('<?php echo home_url() . '/wp-admin/admin-ajax.php'; ?>',
+		{
+			action: 'xbmcPlayPause',
+			security: '<?php echo $ajax_nonce; ?>',
+			player: 1
+		}, null, 'json')
+		.done(function(data)
+		{
+			if (data.result.speed)
+            {
+            	$("#playpause").html('<i class="icon-pause icon-white"></i>');
             }
-        });
+            else
+            {
+            	$("#playpause").html('<i class="icon-play icon-white"></i>');
+            }
+		});
     });	
 		
-	$('#stop').on("click", function () {
-		jQuery.ajax({ 
-            type: 'POST',
-            cache: false,  
-            url: "<?php echo home_url() . '/wp-admin/admin-ajax.php'; ?>",  
-            data: {  
-                action: 'xbmcStopVideo',
-                security: '<?php echo $ajax_nonce; ?>'
-            },
-            dataType: 'json',
-            success: function(data, textStatus, XMLHttpRequest) {
-            	$("#playpause").html('<i class="icon-play icon-white"></i>');
-            },
-            error: function(MLHttpRequest, textStatus, errorThrown) {
-            	console.log("error");
-            }
-        });
+	$('#stop').on('click', function () {
+		$.post('<?php echo home_url() . '/wp-admin/admin-ajax.php'; ?>',
+		{
+				action: 'xbmcInputAction',
+				security: '<?php echo $ajax_nonce; ?>',
+				input: 'stop'
+		})
+		.done(function()
+		{
+			$('#playpause').html('<i class="icon-play icon-white"></i>');
+		});
 	});
 
 

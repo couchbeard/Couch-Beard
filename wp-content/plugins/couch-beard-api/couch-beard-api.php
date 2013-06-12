@@ -246,7 +246,7 @@ function getAPI($name)
     global $wpdb;
     global $table_name;
     $api = $wpdb->get_var($wpdb->prepare(
-                    "
+        "
 		SELECT api
 		FROM $table_name
 		WHERE name = %s
@@ -268,7 +268,7 @@ function getLogin($name)
     global $wpdb;
     global $table_name;
     $user = $wpdb->get_row($wpdb->prepare(
-                    "
+        "
 		SELECT username, password
 		FROM $table_name
 		WHERE name = %s
@@ -359,8 +359,8 @@ function isHostAlive($application) {
             $url = xbmc_getURL();
             $xbmc = getLogin('XBMC');
             $header = array(
-                "Content-Type: application/json",
-                "Authorization: Basic " . base64_encode($xbmc->username . ":" . $xbmc->password)
+                'Content-Type: application/json',
+                'Authorization: Basic ' . base64_encode($xbmc->username . ':' . $xbmc->password)
             );
             break;
         default:
@@ -404,7 +404,7 @@ function cp_getURL()
     global $wpdb;
     global $table_name;
     $ip = $wpdb->get_var($wpdb->prepare(
-                    "
+        "
 		SELECT ip
 		FROM $table_name
 		WHERE name = %s
@@ -413,7 +413,7 @@ function cp_getURL()
     if (empty($ip))
         throw new Exception('No IP');
 
-    $url = "http://" . $ip . "/api/" . getAPI('Couchpotato');
+    $url = 'http://' . $ip . '/api/' . getAPI('Couchpotato');
     return $url;
 }
 
@@ -640,7 +640,7 @@ function sb_getURL()
     global $wpdb;
     global $table_name;
     $ip = $wpdb->get_var($wpdb->prepare(
-                    "
+        "
 		SELECT ip
 		FROM $table_name
 		WHERE name = %s
@@ -649,7 +649,7 @@ function sb_getURL()
     if (empty($ip))
         throw new Exception('Ip empty');
 
-    $url = "http://" . $ip . "/api/" . getAPI('Sickbeard');
+    $url = 'http://' . $ip . '/api/' . getAPI('Sickbeard');
     return $url;
 }
 
@@ -785,7 +785,7 @@ function sab_getURL()
     global $wpdb;
     global $table_name;
     $ip = $wpdb->get_var($wpdb->prepare(
-                    "
+        "
 		SELECT ip
 		FROM $table_name
 		WHERE name = %s
@@ -794,7 +794,7 @@ function sab_getURL()
     if (empty($ip))
         throw new Exception('No IP');
 
-    $url = "http://" . $ip . "/api?apikey=" . getAPI('SabNZBD') . "&output=json&mode=";
+    $url = 'http://' . $ip . '/api?apikey=' . getAPI('SabNZBD') . '&output=json&mode=';
     return $url;
 }
 
@@ -806,7 +806,7 @@ function sab_getCurrentDownloads()
 {
     try
     {
-        $url = sab_getURL() . "qstatus";
+        $url = sab_getURL() . 'qstatus';
         $json = curl_download($url);
         if (!$json)
             return false;
@@ -1080,16 +1080,9 @@ function xbmc_play($libraryid)
     return $data;
 }
 
-function xbmc_playPauseVideo()
+function xbmc_playPause($player) // 1 = video, 0 = audio
 {
-    $json = '{"jsonrpc": "2.0", "method": "Player.PlayPause", "params": { "playerid": 1 }, "id": "VideoPlayPause"}';
-    $data = xbmc_API($json);
-    return $data;
-}
-
-function xbmc_stopVideo()
-{
-    $json = '{"jsonrpc": "2.0", "method": "Player.Stop", "params": { "playerid": 1 }, "id": "VideoStop"}';
+    $json = '{"jsonrpc": "2.0", "method": "Player.PlayPause", "params": { "playerid": ' .$player. ' }, "id": "PlayPause"}';
     $data = xbmc_API($json);
     return $data;
 }
@@ -1101,9 +1094,9 @@ function xbmc_getGenres($type) //type = movie || tvshow || musicvideo
     return json_decode($data)->result->genres;
 }
 
-function xbmc_getPlayerProperties()
+function xbmc_getPlayerProperties($player = 1) // 1 = video, 0 = audio
 {
-    $json = '{"jsonrpc": "2.0", "method": "Player.GetProperties", "params": { "properties": [ "time", "percentage", "totaltime" ], "playerid": 1 }, "id": "PlayerProperties"}';
+    $json = '{"jsonrpc": "2.0", "method": "Player.GetProperties", "params": { "properties": [ "time", "percentage", "totaltime" ], "playerid": ' .$player. ' }, "id": "PlayerProperties"}';
     $data = xbmc_API($json);
     return $data;
 }
@@ -1124,7 +1117,7 @@ function xbmc_inputAction($action)
  */
 function imdb_to_tvdb($imdb)
 {
-    $xml = simplexml_load_string(curl_download("http://thetvdb.com/api/GetSeriesByRemoteID.php?imdbid=" . $imdb));
+    $xml = simplexml_load_string(curl_download('http://thetvdb.com/api/GetSeriesByRemoteID.php?imdbid=' . $imdb));
     return (string) $xml->Series->children()->seriesid;
 }
 
@@ -1135,7 +1128,7 @@ function imdb_to_tvdb($imdb)
  */
 function tvdb_to_imdb($name)
 {
-    $xml = simplexml_load_string(file_get_contents("http://thetvdb.com/api/GetSeries.php?seriesname=" . urlencode($name)));
+    $xml = simplexml_load_string(file_get_contents('http://thetvdb.com/api/GetSeries.php?seriesname=' . urlencode($name)));
     return (string) $xml->Series->children()->IMDB_ID;
 }
 ?>
