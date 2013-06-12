@@ -98,53 +98,48 @@ $(function() {
         }
     });
 
-    $("img.lazy").lazyload({
+    $('img.lazy').lazyload({
     });
     var running;
     function currentDownloading() {
-        jQuery.ajax({  
-            type: 'POST',
-            cache: false,  
-            url: "<?php echo home_url() . '/wp-admin/admin-ajax.php'; ?>",
-            dataType:'json',  
-            data: {  
-                action: 'currentDownloading',
-                security: '<?php echo $ajax_nonce; ?>'
-            },
-            success: function(data, textStatus, XMLHttpRequest) {
-                if (data != "" && data != null) {
-                    if (!running) {
-                        running = true;
-                        clearInterval(timer);
-                        timer = setInterval(currentDownloading, 2000);
-                    }
-                    var length = data.length - 1;
-                    $('#downloads').html('');
-                    for (var i = length; i >= 0; i--) {
-                        var listItem = document.createElement("li");
-                        listItem.innerHTML = data[i].filename;
-                        $('#downloads').append(listItem);
-                    }
-                } else if (!running) {
-                    running = false;
-                    $('#downloads').html("Couldn't find any downloads");
+        $.post('<?php echo home_url() . '/wp-admin/admin-ajax.php'; ?>',
+        {
+            action: 'currentDownloading',
+            security: '<?php echo $ajax_nonce; ?>'
+        }, null, 'json')
+        .done(function(data)
+        {
+            if (data != '' && data != null) {
+                if (!running) {
+                    running = true;
                     clearInterval(timer);
-                    timer = setInterval(currentDownloading, 5000);
+                    timer = setInterval(currentDownloading, 2000);
                 }
-            },  
-            error: function(MLHttpRequest, textStatus, errorThrown) {
-                if (running) {
-                    running = false;
-                    clearInterval(timer);
-                    timer = setInterval(currentDownloading, 5000);
-                    $('#downloads').html("Couldn't find any downloads");
+                var length = data.length - 1;
+                $('#downloads').html('');
+                for (var i = length; i >= 0; i--) {
+                    var listItem = document.createElement('li');
+                    listItem.innerHTML = data[i].filename;
+                    $('#downloads').append(listItem);
                 }
-            }  
-        }); 
+            } else if (!running) {
+                running = false;
+                $('#downloads').html('<?php _e("Couldn\'t find any downloads", 'wpbootstrap'); ?>');
+                clearInterval(timer);
+                timer = setInterval(currentDownloading, 5000);
+            }
+        })
+        .fail(function(data)
+        {
+            if (running) {
+                running = false;
+                clearInterval(timer);
+                timer = setInterval(currentDownloading, 5000);
+                $('#downloads').html('<?php _e("Couldn\'t find any downloads", 'wpbootstrap'); ?>');
+            }
+        });
     }
     
-    
-
     currentDownloading();
     var timer = setInterval(currentDownloading, 5000);
 });

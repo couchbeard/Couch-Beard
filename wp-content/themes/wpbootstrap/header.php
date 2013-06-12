@@ -259,24 +259,6 @@
             	$('#playingRuntime').text('-' + msToTime(left));
             	$('#playingProgress').css('width', Math.round(data.result.percentage) + '%');
 			});
-
-			/*jQuery.ajax({  
-	            type: 'POST',
-	            cache: false,  
-	            url: "<?php echo home_url() . '/wp-admin/admin-ajax.php'; ?>",
-	            dataType:'json',  
-	            data: {  
-	                action: 'xbmcPlayerProps',
-	                security: '<?php echo $ajax_nonce; ?>'
-	            },
-	            success: function(data, textStatus, XMLHttpRequest) {
-	            	var now = data.result.time.milliseconds + (data.result.time.seconds * 1000) + (data.result.time.minutes * 60 * 1000) + (data.result.time.hours * 60 * 60 * 1000);
-	            	var total = data.result.totaltime.milliseconds + (data.result.totaltime.seconds * 1000) + (data.result.totaltime.minutes * 60 * 1000) + (data.result.totaltime.hours * 60 * 60 * 1000);
-	            	var left = total - now;
-	            	$('#playingRuntime').text('-' + msToTime(left));
-	            	$('#playingProgress').css('width', Math.round(data.result.percentage) + '%');
-	            }
-	        });*/
 		}
 
 		function msToTime(s) {

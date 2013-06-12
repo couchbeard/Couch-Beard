@@ -124,44 +124,41 @@
 <script>
 	$(document).on("click", "#movieopen", function () {
 	    var id = $(this).data('id');
-				$("#myMovie #title").text( '' );
-            	$("#myMovie #rating").text( '' );
-            	$("#myMovie #votes").text( '' );
-				$("#myMovie #genres").text( '' );
-            	$("#myMovie #year").text( '' );            	
-				$("#myMovie #runtime").text( '' );
-            	$("#myMovie #actors").text( '' );            	
-				$("#myMovie #writers").text( '' );
-            	$("#myMovie #plot").text( '' );            	
-            	$("#myMovie #poster").attr("src", '');	
-            	$("#myMovie #play").data("id", '');    
-            	$("#play").button('reset');
-            	$("#play").removeAttr("disabled");
-		jQuery.ajax({ 
-            type: 'POST',
-            cache: false,  
-            url: "<?php echo home_url() . '/wp-admin/admin-ajax.php'; ?>",  
-            data: {  
-                action: 'movieXbmcInfo',
-                security: '<?php echo $ajax_nonce; ?>',
-                movieid: id
-            },
-            dataType:'json',
-            success: function(data, textStatus, XMLHttpRequest) {
-            	console.log(data);
-            	$("#myMovie #title").text( data.label );
-            	$("#myMovie #rating").text( data.rating.toFixed(1) );
-				$("#myMovie #genres").text( data.genre );
-            	$("#myMovie #year").text( data.year );            	
-				$("#myMovie #runtime").text( formatSeconds(data.runtime) );
-            	$("#myMovie #plot").text( data.plot );            	
-            	$("#myMovie #poster").attr("src", decodeURIComponent(data.thumbnail.replace('image://', '').replace('.jpg/', '.jpg')));
-            	$("#myMovie #play").data("id", data.movieid);
-            },  
-            error: function(MLHttpRequest, textStatus, errorThrown) {
-               	$("#myMovie #title").text("<?php _e('Couldn\'t find the movie', 'wpbootstrap'); ?>");  
-            }  
-        });
+		$("#myMovie #title").text( '' );
+    	$("#myMovie #rating").text( '' );
+    	$("#myMovie #votes").text( '' );
+		$("#myMovie #genres").text( '' );
+    	$("#myMovie #year").text( '' );            	
+		$("#myMovie #runtime").text( '' );
+    	$("#myMovie #actors").text( '' );            	
+		$("#myMovie #writers").text( '' );
+    	$("#myMovie #plot").text( '' );            	
+    	$("#myMovie #poster").attr("src", '');	
+    	$("#myMovie #play").data("id", '');    
+    	$("#play").button('reset');
+    	$("#play").removeAttr("disabled");
+
+    	$.post('<?php echo home_url() . '/wp-admin/admin-ajax.php'; ?>',
+		{
+			action: 'movieXbmcInfo',
+			security: '<?php echo $ajax_nonce; ?>',
+			movieid: id
+		}, null, 'json')
+		.done(function(data)
+		{
+			$("#myMovie #title").text( data.label );
+        	$("#myMovie #rating").text( data.rating.toFixed(1) );
+			$("#myMovie #genres").text( data.genre );
+        	$("#myMovie #year").text( data.year );            	
+			$("#myMovie #runtime").text( formatSeconds(data.runtime) );
+        	$("#myMovie #plot").text( data.plot );            	
+        	$("#myMovie #poster").attr('src', decodeURIComponent(data.thumbnail.replace('image://', '').replace('.jpg/', '.jpg')));
+        	$("#myMovie #play").data('id', data.movieid);
+		})
+		.fail(function(data)
+		{
+			$('#myMovie #title').text("<?php _e('Couldn\'t find the movie', 'wpbootstrap'); ?>"); 
+		});
 	});
 
 	function formatSeconds(sec) {
@@ -174,24 +171,21 @@
 
 		$('#play').on("click", function () {
 	    var id = $(this).data('id');  
-		jQuery.ajax({ 
-            type: 'POST',
-            cache: false,  
-            url: "<?php echo home_url() . '/wp-admin/admin-ajax.php'; ?>",  
-            data: {  
-                action: 'xbmcPlayMovie',
-                security: '<?php echo $ajax_nonce; ?>',
-                movieid: id
-            },
-            dataType:'json',
-            success: function(data, textStatus, XMLHttpRequest) {
-            	if (data.result == 'OK')
-            	{
-	            	$("#play").button('loading');
-	            	$("#play").attr("disabled", "disabled");
-            	}
-            }
-        });
+
+		$.post('<?php echo home_url() . '/wp-admin/admin-ajax.php'; ?>',
+		{
+			action: 'xbmcPlayMovie',
+			security: '<?php echo $ajax_nonce; ?>',
+			movieid: id
+		}, null, 'json')
+		.done(function(data)
+		{
+			if (data.result == 'OK')
+        	{
+            	$("#play").button('loading');
+            	$("#play").attr("disabled", "disabled");
+        	}
+		});
 	});
 
 	$(function() {
