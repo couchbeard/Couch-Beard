@@ -39,7 +39,7 @@
 		</ul>
 <?php } ?>
 </div>
-<?php comb_sb_xbmc($sb_shows, $shows); ?>
+
 <script>
 	$(function() {
 		$("img.lazy").lazyload({
@@ -50,23 +50,3 @@
 	    var timeout = setTimeout(function() {$("img.lazy").trigger("sporty")}, 500);
 	}); 
 </script>
-<?php
-function comb_sb_xbmc($sb, $xbmc)
-{
-	$comb = $xbmc;
-	foreach ($sb as $id => $show)
-	{
-		if (sb_not_xbmc($id))
-		{
-			echo $show->show_name."<br />";
-			$new_show = new stdClass();
-			$new_show->art = new stdClass();
-
-			$new_show->imdbnumber = $id;
-			$new_show->label = $show->show_name;
-
-			$comb->append($new_show);
-		}
-	}
-	print_r($comb);
-}
