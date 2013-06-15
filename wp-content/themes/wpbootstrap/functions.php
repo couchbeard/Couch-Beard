@@ -96,6 +96,14 @@ function xbmcInputActionFunction()
 }
 add_action('wp_ajax_xbmcInputAction', 'xbmcInputActionFunction'); // Only logged in users
 
+function xbmcEjectDriveFunction()
+{
+    check_ajax_referer( 'keyy', 'security' );
+    echo xbmc_ejectDrive();
+    exit();
+}
+add_action('wp_ajax_xbmcEjectDrive', 'xbmcEjectDriveFunction'); // Only logged in users
+
 // 
 
 function timezone() {

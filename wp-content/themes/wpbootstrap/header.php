@@ -104,6 +104,7 @@
 					<a class="btn btn-mini btn-inverse" id="stop"><i class="icon-stop icon-white"></i></a>
 					<a class="btn btn-mini btn-inverse action" data-action="stepforward"><i class="icon-fast-forward icon-white"></i></a>
 					<a class="btn btn-mini btn-inverse action" data-action="bigstepforward"><i class="icon-step-forward icon-white"></i></a>
+					<a class="btn btn-mini btn-inverse" id="eject"><i class="icon-eject icon-white"></i></a>
 				</div>
 				<div class="span3 pull-right">
 					<label class="checkbox">
@@ -128,6 +129,14 @@
 			action: 'xbmcInputAction',
 			security: '<?php echo $ajax_nonce; ?>',
 			input: $(this).data('action')
+		});
+	});
+
+	$('#eject').on('click', function () {
+		$.post('<?php echo home_url() . '/wp-admin/admin-ajax.php'; ?>',
+		{
+			action: 'xbmcEjectDrive',
+			security: '<?php echo $ajax_nonce; ?>'
 		});
 	});
 

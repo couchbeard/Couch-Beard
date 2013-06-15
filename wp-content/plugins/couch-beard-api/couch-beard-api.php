@@ -1108,6 +1108,13 @@ function xbmc_inputAction($action)
     return $data;
 }
 
+function xbmc_ejectDrive($action)
+{
+    $json = '{"jsonrpc": "2.0", "method": "System.EjectOpticalDrive", "id": 1}';
+    $data = xbmc_API($json);
+    return $data;
+}
+
 
 /**
  * Converts IMDb ID to TVDB ID
