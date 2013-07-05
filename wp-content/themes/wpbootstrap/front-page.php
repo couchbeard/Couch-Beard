@@ -17,10 +17,11 @@ $tv = json_decode(xbmc_getRecentlyAddedEpisodes());
                     <div class='carousel-inner' id='movie-carousel'>
                         <?php
                         foreach ($mov->result->movies as $index => $movie): ?>
+
                             <div class="item <?php echo ($index == 0 ? ' active' : ''); ?>">
                                 <img class="frontpagemoviecover minfullwidth" src="<?php echo urldecode(substr($movie->thumbnail, 8, -1)); ?>" alt="">
                                 <div class="carousel-caption">
-                                    <p><?php echo $movie->label . ' (' . $movie->year . ')'; ?></p><i class="icon-info-sign icon-white pull-right pointer"></i>
+                                    <p><?php echo $movie->label . ' (' . $movie->year . ')'; ?></p><a class="pull-right pointer" data-toggle="modal" href="#myMovie" id="movieopen" data-id="<?php echo $movie->imdbnumber; ?>"><i class="icon-info-sign icon-white"></i></a>
 
                                 </div>
                             </div>
@@ -61,7 +62,7 @@ $tv = json_decode(xbmc_getRecentlyAddedEpisodes());
                             <div class="item <?php echo ($index == 0 ? ' active' : ''); ?>">
                                 <img class="minfullwidth frontpagemoviecover" src="<?php echo urldecode(substr($episode->thumbnail, 8, -1)); ?>" alt="">
                                 <div class="carousel-caption">
-                                    <p><?php echo $episode->showtitle . ' [' . $episode->season . 'x' . $episode->episode . '] '.$episode->title; ?></p><i class="icon-info-sign icon-white pull-right pointer"></i>
+                                    <p><?php echo $episode->showtitle . ' [' . $episode->season . 'x' . $episode->episode . '] '.$episode->title; ?></p><a class="pull-right pointer" data-toggle="modal" href="#myMovie" id="movieopen" data-id="<?php echo $episode->imdb; ?>"><i class="icon-info-sign icon-white"></i></a>
                                 </div>
                             </div>
                         <?php
@@ -78,6 +79,19 @@ $tv = json_decode(xbmc_getRecentlyAddedEpisodes());
         ?>
     </div>
 </div>
+
+<?php get_template_part( 'template_parts/my_movie_modal' ); ?>
+
+<script>
+    $(function() {
+        $("img.lazy").lazyload({
+            event : "sporty"
+        });
+    });
+    $(window).bind("load", function() { 
+        var timeout = setTimeout(function() {$("img.lazy").trigger("sporty")}, 2000);
+    });
+</script>
 
 <?php get_footer(); ?>
 <script>

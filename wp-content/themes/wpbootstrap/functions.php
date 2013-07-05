@@ -338,15 +338,18 @@ function custom_scripts()
     wp_enqueue_script('bootstrap');
     wp_register_script('tablesorter', get_template_directory_uri() . '/Scripts/jquery.tablesorter.min.js', array('jquery'));
     wp_enqueue_script('tablesorter');
-    wp_enqueue_script( 'my_acsearch' );
-    wp_enqueue_style( 'myprefix-jquery-ui' );
+    wp_enqueue_script('my_acsearch');
+    wp_enqueue_style('myprefix-jquery-ui');
     wp_enqueue_script("jquery-ui-core");
     wp_register_script('jnotify', get_template_directory_uri() . '/Scripts/jquery.notify.js', array('jquery', 'jquery-ui-core', 'jquery-ui-progressbar'));
     wp_enqueue_script('jnotify');
     wp_register_script('lazyload', get_template_directory_uri() . '/Scripts/jquery.lazyload.js', array('jquery'));
     wp_enqueue_script('lazyload');
     wp_register_script('jic', get_template_directory_uri() . '/Scripts/JIC.js', array('jquery'));
-    wp_enqueue_script('jic');     
+    wp_enqueue_script('jic');
+
+    wp_register_script('movieopen', get_template_directory_uri() . '/Scripts/movieopen.js');
+    wp_enqueue_script('movieopen');
  
 }
 add_action('wp_enqueue_scripts', 'custom_scripts');

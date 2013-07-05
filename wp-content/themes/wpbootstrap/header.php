@@ -16,6 +16,12 @@
       <script src="../assets/js/html5shiv.js"></script>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+	<?php $ajax_nonce = wp_create_nonce("keyy"); ?>
+    <script>
+		no_movie_found = "<?php _e('Couldn\'t find the movie', 'wpbootstrap'); ?>";
+		ajax_url = "<?php echo home_url() . '/wp-admin/admin-ajax.php'; ?>";
+		ajax_nonce = '<?php echo $ajax_nonce; ?>';
+	</script>
 
 	<?php wp_enqueue_script("jquery"); ?>
 	<?php wp_head(); ?>
@@ -265,7 +271,7 @@
 				var now = data.result.time.milliseconds + (data.result.time.seconds * 1000) + (data.result.time.minutes * 60 * 1000) + (data.result.time.hours * 60 * 60 * 1000);
             	var total = data.result.totaltime.milliseconds + (data.result.totaltime.seconds * 1000) + (data.result.totaltime.minutes * 60 * 1000) + (data.result.totaltime.hours * 60 * 60 * 1000);
             	var left = total - now;
-            	$('#playingRuntime').text('-' + msToTime(left));
+            	$('#playingRuntime').text(msToTime(left));
             	$('#playingProgress').css('width', Math.round(data.result.percentage) + '%');
 			});
 		}
