@@ -149,6 +149,7 @@ $data = getMovieData($_GET['id']);
 
 <script>
 var imdbID = "<?php echo $data->imdbID; ?>";
+console.log(imdbID);
 var tv_title = "<?php _e('TV show added', 'wpbootstrap'); ?>";
 var movie_title = "<?php _e('Movie added', 'wpbootstrap'); ?>";
 var tv_msg = "<?php printf(__('%s was added', 'wpbootstrap'), $data->Title); ?>";

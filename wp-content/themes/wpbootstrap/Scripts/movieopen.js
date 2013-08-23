@@ -75,7 +75,6 @@ $(document).on("click", "#movieopen_owned", function () {
     });
 });
 
-$(function() {
     function formatSeconds(sec) {
         var hour = Math.floor(sec / 3600);
         sec -= hour * 3600;
@@ -84,6 +83,7 @@ $(function() {
         return hour + ":" + (min < 10 ? '0' + min : min) + ":" + (sec < 10 ? '0' + sec : sec);
     }
 
+$(function() {
     $('#play').on("click", function () {
         var id = $(this).data('id');  
 
