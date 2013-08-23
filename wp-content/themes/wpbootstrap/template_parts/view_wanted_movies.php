@@ -12,7 +12,7 @@
 					<div id="wantedCoverOverlay">
 						<p class="nolink"><?php echo $movie->original_title . ' (' . $movie->year . ')'; ?></p>
 					</div>
-					<img id="wantedSearchpageCover" src="<?php print IMAGES; ?>/no_cover.png" data-original="<?php echo $movie->images->poster[0]; ?>" class="lazy"/>
+					<img id="wantedSearchpageCover" src="<?php print IMAGES; ?>/no_cover.png" data-original="<?php echo $movie->images->poster[0]; ?>" class="lazysporty"/>
 				</a>
 			</div>		
 		<!--<div class="row">
@@ -36,14 +36,4 @@
 <?php } ?>
 
 	<?php get_template_part( 'template_parts/my_movie_modal' ); ?>
-
-<script>
-	$(function() {
-		$("img.lazy").lazyload({
-			event : "sporty"
-		});
-	});
-	$(window).bind("load", function() { 
-	    var timeout = setTimeout(function() {$("img.lazy").trigger("sporty")}, 2000);
-	});
-</script>
+</div>

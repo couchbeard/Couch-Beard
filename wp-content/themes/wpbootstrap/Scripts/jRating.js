@@ -1,19 +1,11 @@
-/************************************************************************
-*************************************************************************
-@Name :       	jRating - jQuery Plugin
-@Revison :    	3.0
-@Date : 		28/01/2013 
-@Author:     	 ALPIXEL - (www.myjqueryplugins.com - www.alpixel.fr) 
-@License :		 Open Source - MIT License : http://www.opensource.org/licenses/mit-license.php
- 
-**************************************************************************
-*************************************************************************/
 (function($) {
 	$.fn.jRating = function(op) {
 		var defaults = {
 			/** String vars **/
-			bigStarsPath : '<?php print IMAGES; ?>/stars.png', // path of the icon stars.png
-			smallStarsPath : '<?php print IMAGES; ?>/images/small.png', // path of the icon small.png
+			bigStarsPath : images_src + '/star-inverse2.png', // path of the icon stars.png
+			smallStarsPath : images_src + '/small.png', // path of the icon small.png
+			star18Path : images_src + '/stars18.png',
+			star15Path : images_src + '/stars15.png',
 			phpPath : '', // path of the php file jRating.php
 			type : 'big', // can be set to 'small' or 'big'
 
@@ -217,9 +209,19 @@
 						starHeight = 10; // height of the picture small.png
 						bgPath = opts.smallStarsPath;
 					break;
+					case '18' :
+						starWidth = 18;
+						starHeight = 16;
+						bgPath = opts.star18Path;
+					break;
+					case '15' :
+						starWidth = 15;
+						starHeight = 13;
+						bgPath = opts.star15Path;
+					break;					
 					default :
-						starWidth = 23; // width of the picture stars.png
-						starHeight = 20; // height of the picture stars.png
+						starWidth = 18; // width of the picture stars.png
+						starHeight = 18; // height of the picture stars.png
 						bgPath = opts.bigStarsPath;
 				}
 			};

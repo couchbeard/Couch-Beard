@@ -4,6 +4,9 @@
 function addMovieFunction()
 {
     check_ajax_referer( 'keyy', 'security' );
+    if (!isHostAlive('cp'))
+        return;
+    
     echo (bool) cp_addMovie($_POST['id']);
     exit();
 }
@@ -11,6 +14,9 @@ add_action('wp_ajax_addMovie', 'addMovieFunction');  // Only logged in users
 
 function xbmc_sendNotificationFunction() {
     check_ajax_referer( 'keyy', 'security' );
+    if (!isHostAlive('xbmc'))
+        return;
+    
     echo (bool) xbmc_sendNotification('Couch Beard message', $_POST['message']);
     exit();
 }
@@ -19,6 +25,9 @@ add_action('wp_ajax_xbmcSendNotification', 'xbmc_sendNotificationFunction');  //
 function addTVFunction()
 {
     check_ajax_referer( 'keyy', 'security' );
+    if (!isHostAlive('sb'))
+        return;
+    
     echo (bool) sb_addShow($_POST['id']);
     exit();
 }
@@ -35,6 +44,9 @@ add_action('wp_ajax_movieInfo', 'movieInfoFunction');  // Only logged in users
 function movieXbmcInfoFunction()
 {
     check_ajax_referer( 'keyy', 'security' );
+    if (!isHostAlive('xbmc'))
+        return;
+    
     echo json_encode(xbmc_getMovieDetails($_POST['movieid']));
     exit();
 }
@@ -43,6 +55,9 @@ add_action('wp_ajax_movieXbmcInfo', 'movieXbmcInfoFunction');  // Only logged in
 function xbmcPlayMovieFunction()
 {
     check_ajax_referer( 'keyy', 'security' );
+    if (!isHostAlive('xbmc'))
+        return;
+    
     echo xbmc_play($_POST['movieid']);
     exit();
 }
@@ -51,6 +66,9 @@ add_action('wp_ajax_xbmcPlayMovie', 'xbmcPlayMovieFunction');  // Only logged in
 function xbmcPlayPauseFunction()
 {
     check_ajax_referer( 'keyy', 'security' );
+    if (!isHostAlive('xbmc'))
+        return;
+    
     echo xbmc_playPause($_POST['player']);
     exit();
 }
@@ -59,6 +77,9 @@ add_action('wp_ajax_xbmcPlayPause', 'xbmcPlayPauseFunction');  // Only logged in
 function currentPlayingFunction() 
 {
     check_ajax_referer( 'keyy', 'security' );
+    if (!isHostAlive('xbmc'))
+        return;
+    
     echo json_encode(xbmc_getCurrentPlaying());
     exit();
 }
@@ -67,6 +88,9 @@ add_action('wp_ajax_currentPlaying', 'currentPlayingFunction');  // Only logged 
 function xbmcPlayerPropsFunction() 
 {
     check_ajax_referer( 'keyy', 'security' );
+    if (!isHostAlive('xbmc'))
+        return;
+    
     echo xbmc_getPlayerProperties();
     exit();
 }
@@ -75,6 +99,9 @@ add_action('wp_ajax_xbmcPlayerProps', 'xbmcPlayerPropsFunction');  // Only logge
 function currentDownloadingFunction() 
 {
     check_ajax_referer( 'keyy', 'security' );
+    if (!isHostAlive('sab'))
+        return;
+    
     echo json_encode(sab_getQueue());
     exit();
 }
@@ -91,6 +118,9 @@ add_action('wp_ajax_connectionStatus', 'connectionStatusFunction'); // Only logg
 function xbmcInputActionFunction()
 {
     check_ajax_referer( 'keyy', 'security' );
+    if (!isHostAlive('xbmc'))
+        return;
+    
     echo xbmc_inputAction($_POST['input']);
     exit();
 }
@@ -99,6 +129,9 @@ add_action('wp_ajax_xbmcInputAction', 'xbmcInputActionFunction'); // Only logged
 function xbmcEjectDriveFunction()
 {
     check_ajax_referer( 'keyy', 'security' );
+    if (!isHostAlive('xbmc'))
+        return;
+    
     echo xbmc_ejectDrive();
     exit();
 }
@@ -345,11 +378,18 @@ function custom_scripts()
     wp_enqueue_script('jnotify');
     wp_register_script('lazyload', get_template_directory_uri() . '/Scripts/jquery.lazyload.js', array('jquery'));
     wp_enqueue_script('lazyload');
-    wp_register_script('jic', get_template_directory_uri() . '/Scripts/JIC.js', array('jquery'));
-    wp_enqueue_script('jic');
+    //wp_register_script('jic', get_template_directory_uri() . '/Scripts/JIC.js', array('jquery'));
+    //wp_enqueue_script('jic');
+    wp_register_script('jrating', get_template_directory_uri() . '/Scripts/jRating.js', array('jquery'));
 
-    wp_register_script('movieopen', get_template_directory_uri() . '/Scripts/movieopen.js');
+    wp_register_script('movieopen', get_template_directory_uri() . '/Scripts/movieopen.js', array('jquery'));
     wp_enqueue_script('movieopen');
+    wp_register_script('custom_script', get_template_directory_uri() . '/Scripts/custom_script.js', array('jquery'));
+    //wp_enqueue_script('custom_script');
+
+    // Seperate php file scripts
+    wp_register_script('header', get_template_directory_uri() . '/Scripts/header.js', array('jquery', 'custom_script'));
+    wp_register_script('searchpage', get_template_directory_uri() . '/Scripts/searchpage.js', array('jquery', 'custom_script'));
  
 }
 add_action('wp_enqueue_scripts', 'custom_scripts');

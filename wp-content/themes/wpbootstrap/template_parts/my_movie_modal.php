@@ -18,8 +18,8 @@
                                 </div>
                             </center>
                         </div>
-                        <img id="searchpageCover" src="<?php echo IMAGES . '/no_cover.png'; ?>" class="img-rounded"/>
-                    </div>
+                    <img id="searchpageCover" src="<?php echo IMAGES . '/no_cover.png'; ?>" class="img-rounded"/>
+                </div>
             </div>
             <div class="span9">
                 <div class="row-fluid">

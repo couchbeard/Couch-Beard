@@ -35,3 +35,71 @@ $(document).on("click", "#movieopen", function () {
         $("#myMovie #title").text(no_movie_found);
     });
 });
+
+$(document).on("click", "#movieopen_owned", function () {
+    var id = $(this).data('id');
+    $("#myMovie #title").text( '' );
+    $("#myMovie #rating").text( '' );
+    $("#myMovie #votes").text( '' );
+    $("#myMovie #genres").text( '' );
+    $("#myMovie #year").text( '' );             
+    $("#myMovie #runtime").text( '' );
+    $("#myMovie #actors").text( '' );               
+    $("#myMovie #writers").text( '' );
+    $("#myMovie #plot").text( '' );             
+    $("#myMovie #poster").attr("src", '');  
+    $("#myMovie #play").data("id", '');    
+    $("#play").button('reset');
+    $("#play").removeAttr("disabled");
+
+    $.post(ajax_url,
+    {
+        action: 'movieXbmcInfo',
+        security: ajax_nonce,
+        movieid: id
+    }, null, 'json')
+    .done(function(data)
+    {
+        $("#myMovie #title").text( data.label );
+        $("#myMovie #rating").text( data.rating.toFixed(1) );
+        $("#myMovie #genres").text( data.genre );
+        $("#myMovie #year").text( data.year );              
+        $("#myMovie #runtime").text( formatSeconds(data.runtime) );
+        $("#myMovie #plot").text( data.plot );              
+        $("#myMovie #poster").attr('src', decodeURIComponent(data.thumbnail.replace('image://', '').replace('.jpg/', '.jpg')));
+        $("#myMovie #play").data('id', data.movieid);
+    })
+    .fail(function(data)
+    {
+        $('#myMovie #title').text(no_movie_found); 
+    });
+});
+
+$(function() {
+    function formatSeconds(sec) {
+        var hour = Math.floor(sec / 3600);
+        sec -= hour * 3600;
+        var min = Math.floor(sec / 60);
+        sec -= min * 60;
+        return hour + ":" + (min < 10 ? '0' + min : min) + ":" + (sec < 10 ? '0' + sec : sec);
+    }
+
+    $('#play').on("click", function () {
+        var id = $(this).data('id');  
+
+        $.post(ajax_url,
+        {
+            action: 'xbmcPlayMovie',
+            security: ajax_nonce,
+            movieid: id
+        }, null, 'json')
+        .done(function(data)
+        {
+            if (data.result == 'OK')
+            {
+                $("#play").button('loading');
+                $("#play").attr("disabled", "disabled");
+            }
+        });
+    });
+});

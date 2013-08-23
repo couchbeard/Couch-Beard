@@ -38,8 +38,10 @@ Template Name: Wanted Movies
 				</div>
 				<div class="row">
 					<div class="center" data-toggle="buttons-checkbox">
-						<?php foreach ($genres as $g) { ?>
-					  		<button type="button" class="btn btn-inverse span2" id="genreButtons" value="<?php echo $g->genreid; ?>"><?php echo $g->label; ?></button>
+						<?php
+						if (!empty($genres)) 
+							foreach ($genres as $g) { ?>
+					  			<button type="button" class="btn btn-inverse span2" id="genreButtons" value="<?php echo $g->genreid; ?>"><?php echo $g->label; ?></button>
 					  	<?php } ?>
 					</div>
 				</div>
@@ -64,34 +66,4 @@ Template Name: Wanted Movies
    </div>
 <?php get_footer(); ?>
 
-<script>
-	$('#search').click(function() {
-		if ($('#searchBar').css('display') == 'none') {
-			$('#searchBar').slideDown('slow', function() {
-			    // Animation complete.
-			});
-		} else {
-			$('#searchBar').slideUp('slow', function() {
-			    // Animation complete.
-		    });
-		}
-	});
-
-		$(document).keyup(function(e) {
-			if (e.keyCode == 27) { // ESC
-				if ($('#searchBar').css('display') != 'none') {
-					$('#searchBar').slideUp('slow', function() {
-			   			// Animation complete.
-		    		});					
-				}
-			}
-		});
-
-		$('.close').click(function() {
-			if ($('#searchBar').css('display') != 'none') {
-				$('#searchBar').slideUp('slow', function() {
-		   			// Animation complete.
-	    		});					
-			}			
-		});
-</script>
+<?php wp_enqueue_script('jrating'); ?>

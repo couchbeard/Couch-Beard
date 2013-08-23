@@ -14,3 +14,8 @@ if (isset($_GET['id'])) {
 	}
 }
 get_footer(); ?>
+
+<?php
+	wp_enqueue_script('jrating');
+	wp_enqueue_script('searchpage'); 
+?>

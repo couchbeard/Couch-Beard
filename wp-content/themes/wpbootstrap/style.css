@@ -112,6 +112,7 @@ p, h1, h2, h3, h4, body, legend {
 	display: inline;
 	cursor: help;
 	display: none;
+	z-index: 999;
 }
 
 #statusConnection p {

@@ -40,3 +40,5 @@ Template Name: Wanted TV shows
    ?> 	
 	</div>
 <?php get_footer(); ?>
+
+<?php wp_enqueue_script('jrating'); ?>

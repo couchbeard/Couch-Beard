@@ -14,7 +14,7 @@
 					<div id="wantedCoverOverlay">
 						<p class="nolink"><?php echo $show->label . ' (' . $show->year . ')'; ?></p>
 					</div>
-					<img class="lazy" id="wantedSearchpageCover" src="<?php print IMAGES; ?>/no_cover.png" data-original="<?php echo urldecode(substr($show->thumbnail, 8, -1)); ?>"/>
+					<img class="lazysporty" id="wantedSearchpageCover" src="<?php print IMAGES; ?>/no_cover.png" data-original="<?php echo urldecode(substr($show->thumbnail, 8, -1)); ?>"/>
 					<?php
 					if (in_array($show->imdbnumber, array_keys((array) $sb_shows)))
 					{
@@ -39,14 +39,3 @@
 		</ul>
 <?php } ?>
 </div>
-
-<script>
-	$(function() {
-		$("img.lazy").lazyload({
-			event : "sporty"
-		});
-	});
-	$(window).bind("load", function() { 
-	    var timeout = setTimeout(function() {$("img.lazy").trigger("sporty")}, 500);
-	}); 
-</script>

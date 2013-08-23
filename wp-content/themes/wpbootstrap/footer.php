@@ -27,60 +27,6 @@
 			</span>
 		</div>
 		</div> <!-- /container -->
-		<?php $ajax_nonce = wp_create_nonce("keyy"); ?>
-		<script>
-		$(function() {
-			$('#statusConnection').on('click', function() {
-				$(this).fadeOut(500);
-				clearInterval(timer);
-			});
-
-			function getConnections() {
-				jQuery.ajax({  
-		            type: 'POST',
-		            cache: false,  
-		            url: "<?php echo home_url() . '/wp-admin/admin-ajax.php'; ?>",
-		            dataType:'json',  
-		            data: {  
-		                action: 'connectionStatus',
-		                security: '<?php echo $ajax_nonce; ?>'
-		            },
-		            success: function(data, textStatus, XMLHttpRequest) {
-		            	if (data.length > 0)
-		            	{
-		            		if ($('#statusConnection').css('display') == 'none') {
-		            			$('#statusConnection').fadeIn(500, function() {
-		            				$('#statusConnection').show();
-		            			});
-		            		}
-
-							$('#statusConnection').attr('title', 'Connection failed to ' + data);
-							$('#statusConnection').tooltip({
-								placement: 'left'
-							});
-
-							$('#statusConnection').tooltip('hide').tooltip('fixTitle');
-		            	} 
-		            	else 
-		            	{	
-		            		if ($('#statusConnection').css('display') != 'none') {
-		            			$('#statusConnection').fadeOut(500, function() {
-		            				$('#statusConnection').hide();
-		            			});
-		            		}
-
-		            	}
-		            },
-		            error: function(MLHttpRequest, textStatus, errorThrown) {
-		            	console.log("error");
-		            }
-	        	});
-			}
-			getConnections();
-	    	var timer = setInterval(getConnections, 10000);
-	    });
-		</script>
-
 		<?php wp_footer(); ?>
 	</body>
 </html>

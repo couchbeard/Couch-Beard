@@ -215,6 +215,10 @@
       .removeClass('active')
 
     this.$element.toggleClass('active')
+    
+    if (this.$element.hasClass('active')) {
+        this.$element.trigger('active')
+    }
   }
 
 
