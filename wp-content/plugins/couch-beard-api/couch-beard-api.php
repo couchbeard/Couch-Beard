@@ -729,7 +729,7 @@ function sb_getShow($id)
 function sb_showAdded($id)
 {
     $res = (array) sb_getShows();
-    return (in_array($id, array_keys($res)) ? sb_getShow($id) : false);
+    return (in_array(imdb_to_tvdb($id), array_keys($res)) ? sb_getShow(imdb_to_tvdb($id)) : false);
 }
 
 function sb_getFuture()
