@@ -1,4 +1,4 @@
-$(document).on("click", "#movieopen", function () {
+/*$(document).on("click", "#movieopen", function () {
     var imdb = $(this).data('id');
     $("#myMovie #title").text( '' );
     $("#myMovie #rating").text( '' );
@@ -102,4 +102,4 @@ $(function() {
             }
         });
     });
-});
+});*/

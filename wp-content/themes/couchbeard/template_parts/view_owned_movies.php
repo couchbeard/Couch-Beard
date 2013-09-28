@@ -1,11 +1,20 @@
 <?php $ajax_nonce = wp_create_nonce("keyy"); ?>
 <div class="span12">
 	<?php
+	try {
+		$xbmc = new xbmc();
+	} catch (Exception $e) {
+		_e('xbmc is not online.', 'couchbeard');
+		echo '</div>';
+		return;
+	}
+
 	$page = isset($_GET['page']) ? absint($_GET['page']) : 1;
 	$limit = 21;
-	$pages = ceil(sizeof(xbmc_getMovies())/$limit);
+	$pages = ceil(sizeof($xbmc->getMovies())/$limit);
 	$offset = ($page - 1) * $limit;
-	$movies = xbmc_getMovies($offset, $limit);
+	
+	$movies = $xbmc->getMovies($offset, $limit);
 	if (empty($movies)) {
 		_e('No movies owned', 'wpbootstrap');
 	} else {

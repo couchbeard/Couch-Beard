@@ -14,7 +14,7 @@
 		}
 
 		/**
-		 * Returns xbmc api 
+		 * Returns xbmc $this->api 
 		 * @param array $json data
 		 */
 		private function API($json)
@@ -48,7 +48,7 @@
 	        else
 	            $json = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": { "limits": { "start" : ' . intval($start) . ', "end" : ' . intval($start + $end) . ' }, "properties" : ["art", "thumbnail", "rating", "playcount", "year", "imdbnumber"], "sort": { "order": "ascending", "method": "sorttitle", "ignorearticle": true} }, "id": "libMovies"}';
 
-	        $data = json_decode(API($json));
+	        $data = json_decode($this->API($json));
 
 	        return $data->result->movies;
 		}
@@ -60,7 +60,7 @@
 		 */
 		public function movieOwned($imdb_id)
 		{
-		    $movies = getMovies();
+		    $movies = $this->getMovies();
 		    if (empty($movies))
 		        return false;
 
@@ -87,7 +87,7 @@
 	        else
 	            $json = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "params": { "limits": { "start" : ' . intval($start) . ', "end" : ' . intval($start + $end) . ' }, "properties" : ["art", "thumbnail", "rating", "playcount", "year", "imdbnumber"], "sort": { "order": "ascending", "method": "label", "ignorearticle": true} }, "id": "libTvShows"}';
 	        
-	        $data = json_decode(API($json));
+	        $data = json_decode($this->API($json));
 	        return $data->result->tvshows;
 		}
 
@@ -121,7 +121,7 @@
 		public function sendNotification($title, $message)
 		{
 		    $json = '{"jsonrpc": "2.0", "method": "GUI.ShowNotification", "params": {"title" : "' . $title . '", "message" : "' . $message . '" }, "id": "1"}';
-		    $data = json_decode(API($json));
+		    $data = json_decode($this->API($json));
 		    return ($data->result == 'OK');
 		}
 
@@ -141,7 +141,7 @@
 		 */
 		public function getCurrentPlaying() {
 		    $json = '{"jsonrpc": "2.0", "method": "Player.GetActivePlayers", "id": 1}';
-		    $data = json_decode(API($json));
+		    $data = json_decode($this->API($json));
 		    if (empty($data))
 		    {
 		        return false;
@@ -165,14 +165,14 @@
 		public function getCurrentMoviePlaying()
 		{
 		    $json = '{"jsonrpc": "2.0", "method": "Player.GetItem", "params": { "properties": ["title", "album", "artist", "season", "episode", "duration", "showtitle", "tvshowid", "thumbnail", "file", "fanart", "streamdetails"], "playerid": 1 }, "id": "VideoGetItem"}';
-		    $data = json_decode(API($json));
+		    $data = json_decode($this->API($json));
 		    return $data->result->item;
 		}
 
 		public function getCurrentAudioPlaying()
 		{
 		    $json = '{"jsonrpc": "2.0", "method": "Player.GetItem", "params": { "properties": ["title", "album", "artist", "duration", "thumbnail", "file", "fanart", "streamdetails"], "playerid": 0 }, "id": "AudioGetItem"}';
-		    $data = API($json);
+		    $data = $this->API($json);
 		    return $data->result->item;
 		}
 
@@ -180,14 +180,14 @@
 		public function getRecentlyAddedMovies()
 		{
 		    $json = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetRecentlyAddedMovies", "params": { "properties" : ["thumbnail", "year", "imdbnumber"], "sort": { "order": "descending", "method": "dateadded" } }, "id": "libMovies"}';
-		    $data = API($json);
+		    $data = $this->API($json);
 		    return $data;
 		}
 
 		public function getRecentlyAddedEpisodes()
 		{
 		    $json = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetRecentlyAddedEpisodes", "params": { "properties" : ["thumbnail", "showtitle", "season", "episode", "title"], "sort": { "order": "descending", "method": "dateadded" } }, "id": "libMovies"}';
-		    $data = API($json);
+		    $data = $this->API($json);
 		    return $data;
 		}
 
@@ -195,35 +195,35 @@
 		public function getMovieDetails($movieid)
 		{
 		    $json = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovieDetails", "params": { "properties": ["title", "genre", "year", "rating", "plot", "runtime", "imdbnumber", "thumbnail", "art"], "movieid": ' . $movieid . ' }, "id": "VideoGetItem"}';
-		    $data = json_decode(API($json))->result->moviedetails;
+		    $data = json_decode($this->API($json))->result->moviedetails;
 		    return $data;
 		}
 
 		public function play($libraryid)
 		{
 		    $json = '{"jsonrpc": "2.0", "method": "Player.Open", "params": { "item": { "movieid": '.$libraryid.' } }, "id": 1}';
-		    $data = API($json);
+		    $data = $this->API($json);
 		    return $data;
 		}
 
 		public function playPause($player) // 1 = video, 0 = audio
 		{
 		    $json = '{"jsonrpc": "2.0", "method": "Player.PlayPause", "params": { "playerid": ' .$player. ' }, "id": "PlayPause"}';
-		    $data = API($json);
+		    $data = $this->API($json);
 		    return $data;
 		}
 
 		public function getGenres($type) //type = movie || tvshow || musicvideo
 		{
 		    $json = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetGenres", "params": {"type" : "'.$type.'", "sort": { "order": "ascending", "method": "label" } }, "id": "1"}';
-		    $data = API($json);
+		    $data = $this->API($json);
 		    return json_decode($data)->result->genres;
 		}
 
 		public function getPlayerProperties($player = 1) // 1 = video, 0 = audio
 		{
 		    $json = '{"jsonrpc": "2.0", "method": "Player.GetProperties", "params": { "properties": [ "time", "percentage", "totaltime" ], "playerid": ' .$player. ' }, "id": "PlayerProperties"}';
-		    $data = API($json);
+		    $data = $this->API($json);
 		    return $data;
 		}
 
@@ -231,14 +231,14 @@
 		public function inputAction($action)
 		{
 		    $json = '{"jsonrpc": "2.0", "method": "Input.ExecuteAction", "params" : {"action" : "'.$action.'"}, "id": 1}';
-		    $data = API($json);
+		    $data = $this->API($json);
 		    return $data;
 		}
 
 		public function ejectDrive($action)
 		{
 		    $json = '{"jsonrpc": "2.0", "method": "System.EjectOpticalDrive", "id": 1}';
-		    $data = API($json);
+		    $data = $this->API($json);
 		    return $data;
 		}
 	}

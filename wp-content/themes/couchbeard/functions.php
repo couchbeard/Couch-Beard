@@ -181,14 +181,14 @@ function custom_scripts()
     wp_enqueue_script('jnotify');
     wp_register_script('lazyload', get_template_directory_uri() . '/Scripts/jquery.lazyload.js', array('jquery'));
     wp_enqueue_script('lazyload');
-    //wp_register_script('jic', get_template_directory_uri() . '/Scripts/JIC.js', array('jquery'));
-    //wp_enqueue_script('jic');
+    wp_register_script('jic', get_template_directory_uri() . '/Scripts/JIC.js', array('jquery'));
+    wp_enqueue_script('jic');
     wp_register_script('jrating', get_template_directory_uri() . '/Scripts/jRating.js', array('jquery'));
 
     wp_register_script('movieopen', get_template_directory_uri() . '/Scripts/movieopen.js', array('jquery'));
     wp_enqueue_script('movieopen');
     wp_register_script('custom_script', get_template_directory_uri() . '/Scripts/custom_script.js', array('jquery'));
-    //wp_enqueue_script('custom_script');
+    wp_enqueue_script('custom_script');
 
     // Seperate php file scripts
     wp_register_script('header', get_template_directory_uri() . '/Scripts/header.js', array('jquery', 'custom_script'));

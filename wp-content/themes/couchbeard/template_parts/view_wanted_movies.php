@@ -1,6 +1,13 @@
 <div class="span12">	
 	<?php
-	$movies = cp_getMovies();
+	try {
+		$cp = new couchpotato();
+		$movies = $cp->getMovies();
+	} catch (Exception $e) {
+		_e('Couchpotato is not online.', 'couchbeard');
+		echo '</div>';
+		return;
+	}
 	if (empty($movies)) {
 		_e('No movies wanted', 'couchbeard');
 	} else {
