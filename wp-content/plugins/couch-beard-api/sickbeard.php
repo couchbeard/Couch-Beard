@@ -20,20 +20,13 @@
 		 */
 		public function version()
 		{
-		    try
-		    {
-		        $url = $this->getURL() . '/?cmd=sb';
-		        $json = curl_download($url);
-		        if (!$json)
-		            return false;
+	        $url = $this->getURL() . '/?cmd=sb';
+	        $json = curl_download($url);
+	        if (!$json)
+	            return false;
 
-		        $data = json_decode($json);
-		        return $data->data->version;
-		    }
-		    catch (Exception $e)
-		    {
-		        return false;
-		    }
+	        $data = json_decode($json);
+	        return $data->data->version;
 		}
 
 		/**
@@ -43,20 +36,13 @@
 		 */
 		public function addShow($id)
 		{
-		    try
-		    {
-		        $url = $this->getURL() . '/?cmd=show.addnew&tvdbid=' . imdb_to_tvdb($id);
-		        $json = curl_download($url);
-		        if (!$json)
-		            return false;
+	        $url = $this->getURL() . '/?cmd=show.addnew&tvdbid=' . imdb_to_tvdb($id);
+	        $json = curl_download($url);
+	        if (!$json)
+	            return false;
 
-		        $data = json_decode($json);
-		        return ($data->result != 'failure');
-		    }
-		    catch (Exception $e)
-		    {
-		        return false;
-		    }
+	        $data = json_decode($json);
+	        return ($data->result != 'failure');
 		}
 
 		/**
@@ -65,20 +51,13 @@
 		 */
 		public function getShows()
 		{
-		    try
-		    {
-		        $url = $this->getURL() . '/?cmd=shows';
-		        $json = curl_download($url);
-		        if (!$json)
-		            return false;
+	        $url = $this->getURL() . '/?cmd=shows';
+	        $json = curl_download($url);
+	        if (!$json)
+	            return false;
 
-		        $data = json_decode($json);
-		        return $data->data;
-		    }
-		    catch (Exception $e)
-		    {
-		        return false;
-		    }
+	        $data = json_decode($json);
+	        return $data->data;
 		}
 
 		/**
@@ -88,20 +67,13 @@
 		 */
 		public function getShow($id)
 		{
-		    try
-		    {
-		        $url = $this->getURL() . '/?cmd=show&tvdbid=' . $id;
-		        $json = curl_download($url);
-		        if (!$json)
-		            return false;
+	        $url = $this->getURL() . '/?cmd=show&tvdbid=' . $id;
+	        $json = curl_download($url);
+	        if (!$json)
+	            return false;
 
-		        $data = json_decode($json);
-		        return $data->data;
-		    }
-		    catch (Exception $e)
-		    {
-		        return false;
-		    }
+	        $data = json_decode($json);
+	        return $data->data;
 		}
 
 		/**
@@ -115,22 +87,19 @@
 		    return (in_array(imdb_to_tvdb($id), array_keys($res)) ? getShow(imdb_to_tvdb($id)) : false);
 		}
 
+		/**
+		 * Returns future starting shows
+		 * @return array future shows
+		 */
 		public function getFuture()
 		{
-		    try
-		    {
-		        $url = $this->getURL() . '/?cmd=future&sort=date';
-		        $json = curl_download($url);
-		        if (!$json)
-		            return false;
+	        $url = $this->getURL() . '/?cmd=future&sort=date';
+	        $json = curl_download($url);
+	        if (!$json)
+	            return false;
 
-		        $data = json_decode($json);
-		        return $data->data;
-		    }
-		    catch (Exception $e)
-		    {
-		        return false;
-		    }
+	        $data = json_decode($json);
+	        return $data->data;
 		}
 	}
 

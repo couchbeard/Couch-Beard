@@ -5,13 +5,20 @@
 abstract class couchbeard 
 {
 	
+	/**
+	 * To know which class it extends.
+	 * @app string
+	 */
 	protected $app;
 	abstract protected function setApp();
 
-	protected $url;
-	protected $login;
-	protected $api;
+	protected $url; 	// url for application
+	protected $login; 	// login for application (if necessary)
+	protected $api;		// api for application (if necessary)
 
+	/**
+	 * Constructor which sets application name and url. Checks if application is online.
+	 */
 	public function __construct() 
 	{
 		$this->setApp();
@@ -21,22 +28,37 @@ abstract class couchbeard
 		$this->url = getURL($this->app);
 	}
 
+	/**
+	 * Returns url for the application
+	 * @return string url string
+	 */
 	protected function getURL()
 	{
 	    return $this->url;
 	}
 
+	/**
+	 * Returns login for the application
+	 * @return [string, string] String array with name and password
+	 */
 	protected function getLogin()
 	{
 		return $this->login;
 	}
 
+	/**
+	 * Returns api for the application
+	 * @return string api string
+	 */
 	protected function getAPI()
 	{
 		return $this->api;
 	}
 
-
+	/**
+	 * Checks if the application is online
+	 * @return boolean online
+	 */
 	public function isAlive() 
 	{
 		return isAlive($this->app);
@@ -100,6 +122,10 @@ abstract class couchbeard
 	    return $output;
 	}
 
+	/**
+	 * Checks every applications in the database if they are online
+	 * @return boolean online
+	 */
 	function isAnyAlive() 
 	{
 	    global $wpdb;
@@ -118,6 +144,11 @@ abstract class couchbeard
 	    return $notAlive;
 	}
 
+	/**
+	 * Returns api for specific application
+	 * @param  string $app application input
+	 * @return string      api
+	 */
 	function getAPI($app)
 	{
 		global $wpdb;
@@ -135,6 +166,11 @@ abstract class couchbeard
 	    return $api;
 	}
 
+	/**
+	 * Returns login for specific application
+	 * @param  string $app application input
+	 * @return [string,string]      login
+	 */
 	function getLogin($app)
 	{
 		global $wpdb;
@@ -152,6 +188,11 @@ abstract class couchbeard
 	    return $user;
 	}
 
+	/**
+	 * Returns url for specific application
+	 * @param  string $app application input
+	 * @return string      url
+	 */
 	function getURL($app)
 	{
 	    global $wpdb;
@@ -174,6 +215,11 @@ abstract class couchbeard
 	    return 'http://' . $ip . '/api/' . getAPI($app);
 	}
 
+	/**
+	 * Returns online status for specific application
+	 * @param  string  $app application input
+	 * @return boolean      online status
+	 */
 	function isAlive($app) 
 	{
 	    $header = '';
