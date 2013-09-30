@@ -1,4 +1,4 @@
-$notifyContainer = $("#notification").notify();
+//$notifyContainer = $("#notification").notify();
 
 $("#addMovie").on("click", function() {
     jQuery.ajax({
@@ -12,12 +12,14 @@ $("#addMovie").on("click", function() {
         },
         success: function(data, textStatus, XMLHttpRequest) {
 			if (data == 1) {
-				create("default", { title:movie_title, text:tv_msg});
+				generate(movie_title, "success");
+                //create("default", { title:movie_title, text:tv_msg});
 				$('#addMovie').attr("disabled", true);
 				$('#addMovie').html('<i>Movie added</i>');
 			} else {
-				create("withIcon", { title:err_title, text:err_msg },{
-					expires:false});
+                generate(err_msg, "error");
+				//create("withIcon", { title:err_title, text:err_msg },{
+				//	expires:false});
 			}
         },
         error: function(MLHttpRequest, textStatus, errorThrown) {
@@ -38,12 +40,14 @@ $("#addTV").on("click", function() {
         },
         success: function(data, textStatus, XMLHttpRequest) {
 			if (data == 1) {
-				create("default", { title:tv_title, text:tv_msg});
+                generate(tv_msg, "success");
+				//create("default", { title:tv_title, text:tv_msg});
 				$('#addTV').attr("disabled", true);
 				$('#addTV').html('<i>TV show added</i>');
 			} else {
-				create("withIcon", { title:err_title, text:err_msg, icon: images_src + '/alert.png' },{
-					expires:false});
+                generate(err_msg, "error");
+				//create("withIcon", { title:err_title, text:err_msg, icon: images_src + '/alert.png' },{
+				//	expires:false});
 			}
         },
         error: function(MLHttpRequest, textStatus, errorThrown) {

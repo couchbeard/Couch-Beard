@@ -1,11 +1,21 @@
 <div class="span12">
 <?php
-	$shows = sb_getShows();
+
+	try {
+		$sb = new sickbeard();
+		$shows = $sb->getShows();
+	} catch (Exception $e) {
+		_e('Sickbeard is not online.', 'couchbeard');
+		echo '</div>';
+		return;
+	}
+
+	
 	if (empty($shows)) {
 		_e('No TV shows wanted', 'couchbeard');
 	} else {
 	?>
-	<?php foreach ($shows as $key => $val) { 
+	<?php foreach ($shows as $key => $val):
 		echo $val->show_name . ' (' . $key . ')';
 		echo '<br />';
 	?>
@@ -27,9 +37,9 @@
 			</div>
 		</div>
 		<br /> -->
-		<?php } ?>
+		<?php endforeach; ?>
 <?php 
-	$future = sb_getFuture();
+	$future = $sb->getFuture();
 	$later = $future->later;
 	$missed = $future->missed;
 	$soon = $future->soon;

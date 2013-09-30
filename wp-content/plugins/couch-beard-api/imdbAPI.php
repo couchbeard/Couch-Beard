@@ -9,26 +9,27 @@
 		private $url;
 		private $data;
 
-		public function __construct($id = false) 
+		public function __construct($id) 
 		{
-			if (empty($id))
-			{
-				$this->id = $id;
-				$this->getData($id);
-			}
+			$this->setID($id);
 		}
 
 		private function getData($id)
 		{
 			$this->url = "http://www.omdbapi.com/?i=" . $id . "&plot=full";
 			$this->data = json_decode(curl_download($this->url));
-			if ($this->data->Response == 'False' || isset($this->data->Error))
-				throw new Exception('No movie found');
+			if ($this->data->Response == 'False' || isset($this->data->Error)) {
+				$oldID = $this->id;
+				$this->id = false;
+				$this->data = false;
+				$this->url = false;
+				throw new Exception('No movie found with id ' . $oldID);
+			}
 		}
 
 		public function setID($id)
 		{
-			getData($id);
+			$this->getData($id);
 			$this->id = $id;
 		}
 

@@ -1,6 +1,6 @@
-function create( template, vars, opts ) {
+/*function create( template, vars, opts ) {
 	return $notifyContainer.notify("create", template, vars, opts);
-}
+}*/
 
 function writeCookie(name,value,days) {
     var date, expires;
@@ -13,6 +13,19 @@ function writeCookie(name,value,days) {
     }
     document.cookie = name + "=" + value + expires + "; path=/";
 }
+
+function generate(text, type) {
+  	var n = noty({
+  		text: text,
+  		type: type,
+      	dismissQueue: true,
+      	maxVisible: 5,
+      	timeout: 5000,
+  		layout: 'topCenter',
+  		theme: 'defaultTheme'
+  	});
+  	console.log('html: '+n.options.id);
+  }
 
 function readCookie(name) {
     var i, c, ca, nameEQ = name + "=";
@@ -46,21 +59,22 @@ function msToTime(s) {
 }
 
 $(function() {
-	$('img.lazy').lazyload({});
+    $('img.lazy').lazyload({});
 	$("img.lazysporty").lazyload({
 		event : "sporty"
 	});
 });
-	$(".rating").jRating({
-		step: true,
-		length: 10,
-		rateMax: 10,
-		isDisabled: true,
-		decimalLength: 0
-	});
 
-	$(".rating").hover(
-		function () {
-			$('.rating').tooltip('show');
-		}
-	);
+$(".rating").jRating({
+	step: true,
+	length: 10,
+	rateMax: 10,
+	isDisabled: true,
+	decimalLength: 0
+});
+
+$(".rating").hover(
+	function () {
+		$('.rating').tooltip('show');
+	}
+);

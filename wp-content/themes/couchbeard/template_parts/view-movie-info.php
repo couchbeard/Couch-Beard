@@ -2,27 +2,45 @@
 try {
 	$imdb = new imdbAPI($_GET['id']);
 } catch (Exception $e) {
-	printf(__('No movie found with ID: <strong>%s</strong>', 'couchbeard'), $_GET['id']);
+?>
+	<script>
+		generate("<?php printf(__('No movie found for ID: <strong>%s</strong>', 'couchbeard'), $_GET['id']); ?>", "error");
+	</script>
+<?php
 	return;
 }
 
 try {
 	$xbmc = new xbmc();
 } catch (Exception $e) {
+?>
+	<script>
+		generate("XBMC is not online.", "warning");
+	</script>
+<?php
 }
 
 try {
 	$cp = new couchpotato();
 } catch (Exception $e) {
-
+?>
+	<script>
+		generate("Couchpotato is not online.", "warning");
+	</script>
+<?php
 }
 
 try {
 	$sb = new sickbeard();
 } catch (Exception $e) {
-
+?>
+	<script>
+		generate("Sickbeard is not online.", "warning");
+	</script>
+<?php
 }
 ?>
+
 <?php $ajax_nonce = wp_create_nonce("keyy"); ?>
 	<legend><?php echo $imdb->title(); ?></legend>
 	<div class="row">
@@ -149,26 +167,12 @@ try {
 		</div>	
 	</div>
 
-<div id="notification">
-	<div id="default">
-		<h1>#{title}</h1>
-		<p>#{text}</p>
-	</div>
-
-	<div id="withIcon">
-		<a class="ui-notify-close ui-notify-cross" href="#">x</a>
-		<div style="float:left;margin:0 10px 0 0"><img src="<?php print IMAGES; ?>/alert.png" alt="warning" /></div>
-		<h1>#{title}</h1>
-		<p>#{text}</p>
-	</div>
-</div>
-
 <script>
 var imdbID = "<?php echo $imdb->getID(); ?>";
-var tv_title = "<?php _e('TV show added', 'couchbeard'); ?>";
-var movie_title = "<?php _e('Movie added', 'couchbeard'); ?>";
+//var tv_title = "<?php _e('TV show added', 'couchbeard'); ?>";
+//var movie_title = "<?php _e('Movie added', 'couchbeard'); ?>";
 var tv_msg = "<?php printf(__('%s was added', 'couchbeard'), $imdb->Title); ?>";
-var err_title = "<?php _e('Not implemented', 'couchbeard'); ?>";
+//var err_title = "<?php _e('Not implemented', 'couchbeard'); ?>";
 var err_msg = "<?php printf(__('<strong>%s</strong> was not added', 'couchbeard'), $imdb->Title); ?>";
 var movie_error = "<?php _e('There was an error adding the movie. The movie was not added.', 'couchbeard'); ?>";
 </script>

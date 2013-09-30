@@ -234,9 +234,6 @@ function couchbeardapi_admin()
         <input type="submit" name="apisave" id="sub" value="Save changes" class="button-primary" />
     </form>
 
-    <?php
-
-    $test = new imdbAPI('tt2229499');
-    echo $test->getMovieTitle();
+<?php
 }
 ?>

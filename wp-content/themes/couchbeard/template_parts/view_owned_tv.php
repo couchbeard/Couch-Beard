@@ -1,10 +1,23 @@
 <div class="span12">
 	<?php
+	try {
+		$xbmc = new xbmc();
+	} catch (Exception $e) {
+		_e('xbmc is not online.', 'couchbeard');
+		echo '</div>';
+		return;
+	}
+
+	try {
+		$sb = new sickbeard();
+		$sb_shows = $sb->getShows();
+	} catch (Exception $e) {}
+
 	$page = isset($_GET['page']) ? absint($_GET['page']) : 1;
 	$limit = 14;
 	$offset = ($page - 1) * $limit;
-	$shows = xbmc_getShows($offset, $limit);
-	$sb_shows = sb_getShows();
+
+	$shows = $xbmc->getShows($offset, $limit);
 	if (empty($shows)) {
 		_e('No TV shows owned', 'couchbeard');
 	} else {
@@ -16,7 +29,7 @@
 					</div>
 					<img class="lazysporty" id="wantedSearchpageCover" src="<?php print IMAGES; ?>/no_cover.png" data-original="<?php echo urldecode(substr($show->thumbnail, 8, -1)); ?>"/>
 					<?php
-					if (in_array($show->imdbnumber, array_keys((array) $sb_shows)))
+					if (!empty($sb_shows) && in_array($show->imdbnumber, array_keys((array) $sb_shows)))
 					{
 						echo '<img class="sb" src="' . IMAGES . '/SB_Logo.png">';
 					}
