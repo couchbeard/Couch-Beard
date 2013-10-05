@@ -136,7 +136,6 @@ $(function() {
 	});
 
 	$(document).keydown(function(e) {
-		console.log(e.which);
 		if (e.which == 83 && e.altKey) {
 			e.preventDefault();
 			$('#movieName').focus();
@@ -216,11 +215,6 @@ $(function() {
 			});
 		}
 	});
-
-	$("#notification").notify({
-		speed: 500,
-		expires: 5000
-	});
 });
 
 function getConnections() {
@@ -272,7 +266,7 @@ function currentDownloading() {
     }, null, 'json')
     .done(function(data)
     {
-		if (data != '' && data != null) {
+		if (data != -1) {
 			if (!running) {
                 running = true;
                 clearInterval(timer);
@@ -311,11 +305,13 @@ function currentPlayingTimer() {
 	}, null, 'json')
 	.done(function(data)
 	{
-		var now = data.result.time.milliseconds + (data.result.time.seconds * 1000) + (data.result.time.minutes * 60 * 1000) + (data.result.time.hours * 60 * 60 * 1000);
-		var total = data.result.totaltime.milliseconds + (data.result.totaltime.seconds * 1000) + (data.result.totaltime.minutes * 60 * 1000) + (data.result.totaltime.hours * 60 * 60 * 1000);
-		var left = total - now;
-		$('#playingRuntime').text(msToTime(left));
-		$('#playingProgress').css('width', Math.round(data.result.percentage) + '%');
+		if (data != -1) {
+			var now = data.result.time.milliseconds + (data.result.time.seconds * 1000) + (data.result.time.minutes * 60 * 1000) + (data.result.time.hours * 60 * 60 * 1000);
+			var total = data.result.totaltime.milliseconds + (data.result.totaltime.seconds * 1000) + (data.result.totaltime.minutes * 60 * 1000) + (data.result.totaltime.hours * 60 * 60 * 1000);
+			var left = total - now;
+			$('#playingRuntime').text(msToTime(left));
+			$('#playingProgress').css('width', Math.round(data.result.percentage) + '%');
+		}
 	});
 }
 
@@ -327,7 +323,7 @@ function currentPlaying() {
 	}, null, 'json')
 	.done(function(data)
 	{
-		if (data != "" && data != null) {
+		if (data != -1) {
 			// Not needed to be updated
 			var title = data.label;
 			if (data.type == 'episode')

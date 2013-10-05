@@ -166,13 +166,14 @@ try {
 			<a href="http://www.imdb.com/title/<?php echo $imdb->getID(); ?>/" target="_blank"><img id="imdblogo" alt="IMDB" src="<?php print IMAGES; ?>/imdb-logo.png" /></a>
 		</div>	
 	</div>
-
+<?php wp_enqueue_script('searchpage'); ?>
 <script>
+var ajax_nonce = '<?php echo $ajax_nonce; ?>';
 var imdbID = "<?php echo $imdb->getID(); ?>";
 //var tv_title = "<?php _e('TV show added', 'couchbeard'); ?>";
 //var movie_title = "<?php _e('Movie added', 'couchbeard'); ?>";
-var tv_msg = "<?php printf(__('%s was added', 'couchbeard'), $imdb->Title); ?>";
+var tv_msg = "<?php printf(__('<strong>%s</strong> was added', 'couchbeard'), $imdb->title()); ?>";
 //var err_title = "<?php _e('Not implemented', 'couchbeard'); ?>";
-var err_msg = "<?php printf(__('<strong>%s</strong> was not added', 'couchbeard'), $imdb->Title); ?>";
+var err_msg = "<?php printf(__('<strong>%s</strong> was not added', 'couchbeard'), $imdb->title()); ?>";
 var movie_error = "<?php _e('There was an error adding the movie. The movie was not added.', 'couchbeard'); ?>";
 </script>

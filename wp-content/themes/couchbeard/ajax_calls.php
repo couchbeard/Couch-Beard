@@ -6,7 +6,7 @@ function addMovieFunction()
     try {
     	$cp = new couchpotato();
     } catch (Exception $e) {
-    	return;
+    	exit();
     }
     
     echo (bool) $cp->addMovie($_POST['id']);
@@ -19,7 +19,7 @@ function xbmc_sendNotificationFunction() {
     try {
     	$xbmc = new xbmc();
     } catch (Exception $e) {
-    	return;
+    	exit();
     }
     
     echo (bool) $xbmc->sendNotification('Couch Beard message', $_POST['message']);
@@ -33,7 +33,7 @@ function addTVFunction()
     try {
     	$sb = new sickbeard();
     } catch (Exception $e) {
-    	return;
+    	exit();
     }
     
     echo (bool) $sb->addShow($_POST['id']);
@@ -56,7 +56,7 @@ function movieXbmcInfoFunction()
     try {
     	$xbmc = new xbmc();
     } catch (Exception $e) {
-    	return;
+    	exit();
     }
     
     echo json_encode($xbmc->getMovieDetails($_POST['movieid']));
@@ -70,7 +70,7 @@ function xbmcPlayMovieFunction()
     try {
     	$xbmc = new xbmc();
     } catch (Exception $e) {
-    	return;
+    	exit();
     }
     
     echo $xbmc->play($_POST['movieid']);
@@ -84,7 +84,7 @@ function xbmcPlayPauseFunction()
     try {
     	$xbmc = new xbmc();
     } catch (Exception $e) {
-    	return;
+    	exit();
     }
     
     echo $xbmc->playPause($_POST['player']);
@@ -98,7 +98,7 @@ function currentPlayingFunction()
     try {
     	$xbmc = new xbmc();
     } catch (Exception $e) {
-    	return;
+    	exit();
     }
     
     echo json_encode($xbmc->getCurrentPlaying());
@@ -112,7 +112,7 @@ function xbmcPlayerPropsFunction()
     try {
     	$xbmc = new xbmc();
     } catch (Exception $e) {
-    	return;
+    	exit();
     }
     
     echo $xbmc->getPlayerProperties();
@@ -126,7 +126,7 @@ function currentDownloadingFunction()
     try {
     	$sab = new sabnzbd();
     } catch (Exception $e) {
-    	return;
+    	exit();
     }
     
     echo json_encode($sab->getQueue());
@@ -148,7 +148,7 @@ function xbmcInputActionFunction()
     try {
     	$xbmc = new xbmc();
     } catch (Exception $e) {
-    	return;
+    	exit();
     }
     
     echo $xbmc->inputAction($_POST['input']);
@@ -162,7 +162,7 @@ function xbmcEjectDriveFunction()
     try {
     	$xbmc = new xbmc();
     } catch (Exception $e) {
-    	return;
+    	exit();
     }
     
     echo $xbmc->ejectDrive();

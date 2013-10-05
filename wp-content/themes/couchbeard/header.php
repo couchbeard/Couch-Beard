@@ -17,14 +17,16 @@
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-    <!--<script>
+    <script>
 		var no_movie_found = "<?php _e('Couldn\'t find the movie', 'couchbeard'); ?>";
 		var ajax_url = "<?php echo home_url() . '/wp-admin/admin-ajax.php'; ?>";
 		var ajax_nonce = '<?php echo $ajax_nonce; ?>';
 		var notification_error = "<?php _e('There was an error adding the movie. The movie was not added.', 'couchbeard'); ?>";
 		var downloads_error = "<?php _e('Couldn\'t find any downloads', 'couchbeard'); ?>";
 		var images_src = '<?php print IMAGES; ?>';
-	</script>-->
+	</script>
+
+
 
 	<?php wp_enqueue_script("jquery"); ?>
 	<?php wp_head(); ?>
@@ -83,14 +85,6 @@
 	        </div>
 	    </div>
 	</div>
-
-	<?php
-		include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-		if (!is_plugin_active('CouchBeardApi/CouchBeardApi.php')) {
-			printf(__('Could not find %s plugin. You need to activate %s ', 'couchbeard'), 'CouchBeardApi', 'CouchBeardApi');
-			exit();
-		}
-	?>
 <!--
 	<script>
 // 	jQuery(document).ready(function ($) {

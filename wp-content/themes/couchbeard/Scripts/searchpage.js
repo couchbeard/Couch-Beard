@@ -11,8 +11,9 @@ $("#addMovie").on("click", function() {
             id: imdbID
         },
         success: function(data, textStatus, XMLHttpRequest) {
+            console.log(data);
 			if (data == 1) {
-				generate(movie_title, "success");
+				generate(tv_msg, "success");
                 //create("default", { title:movie_title, text:tv_msg});
 				$('#addMovie').attr("disabled", true);
 				$('#addMovie').html('<i>Movie added</i>');

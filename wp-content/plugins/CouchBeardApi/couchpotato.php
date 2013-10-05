@@ -55,6 +55,7 @@
 	            return false;
 
 	        $data = json_decode($json);
+	        return 1;
 	        return $data->added;
 		}
 

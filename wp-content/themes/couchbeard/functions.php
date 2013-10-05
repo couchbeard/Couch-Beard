@@ -196,8 +196,13 @@ function custom_scripts()
     // Using?
     wp_register_script('jic', get_template_directory_uri() . '/Scripts/JIC.js', array('jquery'));
     wp_enqueue_script('jic');
+
+
+    wp_register_script('searchpage', get_template_directory_uri() . '/Scripts/searchpage.js', array('jquery'));
     
+
     wp_register_script('jrating', get_template_directory_uri() . '/Scripts/jRating.js', array('jquery'));
+    wp_enqueue_script('jrating');
 
     wp_register_script('movieopen', get_template_directory_uri() . '/Scripts/movieopen.js', array('jquery'));
     wp_enqueue_script('movieopen');
