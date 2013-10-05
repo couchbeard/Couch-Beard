@@ -26,23 +26,16 @@ First you need an apache server with PHP 5.3 or above and MySQL database. cURL h
 This could be more simple and should be in future releases.
 
 1. Download this repo.
-
-2. Open browser and connect to the page.
-
+2. Open browser and connect go to host (e.g. localhost/<couchbeard_path>)
 3. Enter database informations and site informations.
-
 4. Login to the website.
-
-5. Go to 'Tools/Import' and choose 'Wordpress'. Select 'backup.xml' and submit.
-
-6. Go to 'Appearance/Themes' and activate 'wpbootstrap'
-
+5. Go to 'Tools/Import' and choose 'Wordpress'. Select 'backup.xml' from the repo directory and submit.
+6. Go to 'Appearance/Themes' and activate 'couchbeard'
 7. Go to 'Appearance/Menus' and add 'User' to 'User menu' and 'Guest' to 'Guest menu'
-
 8. Go to 'Plugins' and activate following plugins:
-    - jQuery Updater
-    - Couch Beard APIs    
-9. Now go to 'Settings' and 'Couch Beard APIs' to enter the information.
+ * jQuery Updater
+ * Couch Beard APIs
+9. Now go to CouchBeard to enter application informations.
 
 
 License
