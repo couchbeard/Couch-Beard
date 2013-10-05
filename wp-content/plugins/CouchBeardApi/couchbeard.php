@@ -129,12 +129,10 @@ abstract class couchbeard
 	function isAnyAlive() 
 	{
 	    global $wpdb;
-	    global $table_name;
 	    $app = $wpdb->get_col($wpdb->prepare(
 	        "
 	        SELECT name
-	        FROM $table_name
-	        "
+	        FROM " . CouchBeardApi::$table_name
 	    ));
 	    $notAlive = array();
 	    foreach ($app as $a) {
@@ -152,11 +150,10 @@ abstract class couchbeard
 	function getAPI($app)
 	{
 		global $wpdb;
-    	global $table_name;
 	    $api = $wpdb->get_var($wpdb->prepare(
 	        "
 			SELECT api
-			FROM $table_name
+			FROM " . CouchBeardApi::$table_name . "
 			WHERE name = %s
 			", $app
 	    ));
@@ -174,11 +171,10 @@ abstract class couchbeard
 	function getLogin($app)
 	{
 		global $wpdb;
-    	global $table_name;
 	    $user = $wpdb->get_row($wpdb->prepare(
 	        "
 			SELECT username, password
-			FROM $table_name
+			FROM " . CouchBeardApi::$table_name . "
 			WHERE name = %s
 			", $app
 	    ));
@@ -196,11 +192,10 @@ abstract class couchbeard
 	function getURL($app)
 	{
 	    global $wpdb;
-	    global $table_name;
 	    $ip = $wpdb->get_var($wpdb->prepare(
 	        "
 			SELECT ip
-			FROM $table_name
+			FROM " . CouchBeardApi::$table_name . "
 			WHERE name = %s
 			", $app
 	    ));

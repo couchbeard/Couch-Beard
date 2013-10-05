@@ -136,6 +136,7 @@ $(function() {
 	});
 
 	$(document).keydown(function(e) {
+		console.log(e.which);
 		if (e.which == 83 && e.altKey) {
 			e.preventDefault();
 			$('#movieName').focus();

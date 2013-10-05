@@ -25,8 +25,8 @@ Template Name: Wanted TV shows
 </legend>
 	<?php
 		include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-		if (!is_plugin_active('couch-beard-api/couch-beard-api.php')) {
-			printf(__('Could not find %s plugin. You need to activate %s ', 'couchbeard'), 'couch-beard-api', 'couch-beard-api');
+		if (!is_plugin_active('CouchBeardApi/CouchBeardApi.php')) {
+			printf(__('Could not find %s plugin. You need to activate %s ', 'couchbeard'), 'CouchBeardApi', 'CouchBeardApi');
 			exit();
 		}
 	?>
