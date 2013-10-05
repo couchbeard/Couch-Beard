@@ -54,13 +54,6 @@ Template Name: Wanted Movies
 		</div>
 	</div>	
 </legend>
-   	<?php
-	include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-	if (!is_plugin_active('CouchBeardApi/CouchBeardApi.php')) {
-		printf(__('Could not find %s plugin. You need to activate %s ', 'couchbeard'), 'CouchBeardApi', 'CouchBeardApi');
-		exit();
-	}
-	?>
 	<div class="row">
    	<?php if ($_GET['movies'] == 'wanted') {
 		get_template_part( 'template_parts/view_wanted_movies' );

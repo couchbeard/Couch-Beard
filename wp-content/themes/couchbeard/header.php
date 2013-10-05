@@ -83,6 +83,14 @@
 	        </div>
 	    </div>
 	</div>
+
+	<?php
+		include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+		if (!is_plugin_active('CouchBeardApi/CouchBeardApi.php')) {
+			printf(__('Could not find %s plugin. You need to activate %s ', 'couchbeard'), 'CouchBeardApi', 'CouchBeardApi');
+			exit();
+		}
+	?>
 <!--
 	<script>
 // 	jQuery(document).ready(function ($) {
