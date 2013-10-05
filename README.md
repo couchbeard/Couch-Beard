@@ -8,7 +8,7 @@ Search for movies and TV shows with a single search bar. The search bar is using
 Share your movie and TV collection from XBMC on the website and view server information.
 
 
-Feel free to donate to the project or add issues. [![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.com/dk/cgi-bin/webscr?cmd=_flow&SESSION=D1UVPvXkDBbeUoW-pOIiviXJAFT2PmPIe7CjjuYi_MYkRgvAid0ZjL32lrG&dispatch=5885d80a13c0db1f8e263663d3faee8d14f86393d55a810282b64afed84968ec)
+Feel free to donate to the project or add issues. [![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=XJZJGF4U9SGHW&lc=DK&item_name=CouchBeard&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted)
 
 ![preview thumb](http://i.imgur.com/Mk4qKtO.png)
 
