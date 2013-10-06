@@ -109,9 +109,9 @@ class CouchBeardApi {
 
         self::$table_name = $wpdb->prefix . 'apis';
 
-        if ($wpdb->get_var('SHOW TABLES LIKE ' . $this->table_name) != $this->table_name)
+        if ($wpdb->get_var('SHOW TABLES LIKE ' . self::$table_name) != self::$table_name)
         {
-            $sql = "CREATE TABLE " . $this->table_name . "(
+            $sql = "CREATE TABLE " . self::$table_name . "(
                   ID INT(20) UNSIGNED NOT NULL AUTO_INCREMENT ,
                   name VARCHAR(45) NOT NULL UNIQUE ,
                   api VARCHAR(100) NULL ,
@@ -130,12 +130,12 @@ class CouchBeardApi {
 
         foreach (self::$apis as $a)
         {
-            $wpdb->insert($this->table_name, array('name' => $a));
+            $wpdb->insert(self::$table_name, array('name' => $a));
         }
 
         foreach (self::$logins as $l)
         {
-            $wpdb->insert($this->table_name, array('name' => $l, 'login' => 1));
+            $wpdb->insert(self::$table_name, array('name' => $l, 'login' => 1));
         }
 
         require_once(__DIR__ . '/couchbeard-list-table.php');
