@@ -123,17 +123,27 @@ abstract class couchbeard
 	}
 
 	/**
-	 * Checks every applications in the database if they are online
-	 * @return boolean online
+	 * Return all application names in database
+	 * @return array string array
 	 */
-	function isAnyAlive() 
-	{
-	    global $wpdb;
+	function getAllApps() {
+		global $wpdb;
 	    $app = $wpdb->get_col($wpdb->prepare(
 	        "
 	        SELECT name
 	        FROM " . CouchBeardApi::$table_name
 	    ));
+
+	    return $app;
+	}
+
+	/**
+	 * Checks every applications in the database if they are online
+	 * @return boolean online
+	 */
+	function isAnyAlive() 
+	{
+	    $app = getAllApps();
 	    $notAlive = array();
 	    foreach ($app as $a) {
 	        if (!isAlive($a))

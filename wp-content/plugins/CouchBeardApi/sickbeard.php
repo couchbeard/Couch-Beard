@@ -83,8 +83,8 @@
 		 */
 		public function showAdded($id)
 		{
-		    $res = (array) getShows();
-		    return (in_array(imdb_to_tvdb($id), array_keys($res)) ? getShow(imdb_to_tvdb($id)) : false);
+		    $res = (array) $this->getShows();
+		    return (in_array(imdb_to_tvdb($id), array_keys($res)) ? $this->getShow(imdb_to_tvdb($id)) : false);
 		}
 
 		/**

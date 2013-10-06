@@ -1,8 +1,4 @@
 <?php
-
-// Ajax calls in separate file.
-require_once(__DIR__ . '/ajax_calls.php');
-
 function timezone() {
     date_default_timezone_set(get_option('timezone_string'));
 }

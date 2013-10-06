@@ -136,7 +136,7 @@ add_action('wp_ajax_currentDownloading', 'currentDownloadingFunction');  // Only
 
 function connectionStatusFunction()
 {
-    check_ajax_referer( 'keyy', 'security' );
+    //check_ajax_referer( 'keyy', 'security' );
     echo json_encode(isAnyAlive());
     exit();
 }

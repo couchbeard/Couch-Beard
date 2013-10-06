@@ -8,7 +8,7 @@
   Author URI:
 */
 
-/*  Copyright YEAR  PLUGIN_AUTHOR_NAME  (email : madslundt@live.dk)
+/*  Copyright 2013  Mads Lundt  (email : madslundt@live.dk)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License, version 2, as 
@@ -23,13 +23,6 @@
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
-
-/*require_once(__DIR__ . '/couchbeard.php');
-require_once(__DIR__ . '/sabnzbd.php');
-require_once(__DIR__ . '/couchpotato.php');
-require_once(__DIR__ . '/sickbeard.php');
-require_once(__DIR__ . '/xbmc.php');
-require_once(__DIR__ . '/imdbAPI.php');*/
 
 
 function loadStyle()
@@ -165,6 +158,8 @@ class CouchBeardApi {
 
         if (!class_exists('imdbAPI'))
             require_once(__DIR__ . '/imdbAPI.php');
+
+        require_once(__DIR__ . '/ajax_calls.php');
     }
 
 } //class
@@ -173,41 +168,64 @@ new CouchBeardApi();
 
 if (isset($_POST['submitbutton'])) {
 
-    // All apis
-    foreach (CouchBeardApi::$apis as $app) {
-        if (strlen($_POST['user' . $app]) > 2 && strlen($_POST['ip' . $app]) > 2) {
-            $wpdb->query($wpdb->prepare(
-                "
-                UPDATE " . CouchBeardApi::$table_name . "
-                SET api = %s, ip = %s
-                WHERE name = %s
-                ", 
-                array(
-                    $_POST['api' . $app],
-                    $_POST['ip' . $app],
-                    $app
-                )
-            ));
-        }
-    }
+    $apps = $wpdb->get_results(
+        "
+        SELECT *
+        FROM " . CouchBeardApi::$table_name
+    );
 
-    // All logins
-    foreach (CouchBeardApi::$logins as $app) {
-        if (strlen($_POST['user' . $app]) > 2 && strlen($_POST['ip' . $app]) > 2) {
-            $wpdb->query($wpdb->prepare(
-                "
-                UPDATE " . CouchBeardApi::$table_name . "
-                SET ip = %s, username = %s, password = %s
-                WHERE name = %s
-                ", 
-                array(
-                    $_POST['ip' . $app],
-                    $_POST['user' . $app],
-                    $_POST['pass' . $app],
-                    $app
-                )
-            ));
+    foreach ($apps as $app) {
+        if (empty($app->login)) {
+            if (strlen($_POST['api' . $app->ID]) > 2 && strlen($_POST['ip' . $app->ID]) > 2) {
+                $wpdb->query($wpdb->prepare(
+                    "
+                    UPDATE " . CouchBeardApi::$table_name . "
+                    SET api = %s, ip = %s
+                    WHERE ID = %s
+                    ", 
+                    array(
+                        $_POST['api' . $app->ID],
+                        $_POST['ip' . $app->ID],
+                        $app->ID
+                    )
+                ));
+            }
+        } else {
+            if (strlen($_POST['user' . $app->ID]) > 2 && strlen($_POST['pass' . $app->ID]) > 2 && strlen($_POST['ip' . $app->ID]) > 2) {
+                $wpdb->query($wpdb->prepare(
+                    "
+                    UPDATE " . CouchBeardApi::$table_name . "
+                    SET ip = %s, username = %s, password = %s
+                    WHERE ID = %s
+                    ", 
+                    array(
+                        $_POST['ip' . $app->ID],
+                        $_POST['user' . $app->ID],
+                        $_POST['pass' . $app->ID],
+                        $app->ID
+                    )
+                ));
+            }
         }
     }
 }
+
+function setFooter() {
+?>
+    <div class="span1 pull-right">
+        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+        <input type="hidden" name="cmd" value="_donations">
+        <input type="hidden" name="business" value="madslundt@live.dk">
+        <input type="hidden" name="lc" value="DK">
+        <input type="hidden" name="item_name" value="CouchBeard">
+        <input type="hidden" name="no_note" value="0">
+        <input type="hidden" name="currency_code" value="EUR">
+        <input type="hidden" name="bn" value="PP-DonationsBF:btn_donate_LG.gif:NonHostedGuest">
+        <input type="image" src="https://www.paypalobjects.com/da_DK/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal – den sikre og nemme måde at betale på nettet.">
+        <img alt="" border="0" src="https://www.paypalobjects.com/da_DK/i/scr/pixel.gif" width="1" height="1">
+        </form>
+    </div>
+<?php
+}
+add_action('wp_footer', 'setFooter');
 ?>

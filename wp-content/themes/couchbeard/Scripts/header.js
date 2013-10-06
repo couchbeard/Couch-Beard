@@ -228,6 +228,7 @@ function getConnections() {
             security: ajax_nonce
         },
         success: function(data, textStatus, XMLHttpRequest) {
+        	console.log(data);
 			if (data.length > 0)
 			{
 				if ($('#statusConnection').css('display') == 'none') {

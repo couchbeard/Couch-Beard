@@ -29,12 +29,12 @@ class Couchbeard_List_Table extends WP_List_Table {
         	case 'application':
         		return $item->name;
         	case 'key':
-        		if (empty($item->api))
-        			return '<input type="text" name="user' . $item->name . '" value="' . $item->username . '" placeholder="' . __('Username', 'couchbeard') . '"> <input type="password" name="pass' . $item->name . '" value="' . $item->password . '" placeholder="' . __('Password', 'couchbeard') . '">';
+        		if (!empty($item->login))
+        			return '<input type="text" name="user' . $item->ID . '" value="' . $item->username . '" placeholder="' . __('Username', 'couchbeard') . '"> <input type="password" name="pass' . $item->ID . '" value="' . $item->password . '" placeholder="' . __('Password', 'couchbeard') . '">';
         		else
-        			return '<input type="text" name="api' . $item->name . '" value="' . $item->api . '" placeholder="' . __('API', 'couchbeard') . '">';
+        			return '<input type="text" name="api' . $item->ID . '" value="' . $item->api . '" placeholder="' . __('API', 'couchbeard') . '">';
         	case 'ip':
-        		return '<input type="text" name="ip' . $item->name . '" value="' . $item->ip . '" placeholder="' . __('IP:Port', 'couchbeard') . '">';
+        		return '<input type="text" name="ip' . $item->ID . '" value="' . $item->ip . '" placeholder="' . __('IP:Port', 'couchbeard') . '">';
             default:
                 return print_r($item,true); //Show the whole array for troubleshooting purposes
         }
@@ -44,13 +44,13 @@ class Couchbeard_List_Table extends WP_List_Table {
         
         //Build row actions
         $actions = array(
-            'clear'      => '<a href="'.add_query_arg(array('page' => $_REQUEST['page'], 'action' => 'clear', $this->_args['singular'] => $item->Value), 'admin.php').'">'.__('Clear').'</a>',
+            'clear'      => '<a href="'.add_query_arg(array('page' => $_REQUEST['page'], 'action' => 'clear', $this->_args['singular'] => $item->ID), 'admin.php').'">'.__('Clear').'</a>',
         );
         
         //Return the title contents
         return sprintf('<strong><a href="%1$s">%2$s</a></strong>%3$s',
-            add_query_arg(array('page' => $_REQUEST['page'], 'subpage' => 'wpdkatag-objects', $this->_args['singular'] => $item->Value), 'admin.php'),
-            $item->Value,
+            add_query_arg(array('page' => $_REQUEST['page'], 'subpage' => 'wpdkatag-objects', $this->_args['singular'] => $item->ID), 'admin.php'),
+            $item->ID,
             $this->row_actions($actions)
         );
     }
@@ -68,8 +68,8 @@ class Couchbeard_List_Table extends WP_List_Table {
     protected function column_cb($item) {
         return sprintf(
             '<input type="checkbox" name="%1$s[]" value="%2$s" />',
-            /*$1%s*/ $this->_args['singular'],  //Let's simply repurpose the table's singular label ("movie")
-            /*$2%s*/ $item->Value                //The value of the checkbox should be the record's id
+            /*$1%s*/ $this->_args['singular'], 
+            /*$2%s*/ $item->ID
         );
     }
 
@@ -88,9 +88,21 @@ class Couchbeard_List_Table extends WP_List_Table {
     }
 
     protected function process_bulk_action() {
-        
+        global $wpdb;
         //Clear when a bulk action is being triggered...
         if($this->current_action() == 'clear') {
+            foreach ($_POST[$this->_args['singular']] as $id) {
+                $wpdb->query($wpdb->prepare(
+                    "
+                    UPDATE " . CouchBeardApi::$table_name . "
+                    SET api = '', ip = '', username = '', password = ''
+                    WHERE ID = %s
+                    ", 
+                    array(
+                        $id
+                    )
+                ));
+            }
             wp_die('Items cleared (or they would be if we had items to clear)!');
         }
     }
