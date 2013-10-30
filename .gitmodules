@@ -1,0 +1,3 @@
+[submodule "wp-content/plugins/couchbeard-plugin"]
+	path = wp-content/plugins/couchbeard-plugin
+	url = https://github.com/couchbeard/couchbeard-plugin.git
